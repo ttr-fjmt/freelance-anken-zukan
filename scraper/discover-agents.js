@@ -158,11 +158,11 @@ async function main() {
     const existingHints = topCategoryHints(agents);
     let id = nextId(agents);
 
-    for (const { candidate, pageText, verifiedUrl } of verified) {
-      console.log(`Structuring verified candidate: ${candidate.name} <${candidate.website}>`);
+    for (const { candidate, pageText, verifiedUrl, thinContent } of verified) {
+      console.log(`Structuring verified candidate: ${candidate.name} <${candidate.website}>${thinContent ? ' (thin content)' : ''}`);
       let ai;
       try {
-        ai = await buildDiscoveredAgentFields(candidate, pageText, anthropic, existingHints);
+        ai = await buildDiscoveredAgentFields(candidate, pageText, anthropic, existingHints, thinContent);
       } catch (err) {
         // 実在は確認済みだが構造化AI呼び出し自体が失敗（レート制限等）した場合は
         // スキップリストに入れず、次回の実行で再試行する。

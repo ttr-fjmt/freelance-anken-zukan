@@ -19,7 +19,7 @@
 const cheerio = require('cheerio');
 const { politeDelay } = require('./http');
 const { companyNameCore } = require('./website-enrich');
-const { CATEGORIES } = require('./schema');
+const { CATEGORIES, NOT_DISCLOSED_TEXT } = require('./schema');
 
 const DISCOVERY_MODEL = process.env.ANTHROPIC_DISCOVERY_MODEL || 'claude-sonnet-4-6';
 const STRUCTURE_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001';
@@ -191,7 +191,13 @@ async function discoverCandidates(excludeNames, maxCandidates) {
 
       const verification = await module.exports.verifyCandidate(candidate);
       if (verification.ok) {
-        verified.push({ candidate, category, pageText: verification.pageText, verifiedUrl: verification.verifiedUrl });
+        verified.push({
+          candidate,
+          category,
+          pageText: verification.pageText,
+          verifiedUrl: verification.verifiedUrl,
+          thinContent: verification.thinContent,
+        });
         listed += 1;
       } else {
         skipped.push({ candidate, category, reason: verification.reason });
@@ -310,6 +316,14 @@ function candidateNameCores(name) {
 /** 構造化AIのプロンプトに渡すページ本文抽出テキストの上限文字数。 */
 const PAGE_TEXT_MAX_CHARS = 4000;
 
+/**
+ * pageTextの文字数がこれ未満の場合、実在照合自体はok:trueのまま
+ * thinContent:true を付与する（タイトルのみ・エラーメッセージ・
+ * リダイレクトスタブ等、実在はしているが本文からの特徴抽出には
+ * 情報量が不足しているケースを検知するため）。
+ */
+const MIN_CONTENT_LENGTH = 200;
+
 function buildPageText(rawBodyText) {
   return rawBodyText
     .replace(/[ \t　]+/g, ' ')
@@ -375,7 +389,12 @@ async function verifyCandidate(candidate) {
   const pathAttempt = await tryUrlsForMatch(pathUrls, nameCores);
   if (pathAttempt.matched !== undefined) {
     return pathAttempt.matched
-      ? { ok: true, verifiedUrl: pathAttempt.url, pageText: pathAttempt.pageText }
+      ? {
+          ok: true,
+          verifiedUrl: pathAttempt.url,
+          pageText: pathAttempt.pageText,
+          thinContent: pathAttempt.pageText.length < MIN_CONTENT_LENGTH,
+        }
       : { ok: false, reason: 'name_mismatch' };
   }
 
@@ -387,7 +406,12 @@ async function verifyCandidate(candidate) {
   const rootAttempt = await tryUrlsForMatch(rootUrls, nameCores);
   if (rootAttempt.matched !== undefined) {
     return rootAttempt.matched
-      ? { ok: true, verifiedUrl: rootAttempt.url, pageText: rootAttempt.pageText }
+      ? {
+          ok: true,
+          verifiedUrl: rootAttempt.url,
+          pageText: rootAttempt.pageText,
+          thinContent: rootAttempt.pageText.length < MIN_CONTENT_LENGTH,
+        }
       : { ok: false, reason: 'name_mismatch' };
   }
 
@@ -409,7 +433,7 @@ async function verifyCandidate(candidate) {
  * 生成させることで、内容の薄い「非公開」だらけの結果になることを防ぐ
  * （本文に記載が無い項目は正直に null/空配列/"unknown"を出力させる）。
  */
-async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existingHints = []) {
+async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existingHints = [], thinContent = false) {
   const tool = {
     name: 'structure_discovered_agent',
     description:
@@ -512,6 +536,12 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
         existingHints.join('、') + '\n'
       : '';
 
+  const thinContentLine = thinContent
+    ? '- 本文から具体的な特徴を抽出できるだけの情報量がありません。無理に文章を作らず、' +
+      'oneLiner・appeal・companyOneLiner・companyAppealには、既存の非公開表現の規則に沿った' +
+      `定型文（例:「${NOT_DISCLOSED_TEXT}」）を返してください。\n`
+    : '';
+
   const factsBlock = pageText && pageText.trim()
     ? `以下は、実際に取得した公式サイト（${candidate.website}）のページ本文です。\n\n${pageText}`
     : `公式サイトの本文を取得できませんでした。手がかりは会社名と公式サイトURLのみです。\n` +
@@ -545,6 +575,7 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
         '（新しいカテゴリ名を作らない。該当が無ければ「その他」を使う）。\n' +
         '- categoryが「その他」の場合は、必ず categoryHint も出力すること（省略しない）。' +
         'category がその他以外の場合は categoryHint を出力しないこと。\n' +
+        thinContentLine +
         hintVocabLine,
     }],
   });

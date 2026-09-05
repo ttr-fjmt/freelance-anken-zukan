@@ -21,4 +21,12 @@ const CATEGORIES = [
 
 const NOT_DISCLOSED = '非公開（お問い合わせで確認）';
 
-module.exports = { CATEGORIES, NOT_DISCLOSED };
+/**
+ * oneLiner・appeal等の自由記述フィールド用の定型文。ページ本文の情報量が
+ * 極端に薄い（SPAのクライアントサイドレンダリング、ボット検知エラー、
+ * リダイレクトスタブ等で実質的な内容が取得できない）候補について、AIが
+ * 取り繕った言い訳文・創作文を書いてしまうのを防ぐために使う。
+ */
+const NOT_DISCLOSED_TEXT = '詳細情報が確認できませんでした。公式サイトでご確認ください。';
+
+module.exports = { CATEGORIES, NOT_DISCLOSED, NOT_DISCLOSED_TEXT };
