@@ -441,6 +441,17 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
             'ページ本文から読み取れる具体的な特徴を3〜5点相当盛り込んだ2〜3文程度の特徴説明。' +
             '案件を探すフリーランス側にとっての魅力という視点で書く。本文に記載の無い内容を創作しないこと。',
         },
+        features: {
+          type: 'array',
+          items: { type: 'string' },
+          minItems: 1,
+          maxItems: 3,
+          description:
+            'ページ本文から読み取れる具体的な特徴を、appealとは別に箇条書き用として1〜3件抽出する' +
+            '（各項目は15〜25字程度の短い体言止め・簡潔な文で、appealの要約・言い換えでよい）。' +
+            'creative作文ではなく、本文に実際に記載されている内容の抽出であること。' +
+            '本文から具体的な特徴を読み取れない場合は空配列 [] とする（無理に埋めない）。',
+        },
         companyAppeal: {
           type: 'string',
           description:
@@ -488,7 +499,7 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
         },
       },
       required: [
-        'category', 'oneLiner', 'companyOneLiner', 'appeal', 'companyAppeal',
+        'category', 'oneLiner', 'companyOneLiner', 'appeal', 'companyAppeal', 'features',
         'contractTypes', 'remoteRatio', 'feeStructure', 'freelancerCount',
       ],
       additionalProperties: false,
@@ -522,8 +533,10 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
         '厳守事項:\n' +
         '- creative作文ではなく、あくまで本文に実際に記載されている内容の抽出・要約であること。' +
         '本文に基づかない具体的な数値・条件・実績を創作しないこと。\n' +
-        '- 本文に記載が無い項目は、正直に null（contractTypesなら空配列 []、feeStructure.typeなら' +
-        '"unknown"）としてください。存在しない情報を推測で埋めないこと。\n' +
+        '- 本文に記載が無い項目は、正直に null（contractTypes・featuresなら空配列 []、' +
+        'feeStructure.typeなら"unknown"）としてください。存在しない情報を推測で埋めないこと。\n' +
+        '- featuresは、appealの単なる分割ではなく、本文中の別々の具体的な事実（対応領域、実績、' +
+        '保証制度、サポート内容等）をそれぞれ短い箇条書きにすること。\n' +
         '- appeal/companyAppealは、本文から読み取れる具体的で内容のある特徴を根拠に書くこと' +
         '（「特に情報なし」のような空虚な記述は避ける。ただし本文に手がかりが乏しい場合は無理に' +
         '誇張せず、読み取れる範囲で簡潔にまとめる）。\n' +
@@ -545,6 +558,7 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
     result.category = 'その他';
   }
   result.categoryHint = result.category === 'その他' ? (result.categoryHint || null) : null;
+  if (!Array.isArray(result.features)) result.features = [];
   if (!Array.isArray(result.contractTypes)) result.contractTypes = [];
   if (!result.feeStructure || typeof result.feeStructure !== 'object') {
     result.feeStructure = { type: 'unknown', note: null };

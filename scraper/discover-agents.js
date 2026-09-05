@@ -89,7 +89,7 @@ function assembleDiscoveredEntry(candidate, ai, id, verifiedUrl) {
     companyOneLiner: ai.companyOneLiner,
     appeal: ai.appeal,
     companyAppeal: ai.companyAppeal || null,
-    features: [],
+    features: ai.features || [],
     reviews: [],
     reviewNote: REVIEW_NOTE,
     companyReviews: [],
