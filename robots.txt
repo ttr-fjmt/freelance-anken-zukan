@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://agent-zukan.net/sitemap.xml
+Sitemap: https://freelance-anken-zukan.net/sitemap.xml

@@ -16,7 +16,7 @@ const AGENTS_PATH = path.join(ROOT, 'agents.json');
 const CATEGORIES_PATH = path.join(ROOT, 'categories.json');
 const SITEMAP_PATH = path.join(ROOT, 'sitemap.xml');
 
-const BASE_URL = 'https://agent-zukan.net';
+const BASE_URL = 'https://freelance-anken-zukan.net';
 const MAX_URLS_PER_SITEMAP = 50000;
 
 function readJson(filePath, fallback) {
@@ -68,26 +68,13 @@ function buildEntries(agents, categories = []) {
   if (fs.existsSync(path.join(ROOT, 'faq.html'))) {
     entries.push({ loc: `${BASE_URL}/faq.html`, changefreq: 'monthly', priority: '0.4' });
   }
-  for (const a of agents) {
-    if (!a.id) continue;
-    entries.push({
-      loc: `${BASE_URL}/agent/${encodeURIComponent(a.id)}/`,
-      changefreq: 'weekly',
-      priority: '0.6',
-    });
-  }
-  // 該当エージェントが1件も無いカテゴリーは generate-category-pages.js がページ自体を
-  // 生成しない（薄いページを作らないため）ので、ここでも同じ条件でスキップする。
-  for (const c of categories) {
-    if (!c.slug) continue;
-    const hasAgents = agents.some(a => a.category === c.name);
-    if (!hasAgents) continue;
-    entries.push({
-      loc: `${BASE_URL}/category/${c.slug}/`,
-      changefreq: 'daily',
-      priority: '0.5',
-    });
-  }
+  // 【フリーランス案件図鑑での一時対応】discover-agents.yml（週次のAI発見パイプライン）は
+  // agent-zukanのprerender.js / generate-category-pages.js相当の処理を持たず、
+  // /agent/{id}/ や /category/{slug}/ の静的ページを一切生成しない。そのため、
+  // agents.json / categories.json にエントリがあってもsitemapには絶対に含めない
+  // （実在しないURLをクローラーに送ってしまうため）。将来この新サイト向けに
+  // 個別ページ・カテゴリーページのプリレンダリングを実装した時点で、
+  // agent-zukan側のこのファイルを参考に該当ループを復活させること。
   return entries;
 }
 
