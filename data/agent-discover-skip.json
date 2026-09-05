@@ -340,5 +340,95 @@
     "website": "https://wacul.co.jp/service/marketing-freelancers-matching",
     "reason": "name_mismatch",
     "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "Tadoru（タドル）": {
+    "name": "Tadoru（タドル）",
+    "website": "https://tadoru.work/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "miniMA（ミニマ）": {
+    "name": "miniMA（ミニマ）",
+    "website": "https://minima-co.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "サグーワークス（株式会社ウィルゲート）": {
+    "name": "サグーワークス（株式会社ウィルゲート）",
+    "website": "https://works.sagooo.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "opusr（オプサー）／株式会社Heurithm": {
+    "name": "opusr（オプサー）／株式会社Heurithm",
+    "website": "https://opusr.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "ムビサク": {
+    "name": "ムビサク",
+    "website": "https://mubisaku.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "CxOコンサルティング（IDEAL株式会社）": {
+    "name": "CxOコンサルティング（IDEAL株式会社）",
+    "website": "https://cxo-consulting.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "XIENZ（シエンズ）": {
+    "name": "XIENZ（シエンズ）",
+    "website": "https://xienz.jp",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "フリーコンサルmatch": {
+    "name": "フリーコンサルmatch",
+    "website": "https://free.consultant-match.com",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "BIZ-directors（ビズディレクターズ）／株式会社ビースタイル スマートキャリア": {
+    "name": "BIZ-directors（ビズディレクターズ）／株式会社ビースタイル スマートキャリア",
+    "website": "https://smartcareer.co.jp/biz-directors/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "Bizlink（ビズリンク）／株式会社ビズリンク": {
+    "name": "Bizlink（ビズリンク）／株式会社ビズリンク",
+    "website": "https://bizlink.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "Futurizm（フューチャリズム）": {
+    "name": "Futurizm（フューチャリズム）",
+    "website": "https://futurizm.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "Kasooku（カソーク）": {
+    "name": "Kasooku（カソーク）",
+    "website": "https://kasooku.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "CXO Works（シーエックスオーワークス）": {
+    "name": "CXO Works（シーエックスオーワークス）",
+    "website": "https://cxo-works.com/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "ここナラエージェント": {
+    "name": "ここナラエージェント",
+    "website": "https://coconala-agent.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "ふるさと兼業": {
+    "name": "ふるさと兼業",
+    "website": "https://furusato-kengyo.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T14:46:57.226Z"
   }
 }
