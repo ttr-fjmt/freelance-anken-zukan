@@ -1,0 +1,60 @@
+name: Backfill features for existing agents (one-off)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  # agents.json をコミット・pushする。他の書き込み系ワークフロー
+  # (discover-agents.yml / import-a8.yml 等)と衝突しないよう同じグループ名を使う。
+  group: repo-content-write
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: scraper/package-lock.json
+
+      - name: Install scraper dependencies
+        working-directory: scraper
+        run: npm ci
+
+      - name: Backfill features from appeal via Claude
+        working-directory: scraper
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node backfill-features.js
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add agents.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: backfill features for existing agents"
+
+          max_retries=2
+          attempt=0
+          until git push; do
+            attempt=$((attempt + 1))
+            if [ "$attempt" -gt "$max_retries" ]; then
+              echo "::error::push failed after $max_retries retries"
+              exit 1
+            fi
+            echo "push failed (attempt $attempt/$max_retries) — pulling --rebase and retrying..."
+            git pull --rebase origin main
+          done
