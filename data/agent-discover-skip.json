@@ -238,5 +238,107 @@
     "website": "https://kenjins.jp",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-05T11:20:26.948Z"
+  },
+  "Computer Futures（SThree株式会社）": {
+    "name": "Computer Futures（SThree株式会社）",
+    "website": "https://www.computerfutures.com/ja-jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "Tech Direct（テックダイレクト）": {
+    "name": "Tech Direct（テックダイレクト）",
+    "website": "https://crowdworks.jp/landing/tech_direct/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "KAIKOKU（カイコク）／株式会社BLAM": {
+    "name": "KAIKOKU（カイコク）／株式会社BLAM",
+    "website": "https://kaikoku.blam.co.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "LegatoShip（レガートシップ）／株式会社レガートシップ": {
+    "name": "LegatoShip（レガートシップ）／株式会社レガートシップ",
+    "website": "https://legatoship.co.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "フリーランス名鑑": {
+    "name": "フリーランス名鑑",
+    "website": "https://meikan.freelance.co.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "フリーコンサルBiz（アクシスコンサルティング）": {
+    "name": "フリーコンサルBiz（アクシスコンサルティング）",
+    "website": "https://freeconsul-biz.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "Ability CROWD（アビリティクラウド）": {
+    "name": "Ability CROWD（アビリティクラウド）",
+    "website": "https://ability-crowd.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "コンサルデータバンク": {
+    "name": "コンサルデータバンク",
+    "website": "https://consul-databank.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "Strategy Consultant Bank": {
+    "name": "Strategy Consultant Bank",
+    "website": "https://strategyconsultantbank.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "lotsful（ロッツフル）／パーソルイノベーション株式会社": {
+    "name": "lotsful（ロッツフル）／パーソルイノベーション株式会社",
+    "website": "https://lotsful.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "GranPaz Agent（グランパスエージェント）": {
+    "name": "GranPaz Agent（グランパスエージェント）",
+    "website": "https://granpaz.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "SOKKIN MATCH（株式会社SOKKIN）": {
+    "name": "SOKKIN MATCH（株式会社SOKKIN）",
+    "website": "https://sokkin.me/sokkin-match/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "ECのプロ": {
+    "name": "ECのプロ",
+    "website": "https://ec-pro.co.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "TechReach（テックリーチ）": {
+    "name": "TechReach（テックリーチ）",
+    "website": "https://tech-reach.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "フリエン（アン・コンサルティング）": {
+    "name": "フリエン（アン・コンサルティング）",
+    "website": "https://freelance.an-con.co.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "スキイキ（SKILLIKI）": {
+    "name": "スキイキ（SKILLIKI）",
+    "website": "https://skilliki.com",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
+  },
+  "WACULマーケティング領域フリーランス/副業マッチング": {
+    "name": "WACULマーケティング領域フリーランス/副業マッチング",
+    "website": "https://wacul.co.jp/service/marketing-freelancers-matching",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T13:53:34.010Z"
   }
 }
