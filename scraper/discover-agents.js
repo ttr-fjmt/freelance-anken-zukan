@@ -2,11 +2,12 @@
 
 /**
  * 週次で、新規のフリーランス向け案件紹介エージェント/サービスをClaude(web_search)に
- * 発見させ、実際にHTTPアクセスして実在照合したうえで agents.json に追加する
- * エントリーポイント（.github/workflows/discover-agents.yml から呼び出される）。
+ * カテゴリー別に発見させ、実際にHTTPアクセスして実在照合したうえで agents.json に
+ * 追加するエントリーポイント（.github/workflows/discover-agents.yml から呼び出される）。
  *
- * 【安全設計】lib/agent-discovery.js の2段階方式（discoverCandidates →
- * verifyCandidate）を経ていない候補は絶対に掲載しない。不一致・fetch失敗は
+ * 【安全設計】lib/agent-discovery.js の discoverCandidates() が、カテゴリーごとの
+ * web_search呼び出しと実在照合(verifyCandidate)までを内部で一貫して行う。この
+ * 2段階方式を経ていない候補は絶対に掲載しない。不一致・fetch失敗は
  * data/agent-discover-skip.json に記録し、以降の実行では除外リストに含めて
  * 再試行しない（無駄なAPI呼び出し・fetchを避けるため）。
  */
@@ -16,7 +17,6 @@ const path = require('path');
 
 const {
   discoverCandidates,
-  verifyCandidate,
   buildDiscoveredAgentFields,
   getAnthropicClient,
 } = require('./lib/agent-discovery');
@@ -121,43 +121,42 @@ async function main() {
   const excludeNames = [...agents.map(a => a.name).filter(Boolean), ...Object.keys(skipList)];
 
   console.log(
-    `Discovering up to ${MAX_PER_RUN} new freelance-agent candidate(s) ` +
+    `Discovering up to ${MAX_PER_RUN} new freelance-agent candidate(s) across categories ` +
       `(excluding ${excludeNames.length} known name(s): ${agents.length} listed + ${Object.keys(skipList).length} skip-listed)...`
   );
 
-  const candidates = await discoverCandidates(excludeNames, MAX_PER_RUN);
-  console.log(`AI proposed ${candidates.length} candidate(s) via web_search.`);
+  // discoverCandidates() がカテゴリーごとにweb_searchと実在照合(verifyCandidate)まで
+  // 内部で行い、累計の照合成功数がMAX_PER_RUNに達した時点で残りのカテゴリーをスキップする。
+  const { verified, skipped, perCategory } = await discoverCandidates(excludeNames, MAX_PER_RUN);
+  const totalFound = perCategory.reduce((sum, c) => sum + c.found, 0);
+  console.log(`AI proposed ${totalFound} candidate(s) via web_search across ${perCategory.length} categorie(s), ${verified.length} passed verification.`);
+
+  const now = new Date().toISOString();
+  for (const { candidate, reason } of skipped) {
+    skipList[candidate.name] = {
+      name: candidate.name,
+      website: candidate.website,
+      reason,
+      checkedAt: now,
+    };
+  }
+  if (skipped.length > 0) {
+    console.log(`Recorded ${skipped.length} skipped candidate(s) in ${path.basename(SKIP_PATH)}, will not retry.`);
+  }
 
   let listedCount = 0;
-  let skippedCount = 0;
   let promotedNames = [];
 
-  if (candidates.length > 0) {
+  if (verified.length > 0) {
     const anthropic = getAnthropicClient();
     const existingHints = topCategoryHints(agents);
     let id = nextId(agents);
-    const now = new Date().toISOString();
 
-    for (const candidate of candidates) {
-      console.log(`Verifying candidate: ${candidate.name} <${candidate.website}>`);
-      const verification = await verifyCandidate(candidate);
-
-      if (!verification.ok) {
-        skipList[candidate.name] = {
-          name: candidate.name,
-          website: candidate.website,
-          reason: verification.reason,
-          checkedAt: now,
-        };
-        skippedCount += 1;
-        console.log(`  SKIP (${verification.reason}) — recorded in ${path.basename(SKIP_PATH)}, will not retry.`);
-        continue;
-      }
-
-      console.log('  VERIFIED — structuring via AI...');
+    for (const { candidate, pageText } of verified) {
+      console.log(`Structuring verified candidate: ${candidate.name} <${candidate.website}>`);
       let ai;
       try {
-        ai = await buildDiscoveredAgentFields(candidate, verification.pageText, anthropic, existingHints);
+        ai = await buildDiscoveredAgentFields(candidate, pageText, anthropic, existingHints);
       } catch (err) {
         // 実在は確認済みだが構造化AI呼び出し自体が失敗（レート制限等）した場合は
         // スキップリストに入れず、次回の実行で再試行する。
@@ -171,27 +170,32 @@ async function main() {
       listedCount += 1;
       console.log(`  LISTED as id=${entry.id}, category=${entry.category}${entry.categoryHint ? ` (hint: ${entry.categoryHint})` : ''}`);
     }
+  }
 
-    if (listedCount > 0) {
+  if (listedCount > 0) {
+    writeJson(AGENTS_PATH, agents);
+  }
+  if (skipped.length > 0) {
+    writeJson(SKIP_PATH, skipList);
+  }
+
+  if (listedCount > 0) {
+    const categories = readJson(CATEGORIES_PATH, []);
+    const result = promoteCategories(agents, categories);
+    promotedNames = result.promotedNames;
+    if (result.promotedNames.length > 0 || result.reclassifiedCount > 0) {
       writeJson(AGENTS_PATH, agents);
-    }
-    if (skippedCount > 0) {
-      writeJson(SKIP_PATH, skipList);
-    }
-
-    if (listedCount > 0) {
-      const categories = readJson(CATEGORIES_PATH, []);
-      const result = promoteCategories(agents, categories);
-      promotedNames = result.promotedNames;
-      if (result.promotedNames.length > 0 || result.reclassifiedCount > 0) {
-        writeJson(AGENTS_PATH, agents);
-        writeJson(CATEGORIES_PATH, categories);
-      }
+      writeJson(CATEGORIES_PATH, categories);
     }
   }
 
+  console.log('--- Category breakdown ---');
+  for (const c of perCategory) {
+    console.log(`${c.category}: 発見${c.found}件・掲載${c.listed}件・スキップ${c.skipped}件`);
+  }
+
   console.log(
-    `Discovery finished: found=${candidates.length}, listed=${listedCount}, skipped=${skippedCount}` +
+    `Discovery finished: found=${totalFound}, listed=${listedCount}, skipped=${skipped.length}` +
       (promotedNames.length ? `, promotedCategories=${promotedNames.join('、')}` : '')
   );
 }

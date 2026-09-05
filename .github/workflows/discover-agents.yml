@@ -4,7 +4,13 @@ on:
   schedule:
     # 毎週月曜 0:00 UTC = 日本時間(JST) 月曜 9:00 に実行
     - cron: "0 0 * * 1"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      max_candidates:
+        description: "1回の実行で新規発見を試みる候補数の上限（手動実行専用。空欄なら50件。週次自動実行は常に10件のまま）"
+        required: false
+        type: string
+        default: "50"
 
 permissions:
   contents: write
@@ -38,6 +44,9 @@ jobs:
         working-directory: scraper
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # 手動実行(workflow_dispatch)時のみ入力値(未入力ならinput自体のdefault: 50)を使う。
+          # 週次cron実行時はコスト・品質管理のため常に10件のまま。
+          DISCOVER_MAX_PER_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.max_candidates || '10' }}
         run: node discover-agents.js
 
       - name: Commit and push changes

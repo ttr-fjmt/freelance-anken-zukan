@@ -61,29 +61,53 @@ function extractJsonArray(text) {
 }
 
 /**
- * 日本国内のフリーランス向け案件紹介・マッチングサービスを、Claudeにweb_searchで
- * 実際に検索させ、excludeNames に無い新規候補のみ最大maxCandidates件返す。
+ * discoverCandidates() が検索クエリを分けるカテゴリー一覧。1回の実行で広いクエリを
+ * 1本だけ投げると同じような候補ばかり見つかり頭打ちになりやすいため、分野ごとに
+ * 軽量な検索呼び出しを複数回行い、カバレッジを広げる。
+ * サイト掲載用のカテゴリー分類（lib/schema.js の CATEGORIES、buildDiscoveredAgentFields
+ * が使う）とは目的が異なる別物（検索クエリの多様化用）であり、意図的に混同していない。
  */
-async function discoverCandidates(excludeNames, maxCandidates) {
+const SEARCH_CATEGORIES = [
+  'IT・Web開発',
+  'デザイン',
+  'ライティング・編集',
+  '動画・クリエイティブ',
+  'コンサル・士業',
+  '事務・バックオフィス',
+  '営業・マーケティング',
+  'その他',
+];
+
+/** 1カテゴリーあたりの検索呼び出しで、AIに提案させる候補数の上限（軽量な呼び出しに留めるため）。 */
+const PER_CATEGORY_SEARCH_LIMIT = 5;
+
+/**
+ * 指定した1カテゴリーについてのみ、Claude API に web_search ツールで実際に検索させ、
+ * 該当するフリーランス向け案件紹介・マッチングサービスの候補を返す（会社名+公式サイトURL）。
+ * discoverCandidates() のカテゴリーループから呼ばれる、軽量な単位の検索呼び出し。
+ */
+async function searchCategoryCandidates(category, excludeNames) {
   const anthropic = getAnthropicClient();
 
   const response = await anthropic.messages.create({
     model: DISCOVERY_MODEL,
-    max_tokens: 2000,
-    tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 8 }],
+    max_tokens: 1500,
+    tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 4 }],
     messages: [{
       role: 'user',
       content:
-        `日本国内で、フリーランス(業務委託・準委任契約)向けに案件紹介・` +
-        `マッチングを行っているエージェント/サービスを、Web検索を使って` +
+        `日本国内で、「${category}」分野を中心に、フリーランス(業務委託・準委任契約)向けに` +
+        `案件紹介・マッチングを行っているエージェント/サービスを、Web検索を使って` +
         `実在するものだけ探してください。\n\n` +
-        `除外リスト(既に掲載済み、これらは含めない): ${excludeNames.join('、')}\n\n` +
+        `除外リスト(既に掲載済み・既に他カテゴリーで見つかった、これらは含めない): ${excludeNames.join('、')}\n\n` +
         `条件:\n` +
         `- 検索で実在を確認できた企業のみ回答すること。知識だけで` +
         `  推測したり、実在確認ができない企業を創作しないこと\n` +
-        `- 最大${maxCandidates}件まで\n` +
+        `- 最大${PER_CATEGORY_SEARCH_LIMIT}件まで\n` +
         `- 個人ブログ・まとめ記事ではなく、エージェント/サービスを` +
-        `  実際に運営する企業自体を対象にすること\n\n` +
+        `  実際に運営する企業自体を対象にすること\n` +
+        `- 「${category}」分野の案件を専門・得意とする、またはこの分野の案件も扱っている` +
+        `  サービスを対象にすること\n\n` +
         `検索が終わったら、最後に必ず以下の形式のJSON配列のみを出力` +
         `してください(前後に説明文やコードフェンスを付けないこと)。\n` +
         `[{"name": "会社名", "website": "公式サイトURL"}, ...]\n` +
@@ -94,13 +118,83 @@ async function discoverCandidates(excludeNames, maxCandidates) {
   const textBlocks = response.content.filter(b => b.type === 'text');
   const lastText = textBlocks[textBlocks.length - 1];
   if (!lastText) {
-    console.error('agent-discovery: AI応答にtextブロックが含まれていませんでした。');
+    console.error(`agent-discovery: [${category}] AI応答にtextブロックが含まれていませんでした。`);
     return [];
   }
+  return extractJsonArray(lastText.text);
+}
 
-  const candidates = extractJsonArray(lastText.text);
+/**
+ * SEARCH_CATEGORIES を順番にループし、カテゴリーごとに searchCategoryCandidates() で
+ * 発見した候補を、その場で verifyCandidate() まで通す（AIの「実在する」という自己申告を
+ * 無条件に信用しない、という2段階方式の原則はここでも維持する）。
+ *
+ * - 見つかった候補はカテゴリーをまたいで重複させないよう、都度 excludeNames に追加する
+ *   （このループ内で見つかった分も含む。呼び出し元から渡された既存分と合わせて管理）。
+ * - 累計の実在照合成功数（verified.length）が maxCandidates に達したら、以降の
+ *   カテゴリーの検索呼び出し自体をスキップして終了する（無駄なAPI呼び出しを避けるため）。
+ *   上限到達後にそのカテゴリー内で他に見つかっていた候補も、照合(HTTP fetch)はスキップする。
+ * - 内部の searchCategoryCandidates / verifyCandidate 呼び出しは、テストでの差し替え
+ *   （モック）を可能にするため、必ず module.exports 経由（後述）で行う。
+ *
+ * 戻り値:
+ *   {
+ *     verified: [{ candidate, category, pageText }, ...],   // 実在照合まで通った候補
+ *     skipped:  [{ candidate, category, reason }, ...],     // 不一致・fetch失敗した候補
+ *     perCategory: [{ category, found, listed, skipped }, ...], // カテゴリー別の内訳
+ *   }
+ */
+async function discoverCandidates(excludeNames, maxCandidates) {
   const excludeCores = new Set((excludeNames || []).map(n => companyNameCore(n)));
-  return candidates.filter(c => !excludeCores.has(companyNameCore(c.name))).slice(0, maxCandidates);
+  const verified = [];
+  const skipped = [];
+  const perCategory = [];
+
+  for (const category of SEARCH_CATEGORIES) {
+    if (verified.length >= maxCandidates) {
+      console.log(`agent-discovery: 上限(${maxCandidates}件)に到達したため、残りのカテゴリーの検索をスキップします。`);
+      break;
+    }
+
+    let rawCandidates;
+    try {
+      rawCandidates = await module.exports.searchCategoryCandidates(category, [...excludeCores]);
+    } catch (err) {
+      console.warn(`agent-discovery: [${category}] Web検索呼び出しに失敗しました: ${err.message}`);
+      perCategory.push({ category, found: 0, listed: 0, skipped: 0 });
+      continue;
+    }
+
+    let found = 0;
+    let listed = 0;
+    let skippedInCategory = 0;
+
+    for (const candidate of rawCandidates) {
+      const core = companyNameCore(candidate.name);
+      if (excludeCores.has(core)) continue; // 既存掲載・他カテゴリーとの重複
+      excludeCores.add(core);
+      found += 1;
+
+      if (verified.length >= maxCandidates) {
+        // 上限到達後は、同カテゴリー内の残り候補についても実在照合(HTTPリクエスト)を行わない。
+        continue;
+      }
+
+      const verification = await module.exports.verifyCandidate(candidate);
+      if (verification.ok) {
+        verified.push({ candidate, category, pageText: verification.pageText });
+        listed += 1;
+      } else {
+        skipped.push({ candidate, category, reason: verification.reason });
+        skippedInCategory += 1;
+      }
+    }
+
+    perCategory.push({ category, found, listed, skipped: skippedInCategory });
+    console.log(`agent-discovery: [${category}] 発見${found}件・掲載${listed}件・スキップ${skippedInCategory}件`);
+  }
+
+  return { verified, skipped, perCategory };
 }
 
 /** candidate.website を https/http の順で1回ずつ試すためのURL候補を組み立てる。 */
@@ -337,6 +431,8 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
 module.exports = {
   getAnthropicClient,
   extractJsonArray,
+  SEARCH_CATEGORIES,
+  searchCategoryCandidates,
   discoverCandidates,
   candidateFetchUrls,
   verifyCandidate,
