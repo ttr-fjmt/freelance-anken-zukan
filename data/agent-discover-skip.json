@@ -172,5 +172,53 @@
     "website": "https://freelance.akkodis.co.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-05T10:55:27.226Z"
+  },
+  "TechStock（テックストック）": {
+    "name": "TechStock（テックストック）",
+    "website": "https://tech-stock.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T11:12:22.354Z"
+  },
+  "Craudia（クラウディア）／株式会社エムフロ": {
+    "name": "Craudia（クラウディア）／株式会社エムフロ",
+    "website": "https://www.craudia.com/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T11:12:22.354Z"
+  },
+  "プルークス（株式会社プルークス）フリーランスパートナー募集": {
+    "name": "プルークス（株式会社プルークス）フリーランスパートナー募集",
+    "website": "https://proox.co.jp/partner/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T11:12:22.354Z"
+  },
+  "Consul Partners（コンサルパートナーズ）／コダワリ・ビジネス・コンサルティング株式会社": {
+    "name": "Consul Partners（コンサルパートナーズ）／コダワリ・ビジネス・コンサルティング株式会社",
+    "website": "https://consul.global/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T11:12:22.354Z"
+  },
+  "foRPro（フォープロ）／株式会社Regrit Partners": {
+    "name": "foRPro（フォープロ）／株式会社Regrit Partners",
+    "website": "https://forpro.regrit.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T11:12:22.354Z"
+  },
+  "クラウドワークス エージェント（旧ビズアシ）": {
+    "name": "クラウドワークス エージェント（旧ビズアシ）",
+    "website": "https://crowdworks.jp/agent/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T11:12:22.354Z"
+  },
+  "オンリーストーリー フリーランスマッチング": {
+    "name": "オンリーストーリー フリーランスマッチング",
+    "website": "https://onlystory.co.jp/service/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T11:12:22.354Z"
+  },
+  "ランサーズ（Lancers）": {
+    "name": "ランサーズ（Lancers）",
+    "website": "https://www.lancers.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T11:12:22.354Z"
   }
 }

@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "name": "フリーランス案件マッチング",
+    "from": "#7A5C8E",
+    "to": "#4E3A5C",
+    "icon": "<path d=\"M28 14 h14 l14 14 v14 l-14 14 h-14 l-14-14 v-14 Z\" stroke=\"#fff\" stroke-width=\"2.2\" fill=\"none\" stroke-linejoin=\"round\"/><circle cx=\"34\" cy=\"26\" r=\"3\" fill=\"#fff\"/>"
+  }
+]
