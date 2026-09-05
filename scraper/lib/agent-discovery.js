@@ -70,7 +70,19 @@ function extractJsonArray(text) {
  * 以前は別々に定義しており2つの一覧がズレる問題があったため、CATEGORIESを唯一の
  * ソースとして一本化した。
  */
-const SEARCH_CATEGORIES = CATEGORIES.filter(c => c !== 'その他');
+/**
+ * 検索の切り口としてのみ追加するカテゴリー（掲載用のCATEGORIESには含めない）。
+ * 「副業」「複業」文脈のサービス（例: 複業クラウド、シューマツワーカー等）は、実質的に
+ * フリーランス向け案件マッチングと同じ業態のものが多く、過去の発見でも「その他」経由で
+ * 見つかっていた。検索クエリの切り口を増やすためだけの用途であり、この名前自体が
+ * agentのcategory値として使われることはない（buildDiscoveredAgentFieldsの分類先は
+ * 引き続きCATEGORIES(9分類)のみ）。
+ */
+const EXTRA_SEARCH_ONLY_CATEGORIES = ['副業・複業マッチング'];
+
+// CATEGORIES（掲載用9分類、「その他」を除く8分類）+ 検索専用の追加分。
+// CATEGORIESが変わってもここを手で書き換える必要が無いよう、引き続き動的に導出する。
+const SEARCH_CATEGORIES = [...CATEGORIES.filter(c => c !== 'その他'), ...EXTRA_SEARCH_ONLY_CATEGORIES];
 
 /** 1カテゴリーあたりの検索呼び出しで、AIに提案させる候補数の上限（軽量な呼び出しに留めるため）。 */
 const PER_CATEGORY_SEARCH_LIMIT = 5;
@@ -93,6 +105,9 @@ async function searchCategoryCandidates(category, excludeNames) {
         `日本国内で、「${category}」分野を中心に、フリーランス(業務委託・準委任契約)向けに` +
         `案件紹介・マッチングを行っているエージェント/サービスを、Web検索を使って` +
         `実在するものだけ探してください。\n\n` +
+        `対象は「フリーランス」向けに限定せず、会社員の「副業」「複業」向けの案件紹介・` +
+        `マッチングサービスも含めてください（実質的にフリーランス向けと同じ業態のサービスが` +
+        `多いため）。\n\n` +
         `除外リスト(既に掲載済み・既に他カテゴリーで見つかった、これらは含めない): ${excludeNames.join('、')}\n\n` +
         `条件:\n` +
         `- 検索で実在を確認できた企業のみ回答すること。知識だけで` +
@@ -101,7 +116,7 @@ async function searchCategoryCandidates(category, excludeNames) {
         `- 個人ブログ・まとめ記事ではなく、エージェント/サービスを` +
         `  実際に運営する企業自体を対象にすること\n` +
         `- 「${category}」分野の案件を専門・得意とする、またはこの分野の案件も扱っている` +
-        `  サービスを対象にすること\n\n` +
+        `  サービスを対象にすること（フリーランス向け・副業/複業向けのいずれでも可）\n\n` +
         `検索が終わったら、最後に必ず以下の形式のJSON配列のみを出力` +
         `してください(前後に説明文やコードフェンスを付けないこと)。\n` +
         `[{"name": "会社名", "website": "公式サイトURL"}, ...]\n` +
