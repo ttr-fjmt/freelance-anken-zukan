@@ -17,7 +17,7 @@
  */
 
 const cheerio = require('cheerio');
-const { fetchText, politeDelay } = require('./http');
+const { politeDelay } = require('./http');
 const { companyNameCore } = require('./website-enrich');
 const { CATEGORIES } = require('./schema');
 
@@ -182,7 +182,7 @@ async function discoverCandidates(excludeNames, maxCandidates) {
 
       const verification = await module.exports.verifyCandidate(candidate);
       if (verification.ok) {
-        verified.push({ candidate, category, pageText: verification.pageText });
+        verified.push({ candidate, category, pageText: verification.pageText, verifiedUrl: verification.verifiedUrl });
         listed += 1;
       } else {
         skipped.push({ candidate, category, reason: verification.reason });
@@ -197,7 +197,36 @@ async function discoverCandidates(excludeNames, maxCandidates) {
   return { verified, skipped, perCategory };
 }
 
-/** candidate.website を https/http の順で1回ずつ試すためのURL候補を組み立てる。 */
+/**
+ * verifyCandidate() 専用のUser-Agent。lib/http.js の共通USER_AGENT（jesra/mhlw等の
+ * 政府系サイトを日次巡回する際に、ボットとして正直に名乗るためのもの）とは目的が異なる。
+ * 診断の結果、正直なbot UAだと単純にブロックされて誤ってfetch_failedと判定される
+ * 実在企業サイトが複数見つかったため、候補サイトの実在照合に限り、実ブラウザに近い
+ * User-Agentを使う（政府系サイトの巡回ポリシーには影響しない、この関数専用の設定）。
+ */
+const VERIFY_UA =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+
+async function fetchWithVerifyUA(url, { timeoutMs = 15000 } = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': VERIFY_UA, 'Accept-Language': 'ja,en;q=0.5' },
+      signal: controller.signal,
+    });
+    if (!res.ok) {
+      const err = new Error(`HTTP ${res.status} for ${url}`);
+      err.status = res.status;
+      throw err;
+    }
+    return await res.text();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** candidate.website を https/http の順で1回ずつ試すためのURL候補を組み立てる（パスはそのまま維持）。 */
 function candidateFetchUrls(website) {
   let url;
   try {
@@ -214,57 +243,146 @@ function candidateFetchUrls(website) {
   return urls;
 }
 
+/**
+ * candidateFetchUrls() のパス指定が404・DNS解決失敗等で使えなかった場合のフォール
+ * バック用に、オリジン（スキーム+ホストのみ、パス・クエリを除いたトップページ）の
+ * URL候補を組み立てる。診断の結果、AIが提示したURLがパス違い（削除済みLP等）や
+ * サブドメイン・ドメイン表記違い（www.の有無、ハイフンの有無等）で、トップページ
+ * 自体は正常に存在するケースが複数見つかったため。
+ */
+function candidateRootUrls(website) {
+  let url;
+  try {
+    url = new URL(website.includes('://') ? website : `https://${website}`);
+  } catch {
+    return [];
+  }
+  // "www." の有無だけが違うホスト（例: www.pe-bank.co.jp は名前解決不可だが
+  // pe-bank.co.jp は実在、というケースが診断で見つかったため）も併せて試す。
+  const hosts = [url.host, url.host.startsWith('www.') ? url.host.slice(4) : `www.${url.host}`];
+  const urls = [];
+  for (const host of hosts) {
+    urls.push(`${url.protocol}//${host}/`);
+    if (url.protocol === 'https:') {
+      urls.push(`http://${host}/`);
+    }
+  }
+  return urls;
+}
+
+/**
+ * 会社名を「欧文名（日本語通称）」のような括弧書き併記形式の場合に、括弧外・括弧内に
+ * 分割する（例: "TECHBIZ（テックビズフリーランス）" → outside:"TECHBIZ",
+ * inside:"テックビズフリーランス"）。全角・半角どちらの括弧にも対応する。
+ * 括弧が無い通常の名前は outside にそのまま名前全体を入れ、inside は null とする。
+ */
+function splitName(name) {
+  const m = String(name).match(/^([^（(]*)[（(]([^）)]*)[）)]\s*$/);
+  if (m) {
+    return { outside: m[1].trim(), inside: m[2].trim() };
+  }
+  return { outside: String(name).trim(), inside: null };
+}
+
+/**
+ * 照合に使う「主要部分」の候補一覧を組み立てる。括弧書き併記の名前は、括弧外・括弧内
+ * それぞれに companyNameCore（法人格除去）を適用したうえで別々の候補として返す。
+ * ページ本文にどちらか一方でも含まれていれば一致とみなす（診断の結果、実在企業でも
+ * 括弧内の日本語通称・括弧外の欧文社名のどちらか片方しかページに載っていないケースが
+ * 複数あり、括弧込み全体を1つの文字列として要求するのは厳しすぎたため）。
+ */
+function candidateNameCores(name) {
+  const { outside, inside } = splitName(name);
+  const cores = [companyNameCore(outside)];
+  if (inside) cores.push(companyNameCore(inside));
+  return cores.filter(core => core && core.length >= 2);
+}
+
 /** 構造化AIのプロンプトに渡すページ本文抽出テキストの上限文字数。 */
 const PAGE_TEXT_MAX_CHARS = 4000;
 
+function buildPageText(rawBodyText) {
+  return rawBodyText
+    .replace(/[ \t　]+/g, ' ')
+    .replace(/\n\s*\n+/g, '\n')
+    .trim()
+    .slice(0, PAGE_TEXT_MAX_CHARS);
+}
+
 /**
- * candidate.website へ実際にHTTPリクエストを送り、取得できたページ本文に
- * candidate.name（法人格を除いた主要部分）が実在するかを機械的に照合する。
- * lib/website-enrich.js の verifyDomainMatch と同じ考え方（最初に取得できた
- * レスポンスの内容で判定し、fetch自体が失敗した場合のみ次のスキームへフォール
- * バックする）。
- *
- * 一致した場合は、後続の buildDiscoveredAgentFields() に渡すための本文抽出
- * テキスト（pageText、先頭 PAGE_TEXT_MAX_CHARS 文字）も併せて返す。これにより、
- * 会社名だけの乏しい情報からAIに特徴を「作文」させるのではなく、実際に取得した
- * ページ本文からの抽出・要約に基づいて生成させることができる。
+ * urls を順番に試し、最初にfetchが成功したURLの内容で名称照合を行う（fetch自体が
+ * 失敗した場合のみ次のURLへフォールバックする。lib/website-enrich.js の
+ * verifyDomainMatch と同じ考え方）。全URLでfetchが失敗した場合は { error } を返す。
  */
-async function verifyCandidate(candidate) {
-  const nameCore = companyNameCore(candidate.name);
-  if (!nameCore || nameCore.length < 2) {
-    return { ok: false, reason: 'name_mismatch' };
-  }
-
-  const urls = candidateFetchUrls(candidate.website);
-  if (urls.length === 0) {
-    return { ok: false, reason: 'fetch_failed' };
-  }
-
+async function tryUrlsForMatch(urls, nameCores) {
   let lastError = null;
   for (const url of urls) {
     await politeDelay();
     try {
-      const html = await fetchText(url, { timeoutMs: 15000 });
+      const html = await module.exports.fetchWithVerifyUA(url);
       const $ = cheerio.load(html);
       // script/styleの中身はページ本文ではないため、名寄せ照合・AIへの本文抽出のどちらからも除く。
       $('script, style, noscript').remove();
       const titleText = $('title').text();
       const rawBodyText = $('body').text();
       const matchText = `${titleText} ${rawBodyText}`.replace(/[\s　]+/g, '');
-      if (!matchText.includes(nameCore)) {
-        return { ok: false, reason: 'name_mismatch' };
-      }
-      const pageText = rawBodyText
-        .replace(/[ \t　]+/g, ' ')
-        .replace(/\n\s*\n+/g, '\n')
-        .trim()
-        .slice(0, PAGE_TEXT_MAX_CHARS);
-      return { ok: true, pageText };
+      const matched = nameCores.some(core => matchText.includes(core));
+      return { matched, url, pageText: buildPageText(rawBodyText) };
     } catch (err) {
       lastError = err;
     }
   }
-  return { ok: false, reason: 'fetch_failed', error: lastError ? lastError.message : 'unknown error' };
+  return { error: lastError ? lastError.message : 'unknown error' };
+}
+
+/**
+ * candidate.website へ実際にHTTPリクエストを送り、取得できたページ本文に
+ * candidate.name（括弧内・括弧外それぞれ、法人格を除いた主要部分）が実在するかを
+ * 機械的に照合する。
+ *
+ * 1. まず記録されたURL（パスそのまま、https→http）を試す。fetchに成功した時点で、
+ *    名称が一致すれば ok:true、一致しなければ name_mismatch で確定する（この時点では
+ *    ルートドメインへのフォールバックは行わない — パスが生きているなら、そのページの
+ *    内容で判定するのが筋のため）。
+ * 2. パスありの全URLでfetch自体が失敗した場合（404・DNS解決失敗・タイムアウト等）
+ *    のみ、オリジン（トップページ）へフォールバックする。トップページでfetchに成功
+ *    すれば、そこで改めて名称照合を行う。
+ *
+ * 一致した場合は、実際にアクセスできたURL（verifiedUrl。パス直アクセスかルート
+ * フォールバックかで記録されたcandidate.websiteと異なる場合がある）と、後続の
+ * buildDiscoveredAgentFields() に渡すための本文抽出テキスト（pageText）を返す。
+ */
+async function verifyCandidate(candidate) {
+  const nameCores = candidateNameCores(candidate.name);
+  if (nameCores.length === 0) {
+    return { ok: false, reason: 'name_mismatch' };
+  }
+
+  const pathUrls = candidateFetchUrls(candidate.website);
+  if (pathUrls.length === 0) {
+    return { ok: false, reason: 'fetch_failed' };
+  }
+
+  const pathAttempt = await tryUrlsForMatch(pathUrls, nameCores);
+  if (pathAttempt.matched !== undefined) {
+    return pathAttempt.matched
+      ? { ok: true, verifiedUrl: pathAttempt.url, pageText: pathAttempt.pageText }
+      : { ok: false, reason: 'name_mismatch' };
+  }
+
+  const rootUrls = candidateRootUrls(candidate.website).filter(u => !pathUrls.includes(u));
+  if (rootUrls.length === 0) {
+    return { ok: false, reason: 'fetch_failed', error: pathAttempt.error };
+  }
+
+  const rootAttempt = await tryUrlsForMatch(rootUrls, nameCores);
+  if (rootAttempt.matched !== undefined) {
+    return rootAttempt.matched
+      ? { ok: true, verifiedUrl: rootAttempt.url, pageText: rootAttempt.pageText }
+      : { ok: false, reason: 'name_mismatch' };
+  }
+
+  return { ok: false, reason: 'fetch_failed', error: rootAttempt.error || pathAttempt.error };
 }
 
 /**
@@ -434,7 +552,11 @@ module.exports = {
   SEARCH_CATEGORIES,
   searchCategoryCandidates,
   discoverCandidates,
+  fetchWithVerifyUA,
   candidateFetchUrls,
+  candidateRootUrls,
+  splitName,
+  candidateNameCores,
   verifyCandidate,
   buildDiscoveredAgentFields,
 };

@@ -64,8 +64,14 @@ function nextId(agents) {
  * ないためスキーマから廃止し、代わりに contractTypes・remoteRatio・
  * feeStructure・freelancerCount（いずれも buildDiscoveredAgentFields が
  * ページ本文から抽出）を採用する。
+ *
+ * verifiedUrl には verifyCandidate() が実際にアクセスできたURL（candidate.website
+ * そのまま、またはルートドメインへのフォールバック先）を渡す。AIが提示したURLの
+ * パス・サブドメイン・ドメイン表記がわずかに誤っていたケースがあったため、掲載時の
+ * website/faviconUrlは、AIの提示値ではなく実際に実在確認が取れたURLを使う。
  */
-function assembleDiscoveredEntry(candidate, ai, id) {
+function assembleDiscoveredEntry(candidate, ai, id, verifiedUrl) {
+  const websiteUrl = verifiedUrl || candidate.website;
   return {
     id,
     source: 'ai-discovered',
@@ -89,8 +95,8 @@ function assembleDiscoveredEntry(candidate, ai, id) {
     companyReviews: [],
     companyReviewNote: COMPANY_REVIEW_NOTE,
     commitmentExplanation: NOT_DISCLOSED,
-    website: stripProtocol(candidate.website),
-    faviconUrl: buildFaviconUrl(candidate.website),
+    website: stripProtocol(websiteUrl),
+    faviconUrl: buildFaviconUrl(websiteUrl),
     affiliateUrl: null,
     featured: false,
     real: true,
@@ -152,7 +158,7 @@ async function main() {
     const existingHints = topCategoryHints(agents);
     let id = nextId(agents);
 
-    for (const { candidate, pageText } of verified) {
+    for (const { candidate, pageText, verifiedUrl } of verified) {
       console.log(`Structuring verified candidate: ${candidate.name} <${candidate.website}>`);
       let ai;
       try {
@@ -164,7 +170,7 @@ async function main() {
         continue;
       }
 
-      const entry = assembleDiscoveredEntry(candidate, ai, id);
+      const entry = assembleDiscoveredEntry(candidate, ai, id, verifiedUrl);
       agents.push(entry);
       id += 1;
       listedCount += 1;
