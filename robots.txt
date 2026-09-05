@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
 
+# LLM向けのサイト概要は https://freelance-anken-zukan.net/llms.txt を参照してください
+# （llms.txtは標準規格ではないため、robots.txtの解釈には影響しません）
 Sitemap: https://freelance-anken-zukan.net/sitemap.xml
