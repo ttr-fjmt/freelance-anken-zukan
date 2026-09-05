@@ -2029,25 +2029,33 @@
     "region": "非公開（お問い合わせで確認）",
     "jobCount": "非公開（お問い合わせで確認）",
     "feeRate": "非公開（お問い合わせで確認）",
-    "contractTypes": [],
+    "contractTypes": [
+      "業務委託",
+      "スポットコンサル（インタビュー）",
+      "正社員採用"
+    ],
     "remoteRatio": null,
     "feeStructure": {
-      "type": "unknown",
-      "note": null
+      "type": "commission",
+      "note": "業務委託：30万円、正社員採用：90万～150万円（プランにより異なる）の成功報酬。候補者の年収に関わらず一律。スポットコンサルは実施分の費用（1時間あたり3万円が目安）。月額3万円～で全機能利用可。初回契約時は初期費用10万円が発生。"
     },
-    "freelancerCount": null,
-    "oneLiner": "サイトがリダイレクトされており、詳細な案件情報を確認できません",
-    "companyOneLiner": "特定の企業情報を確認できません",
-    "appeal": "ご提供いただいたサイト本文は、ビザスクdirectへのリダイレクトページのみで、サービスの具体的な特徴や機能に関する記載がありません。そのため、実際のサービス内容に基づいた特徴を抽出することができません。",
-    "companyAppeal": "リダイレクトページのため、発注企業側の視点での利用価値について記載情報がなく、評価できません。",
-    "features": [],
+    "freelancerCount": "20万人超（エキスパート登録数80万人、業務委託意向登録者あり）",
+    "oneLiner": "80万人超のエキスパート登録で業務委託・インタビュー・採用の3機能を一体提供",
+    "companyOneLiner": "エキスパート採用のため継続的な専門力と一時的なコンサル知見を必要とする企業向け",
+    "appeal": "20万人超のエキスパートから営業顧問・コンサルタント・マーケターなど500超の職種の人材にアクセス可能。業務委託は週1日からプロジェクト単位での柔軟な契約形態に対応し、インタビューは最短即日で専門家の知見を時間単位で購入できる。採用成功報酬は候補者の年収に関わらず一律という透明な課金体系。",
+    "companyAppeal": "業務委託・インタビュー・正社員採用を一つのプラットフォームで管理でき、段階的に信頼を深めたエキスパートをそのまま採用に進められる一体型の人材活用が可能。AI案件作成とAI候補者レコメンド機能で採用工数を削減。",
+    "features": [
+      "500超の業種カバー、約7割が現職者・約5割が上場企業勤務の質の高いエキスパート層",
+      "AI案件作成サポートで最短3分での求人票自動生成、AI候補者レコメンドによる最適候補の自動ピックアップ",
+      "業務委託・インタビュー・正社員採用を同一プラットフォームで一元管理、段階的な人材評価が可能"
+    ],
     "reviews": [],
     "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
     "companyReviews": [],
     "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
     "commitmentExplanation": "非公開（お問い合わせで確認）",
-    "website": "visasq.com",
-    "faviconUrl": "https://www.google.com/s2/favicons?domain=visasq.com&sz=128",
+    "website": "direct.visasq.com",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=direct.visasq.com&sz=128",
     "affiliateUrl": null,
     "featured": false,
     "real": true,
@@ -2067,7 +2075,7 @@
       "confidentiality": "非公開（お問い合わせで確認）"
     },
     "linkVerified": true,
-    "lastLinkCheckAt": "2026-09-05T11:21:00.920Z"
+    "lastLinkCheckAt": "2026-09-05T14:25:38.185Z"
   },
   {
     "id": "a8-001",
