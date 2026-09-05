@@ -220,5 +220,23 @@
     "website": "https://www.lancers.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-05T11:12:22.354Z"
+  },
+  "テックツリーフリーランス / tech tree（株式会社レイハウオリ）": {
+    "name": "テックツリーフリーランス / tech tree（株式会社レイハウオリ）",
+    "website": "https://www.engineer-route.com/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T11:20:26.948Z"
+  },
+  "プロフェッショナルハブ（Professional Hub）": {
+    "name": "プロフェッショナルハブ（Professional Hub）",
+    "website": "https://pro-hub.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T11:20:26.948Z"
+  },
+  "KENJINS（ケンジンズ）": {
+    "name": "KENJINS（ケンジンズ）",
+    "website": "https://kenjins.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T11:20:26.948Z"
   }
 }
