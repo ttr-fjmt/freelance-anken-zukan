@@ -68,13 +68,21 @@ function buildEntries(agents, categories = []) {
   if (fs.existsSync(path.join(ROOT, 'faq.html'))) {
     entries.push({ loc: `${BASE_URL}/faq.html`, changefreq: 'monthly', priority: '0.4' });
   }
-  // 【フリーランス案件図鑑での一時対応】discover-agents.yml（週次のAI発見パイプライン）は
-  // agent-zukanのprerender.js / generate-category-pages.js相当の処理を持たず、
-  // /agent/{id}/ や /category/{slug}/ の静的ページを一切生成しない。そのため、
-  // agents.json / categories.json にエントリがあってもsitemapには絶対に含めない
-  // （実在しないURLをクローラーに送ってしまうため）。将来この新サイト向けに
-  // 個別ページ・カテゴリーページのプリレンダリングを実装した時点で、
-  // agent-zukan側のこのファイルを参考に該当ループを復活させること。
+  // scraper/prerender.js が /agent/{id}/index.html を実際に生成するようになったため、
+  // このループを復活させる（以前は個別ページのプリレンダリングが無く、実在しないURLを
+  // クローラーに送ってしまうため一時的に無効化していた）。
+  for (const a of agents) {
+    if (!a.id) continue;
+    entries.push({
+      loc: `${BASE_URL}/agent/${encodeURIComponent(a.id)}/`,
+      changefreq: 'weekly',
+      priority: '0.6',
+    });
+  }
+  // 【引き続き一時対応】/category/{slug}/ のカテゴリーランディングページは、
+  // generate-category-pages.js相当の生成処理をまだ実装していないため、実在しないURLを
+  // 送らないよう引き続き含めない。このページ種別のプリレンダリングを実装した時点で、
+  // agent-zukan側のgenerate-sitemap.jsを参考に該当ループを追加すること。
   return entries;
 }
 

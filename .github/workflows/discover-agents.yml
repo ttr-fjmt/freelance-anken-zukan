@@ -32,9 +32,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
           cache-dependency-path: scraper/package-lock.json
+
+      - name: Cache Puppeteer's bundled Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/puppeteer
+          key: puppeteer-chromium-${{ runner.os }}-${{ hashFiles('scraper/package-lock.json') }}
 
       - name: Install scraper dependencies
         working-directory: scraper
@@ -49,12 +55,31 @@ jobs:
           DISCOVER_MAX_PER_RUN: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.max_candidates || '10' }}
         run: node discover-agents.js
 
+      - name: Install Chrome runtime dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            ca-certificates fonts-liberation libasound2t64 libatk-bridge2.0-0 libatk1.0-0 \
+            libcups2 libdbus-1-3 libdrm2 libgbm1 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 \
+            libpango-1.0-0 libpangocairo-1.0-0 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
+            libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 xdg-utils
+
+      - name: Prerender agent detail pages (static SSG via Puppeteer)
+        working-directory: scraper
+        run: node prerender.js
+
+      - name: Regenerate sitemap.xml
+        working-directory: scraper
+        run: node generate-sitemap.js
+
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add agents.json categories.json
+          git add agents.json categories.json sitemap.xml
           [ -f data/agent-discover-skip.json ] && git add data/agent-discover-skip.json
+          [ -f data/ssg-manifest.json ] && git add data/ssg-manifest.json
+          [ -d agent ] && git add agent
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
