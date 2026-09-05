@@ -567,23 +567,24 @@ function updateMetaForAgent(a){
 
 // カテゴリー定義（色・アイコン）は categories.json から動的に読み込む。
 // フェッチに失敗した場合のみ、この9件のフォールバックを使用する。
+// scraper/lib/schema.js の CATEGORIES と名称を一致させること。
 const DEFAULT_CATEGORIES = [
-  { name:"IT・Web", from:"#1F6F63", to:"#123F38",
+  { name:"IT・Web開発", from:"#1F6F63", to:"#123F38",
     icon:`<rect x="14" y="14" width="36" height="24" rx="2" stroke="#fff" stroke-width="2.5"/><line x1="24" y1="46" x2="40" y2="46" stroke="#fff" stroke-width="2.5"/><line x1="32" y1="38" x2="32" y2="46" stroke="#fff" stroke-width="2.5"/><path d="M22 22 L18 26 L22 30" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 22 L46 26 L42 30" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>` },
-  { name:"管理部門・コンサル", from:"#2B3A55", to:"#171E2C",
+  { name:"デザイン", from:"#A3446E", to:"#6B2B47",
+    icon:`<path d="M32 14 C20 14 12 23 12 33 c0 7 5 11 10 11 c2 0 4-1 4-3 c0-2-2-3-2-6 c0-3 2-5 5-5 h9 c6 0 13-5 13-15 C51 20 43 14 32 14 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"/><circle cx="21" cy="27" r="2.4" fill="#fff"/><circle cx="30" cy="21" r="2.4" fill="#fff"/><circle cx="41" cy="24" r="2.4" fill="#fff"/><circle cx="43" cy="33" r="2.4" fill="#fff"/>` },
+  { name:"ライティング・編集", from:"#B5651D", to:"#7A4310",
+    icon:`<path d="M20 44 L38 26 L44 32 L26 50 L16 52 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"/><line x1="35" y1="29" x2="41" y2="35" stroke="#fff" stroke-width="2"/><path d="M42 14 L50 22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>` },
+  { name:"動画・クリエイティブ", from:"#3D7A8C", to:"#264E58",
+    icon:`<rect x="14" y="22" width="36" height="26" rx="3" stroke="#fff" stroke-width="2.3" fill="none"/><path d="M14 22 L22 14 h8 l-6 8 Z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M30 22 L38 14 h8 l-6 8 Z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M28 30 L28 40 L38 35 Z" fill="#fff"/>` },
+  { name:"コンサル・士業", from:"#2B3A55", to:"#171E2C",
     icon:`<rect x="14" y="24" width="36" height="24" rx="3" stroke="#fff" stroke-width="2.5"/><path d="M24 24 V18 a3 3 0 0 1 3-3 h10 a3 3 0 0 1 3 3 v6" stroke="#fff" stroke-width="2.5" fill="none"/><line x1="14" y1="34" x2="50" y2="34" stroke="#fff" stroke-width="2"/>` },
-  { name:"施工管理・建設", from:"#B5651D", to:"#7A4310",
-    icon:`<line x1="18" y1="50" x2="18" y2="14" stroke="#fff" stroke-width="2.5"/><line x1="18" y1="14" x2="46" y2="14" stroke="#fff" stroke-width="2.5"/><line x1="38" y1="14" x2="38" y2="24" stroke="#fff" stroke-width="2.5"/><line x1="18" y1="22" x2="30" y2="14" stroke="#fff" stroke-width="2"/><rect x="12" y="50" width="16" height="4" fill="#fff"/>` },
+  { name:"事務・バックオフィス", from:"#4A6670", to:"#2E4148",
+    icon:`<rect x="18" y="16" width="28" height="36" rx="2" stroke="#fff" stroke-width="2.3" fill="none"/><rect x="26" y="12" width="12" height="8" rx="2" fill="#fff"/><line x1="24" y1="28" x2="40" y2="28" stroke="#fff" stroke-width="2"/><line x1="24" y1="35" x2="40" y2="35" stroke="#fff" stroke-width="2"/><line x1="24" y1="42" x2="34" y2="42" stroke="#fff" stroke-width="2"/>` },
   { name:"営業・マーケティング", from:"#B23A4E", to:"#742534",
     icon:`<line x1="16" y1="48" x2="48" y2="48" stroke="#fff" stroke-width="2"/><rect x="20" y="36" width="6" height="12" fill="#fff" opacity=".9"/><rect x="30" y="28" width="6" height="20" fill="#fff" opacity=".9"/><rect x="40" y="20" width="6" height="28" fill="#fff" opacity=".9"/><path d="M18 26 L28 18 L34 22 L46 12" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>` },
-  { name:"外資・グローバル", from:"#2E5FA3", to:"#1B3A66",
-    icon:`<circle cx="32" cy="32" r="18" stroke="#fff" stroke-width="2.5" fill="none"/><ellipse cx="32" cy="32" rx="8" ry="18" stroke="#fff" stroke-width="2" fill="none"/><line x1="14" y1="32" x2="50" y2="32" stroke="#fff" stroke-width="2"/><line x1="17" y1="22" x2="47" y2="22" stroke="#fff" stroke-width="1.5"/><line x1="17" y1="42" x2="47" y2="42" stroke="#fff" stroke-width="1.5"/>` },
-  { name:"スタートアップ・ベンチャー", from:"#6E4AA3", to:"#452C6D",
-    icon:`<path d="M32 14 C40 22 40 34 34 42 L30 42 C24 34 24 22 32 14 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"/><circle cx="32" cy="26" r="3" stroke="#fff" stroke-width="2" fill="none"/><path d="M26 40 L20 48" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path d="M38 40 L44 48" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>` },
-  { name:"地方転職・UIターン", from:"#4C7A3D", to:"#2E4E24",
-    icon:`<path d="M14 44 L26 26 L34 36 L40 28 L50 44 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"/><circle cx="40" cy="18" r="4" stroke="#fff" stroke-width="2" fill="none"/>` },
-  { name:"第二新卒・ポテンシャル層", from:"#C99A2E", to:"#8A6A1D",
-    icon:`<path d="M32 48 V28" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M32 30 C24 30 20 24 20 18 C28 18 32 22 32 30 Z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M32 26 C40 26 44 20 44 16 C36 16 32 20 32 26 Z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/>` },
+  { name:"フリーランス案件マッチング", from:"#7A5C8E", to:"#4E3A5C",
+    icon:`<path d="M28 14 h14 l14 14 v14 l-14 14 h-14 l-14-14 v-14 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"/><circle cx="34" cy="26" r="3" fill="#fff"/>` },
   { name:"その他", from:"#5C6570", to:"#38414A",
     icon:`<path d="M14 22 h12 l4 6 h20 v22 a2 2 0 0 1-2 2 h-32 a2 2 0 0 1-2-2 v-26 a2 2 0 0 1 2-2 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>` }
 ];

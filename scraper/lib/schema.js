@@ -1,15 +1,21 @@
 'use strict';
 
-/** フロントエンド（index.html）の CHIP_LABELS / CATEGORY_STYLE と一致させること。 */
+/**
+ * フロントエンド（index.html/404.html）の DEFAULT_CATEGORIES・CHIP_LABELS /
+ * CATEGORY_STYLE、および scraper/lib/agent-discovery.js の SEARCH_CATEGORIES
+ * （このCATEGORIESから「その他」を除いたものを動的に導出）と一致させること。
+ * フリーランス向け案件紹介サービスの分野分類（agent-zukan時代の転職エージェント
+ * 向け9分類から刷新）。
+ */
 const CATEGORIES = [
-  'IT・Web',
-  '管理部門・コンサル',
-  '施工管理・建設',
+  'IT・Web開発',
+  'デザイン',
+  'ライティング・編集',
+  '動画・クリエイティブ',
+  'コンサル・士業',
+  '事務・バックオフィス',
   '営業・マーケティング',
-  '外資・グローバル',
-  'スタートアップ・ベンチャー',
-  '地方転職・UIターン',
-  '第二新卒・ポテンシャル層',
+  'フリーランス案件マッチング',
   'その他',
 ];
 

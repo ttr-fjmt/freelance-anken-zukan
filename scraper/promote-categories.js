@@ -17,24 +17,18 @@
 const fs = require('fs');
 const path = require('path');
 
+const { CATEGORIES } = require('./lib/schema');
+
 const AGENTS_PATH = path.join(__dirname, '..', 'agents.json');
 const CATEGORIES_PATH = path.join(__dirname, '..', 'categories.json');
 
 const PROMOTION_THRESHOLD = 5;
 
-// categories.json 初期投入時（PART A-1）から存在する、AIの分類対象となる9カテゴリー。
+// lib/schema.js の CATEGORIES（AIの分類対象となる9カテゴリー）と一致させる。
 // これに含まれない categories.json のエントリは「昇格によって追加されたもの」とみなす。
-const ORIGINAL_CATEGORY_NAMES = new Set([
-  'IT・Web',
-  '管理部門・コンサル',
-  '施工管理・建設',
-  '営業・マーケティング',
-  '外資・グローバル',
-  'スタートアップ・ベンチャー',
-  '地方転職・UIターン',
-  '第二新卒・ポテンシャル層',
-  'その他',
-]);
+// 以前はここに別途ハードコードしており、schema.js側の変更に追随できず陳腐化する
+// 問題があったため、CATEGORIESを唯一のソースとして一本化した。
+const ORIGINAL_CATEGORY_NAMES = new Set(CATEGORIES);
 
 // 昇格カテゴリー用の予備カラーパレット（8色、指定の順で使用）。
 const RESERVE_PALETTE = [

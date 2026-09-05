@@ -64,19 +64,13 @@ function extractJsonArray(text) {
  * discoverCandidates() が検索クエリを分けるカテゴリー一覧。1回の実行で広いクエリを
  * 1本だけ投げると同じような候補ばかり見つかり頭打ちになりやすいため、分野ごとに
  * 軽量な検索呼び出しを複数回行い、カバレッジを広げる。
+ *
  * サイト掲載用のカテゴリー分類（lib/schema.js の CATEGORIES、buildDiscoveredAgentFields
- * が使う）とは目的が異なる別物（検索クエリの多様化用）であり、意図的に混同していない。
+ * が使う）から動的に導出する（「その他」は具体的な検索クエリを組み立てようがないため除く）。
+ * 以前は別々に定義しており2つの一覧がズレる問題があったため、CATEGORIESを唯一の
+ * ソースとして一本化した。
  */
-const SEARCH_CATEGORIES = [
-  'IT・Web開発',
-  'デザイン',
-  'ライティング・編集',
-  '動画・クリエイティブ',
-  'コンサル・士業',
-  '事務・バックオフィス',
-  '営業・マーケティング',
-  'その他',
-];
+const SEARCH_CATEGORIES = CATEGORIES.filter(c => c !== 'その他');
 
 /** 1カテゴリーあたりの検索呼び出しで、AIに提案させる候補数の上限（軽量な呼び出しに留めるため）。 */
 const PER_CATEGORY_SEARCH_LIMIT = 5;
