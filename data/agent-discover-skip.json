@@ -28,5 +28,29 @@
     "website": "https://www.pe-bank.co.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-05T05:41:18.641Z"
+  },
+  "ギークスジョブ（GEECHS JOB）": {
+    "name": "ギークスジョブ（GEECHS JOB）",
+    "website": "https://geechsjob.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T06:46:20.268Z"
+  },
+  "テクフリ（TechCareer freelance）": {
+    "name": "テクフリ（TechCareer freelance）",
+    "website": "https://freelance.techcareer.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T06:46:20.268Z"
+  },
+  "TECH STOCK（テックストック）": {
+    "name": "TECH STOCK（テックストック）",
+    "website": "https://tech-stock.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T06:46:20.268Z"
+  },
+  "クラウドワークス テック": {
+    "name": "クラウドワークス テック",
+    "website": "https://crowdworks.jp/lp/tech/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T06:46:20.268Z"
   }
 }
