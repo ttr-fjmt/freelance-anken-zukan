@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>フリーランス案件図鑑｜迷わず選べる、エージェントの図鑑</title>
-<meta name="description" id="meta-description" content="フリーランス案件図鑑は、全国の人材紹介エージェントを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いエージェントを、それぞれ迷わず見つけられます。">
-<meta property="og:title" id="og-title" content="フリーランス案件図鑑｜迷わず選べる、エージェントの図鑑">
-<meta property="og:description" id="og-description" content="フリーランス案件図鑑は、全国の人材紹介エージェントを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いエージェントを、それぞれ迷わず見つけられます。">
+<title>フリーランス案件図鑑｜案件探しには、もう困らない</title>
+<meta name="description" id="meta-description" content="フリーランス案件図鑑は、全国の人材紹介サービスを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いサービスを、それぞれ迷わず見つけられます。">
+<meta property="og:title" id="og-title" content="フリーランス案件図鑑｜案件探しには、もう困らない">
+<meta property="og:description" id="og-description" content="フリーランス案件図鑑は、全国の人材紹介サービスを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いサービスを、それぞれ迷わず見つけられます。">
 <meta property="og:type" content="website">
 <meta property="og:url" id="og-url" content="https://freelance-anken-zukan.net/">
 <link rel="canonical" href="https://freelance-anken-zukan.net/" id="canonical-link">
@@ -16,22 +16,18 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <!-- Google AdSense: 実際に配信する際は client=ca-pub-5761092657360295 をご自身のパブリッシャーIDに置き換えてください -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5761092657360295" crossorigin="anonymous"></script>
-<!-- TODO: フリーランス案件図鑑専用のGA4プロパティを作成し、
-     このIDを差し替える -->
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WBGS0QRR5M"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6S43LSBK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-WBGS0QRR5M');
+  gtag('config', 'G-YS6S43LSBK');
 </script>
 <style>
   :root{
@@ -39,9 +35,9 @@
     --paper:#F8F5EE;
     --surface:#FFFFFF;
     --line:#E4DFD1;
-    --accent:#1F6F63;
-    --accent-deep:#123F38;
-    --accent-soft:#DCEAE7;
+    --accent:#1D5FA8;
+    --accent-deep:#123A6B;
+    --accent-soft:#DCE8F5;
     --gold:#B8863B;
     --gold-soft:#F1E4CC;
     --ink-soft:#5B6660;
@@ -400,10 +396,10 @@
       <span class="agent-count-badge" id="agentCountBadge"></span>
       <span class="update-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8863B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
-        新着エージェント毎日更新！
+        新着サービス毎日更新！
       </span>
     </div>
-    <p class="tagline">迷わず選べる、エージェントの図鑑。</p>
+    <p class="tagline">案件探しには、もう困らない</p>
   </div>
 </header>
 
@@ -423,15 +419,15 @@
 
   <div id="listView">
     <div class="recommend-section">
-      <div class="recommend-label"><span class="home-section-icon" style="background:linear-gradient(135deg, #C2410C, #7C2D12);"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="19" stroke="#fff" stroke-width="2.3"/><path d="M40 24 L34 34 L24 40 L30 30 Z" fill="#fff"/></svg></span>おすすめエージェント</div>
+      <div class="recommend-label"><span class="home-section-icon" style="background:linear-gradient(135deg, #C2410C, #7C2D12);"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="19" stroke="#fff" stroke-width="2.3"/><path d="M40 24 L34 34 L24 40 L30 30 Z" fill="#fff"/></svg></span>おすすめサービス</div>
       <div class="recommend-scroll" id="recommendScroll"></div>
     </div>
 
     <div class="filter-banner" id="filterBanner"></div>
 
     <div class="filter-bar">
-      <input type="text" id="searchInput" placeholder="エージェント名・職種で検索" oninput="onSearchInput()">
-      <a href="javascript:void(0)" class="home-top-link" id="homeTopLink" onclick="showAllAgents()">すべてのエージェントを見る →</a>
+      <input type="text" id="searchInput" placeholder="サービス名・職種で検索" oninput="onSearchInput()">
+      <a href="javascript:void(0)" class="home-top-link" id="homeTopLink" onclick="showAllAgents()">すべてのサービスを見る →</a>
       <div class="select-row">
         <div class="select-field">
           <label class="select-label" for="categorySelect">特化職種</label>
@@ -465,7 +461,7 @@
 </div>
 
 <footer>
-  掲載情報は、厚生労働省委託「職業紹介優良事業者認定制度」（jesra.or.jp）および厚生労働省「人材サービス総合サイト」の公開データをもとに、自動クロールにより毎日更新しています。取得できなかった項目は「非公開（お問い合わせで確認）」と表示しています。口コミは、一部の主要エージェントについて複数の口コミメディアの傾向から要約した推定値を参考情報として掲載しており、実際の集計値・投稿内容そのものではありません。それ以外のエージェントについては口コミデータを収集していないため「口コミなし」と表示しています。個別エージェントのCTAボタンからは各社の公式サイトへ遷移します。
+  掲載情報は、AIによるWeb検索で発見したサービスについて、実際に公式サイトへアクセスして実在確認を行った上で、週次で自動更新しています。取得できなかった項目は「非公開（お問い合わせで確認）」と表示しています。図鑑スコアは実際の利用者口コミではなく、掲載情報の充実度に基づく当サイト独自の指標です。個別サービスのCTAボタンからは各社の公式サイトへ遷移します。
   <div class="footer-links"><a href="faq.html">よくある質問</a> / <a href="privacy.html">プライバシーポリシー</a></div>
 </footer>
 
@@ -479,8 +475,8 @@ let AGENTS = [];
  * 通常アクセス（?ssg=1無し）の挙動には一切影響しない。 */
 const SSG_MODE = new URLSearchParams(location.search).get("ssg") === "1";
 
-const DEFAULT_TITLE = "フリーランス案件図鑑｜迷わず選べる、エージェントの図鑑";
-const DEFAULT_DESCRIPTION = "フリーランス案件図鑑は、全国の人材紹介エージェントを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いエージェントを、それぞれ迷わず見つけられます。";
+const DEFAULT_TITLE = "フリーランス案件図鑑｜案件探しには、もう困らない";
+const DEFAULT_DESCRIPTION = "フリーランス案件図鑑は、全国の人材紹介サービスを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いサービスを、それぞれ迷わず見つけられます。";
 
 function truncateText(str, max){
   if(!str) return "";
@@ -800,14 +796,14 @@ const PREFECTURES = [
   "香川県","愛媛県","高知県","福岡県","佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県",
 ];
 const PREFECTURE_OPTIONS = ["all", ...PREFECTURES, "全国"];
-const FEE_OPTIONS = ["all","〜25%","25〜30%","30〜35%","35%〜","非公開"];
+const FEE_OPTIONS = ["all","マージン制","月額固定制","成果報酬制","非公開"];
 
 let activePrefecture = "all";
 let activeFee = "all";
 
 const LEAD_TEXT = {
-  candidate: `日本全国には、本当にたくさんの転職エージェントがあります。その中から、あなたに一番合った1社を見つけられます。`,
-  company: `エージェントを使った採用で、採用単価を最も下げるために必要な比較サイトです。`
+  candidate: `日本全国には、本当にたくさんの転職サービスがあります。その中から、あなたに一番合った1社を見つけられます。`,
+  company: `サービスを使った採用で、採用単価を最も下げるために必要な比較サイトです。`
 };
 
 function updateLead(){
@@ -891,21 +887,24 @@ function matchesPrefecture(agent, pref){
   return region.includes(pref) || region.includes("全国");
 }
 
-/** feeRate文字列から「%の直前の数字」をすべて抽出し、最小値で料率バケットを判定する。 */
-function feeBucketFor(feeRateStr){
-  if(!feeRateStr) return "非公開";
-  const nums = String(feeRateStr).match(/\d+(?:\.\d+)?(?=%)/g);
-  if(!nums || nums.length===0) return "非公開";
-  const min = Math.min(...nums.map(Number));
-  if(min < 25) return "〜25%";
-  if(min < 30) return "25〜30%";
-  if(min < 35) return "30〜35%";
-  return "35%〜";
+/** agent.feeStructure.type から、フィルター用の料金体系バケット（日本語ラベル）を判定する。 */
+function feeBucketFor(agent){
+  const type = agent.feeStructure && agent.feeStructure.type;
+  if(type === "margin") return "マージン制";
+  if(type === "monthlyFixed") return "月額固定制";
+  if(type === "commission") return "成果報酬制";
+  return "非公開";
 }
 
 function matchesFee(agent, feeBucket){
   if(feeBucket==="all") return true;
-  return feeBucketFor(agent.feeRate)===feeBucket;
+  return feeBucketFor(agent)===feeBucket;
+}
+
+/** feeStructure.type ("margin"/"monthlyFixed"/"commission"/"unknown"/未設定) を表示用の日本語ラベルに変換する。 */
+function feeStructureLabel(type){
+  const labels = { margin: "マージン制", monthlyFixed: "月額固定制", commission: "成果報酬制" };
+  return labels[type] || "非公開（お問い合わせで確認）";
 }
 
 // 「高評価エージェント」判定に使う、completenessScoreの動的なしきい値。
@@ -918,7 +917,7 @@ let highScoreThreshold = 0;
  * （満点ちょうどだけで絞ると、母数によっては目標件数に満たないことがあるため）
  */
 function computeHighScoreThreshold(currentMode, targetCount){
-  const max = currentMode==="candidate" ? 6 : 7;
+  const max = currentMode==="candidate" ? 6 : 5;
   const pool = AGENTS.filter(a => a.featured!==true);
   let threshold = max;
   while(threshold > 0 && pool.filter(a => completenessScore(a, currentMode) >= threshold).length < targetCount){
@@ -947,20 +946,18 @@ function isDisclosed(value){
 function completenessScore(agent, currentMode){
   let score = 0;
   if(currentMode==="candidate"){
-    if(isDisclosed(agent.targetAge)) score++;
     if(isDisclosed(agent.region)) score++;
     if(isDisclosed(agent.jobCount)) score++;
     if((agent.reviews && agent.reviews.length > 0) || agent.reviewNote) score++;
     if(agent.features && agent.features.length > 0) score++;
     if(agent.appeal && agent.appeal.length > 0) score++;
+    if((agent.contractTypes && agent.contractTypes.length > 0) || isDisclosed(agent.remoteRatio)) score++;
   } else {
-    if(isDisclosed(agent.feeRate)) score++;
-    if(isDisclosed(agent.talentRange)) score++;
+    if(agent.feeStructure && agent.feeStructure.type && agent.feeStructure.type !== "unknown") score++;
+    if(isDisclosed(agent.freelancerCount)) score++;
     if((agent.companyReviews && agent.companyReviews.length > 0) || agent.companyReviewNote) score++;
-    if(agent.companyDetail && isDisclosed(agent.companyDetail.placementRate)) score++;
-    if(agent.companyDetail && isDisclosed(agent.companyDetail.onboardingSupport)) score++;
-    if(agent.feeExplanation && agent.feeExplanation.length > 0) score++;
     if(agent.commitmentExplanation && agent.commitmentExplanation.length > 0) score++;
+    if(agent.companyAppeal && agent.companyAppeal.length > 0) score++;
   }
   return score;
 }
@@ -980,7 +977,7 @@ function stars(rating){ return "★".repeat(Math.round(rating)) + "☆".repeat(5
 function zukanScore(agent, mode){
   if(agent.featured) return 5;
   const raw = completenessScore(agent, mode);
-  const max = mode === "candidate" ? 6 : 7;
+  const max = mode === "candidate" ? 6 : 5;
   const ratio = raw / max;
   return Math.max(1, Math.min(4, Math.round(1 + ratio * 4)));
 }
@@ -1020,14 +1017,14 @@ function adSlotHTML(variant, slotId){
 /** 一覧行・ホームのカードグリッド共通で使う .row-item のDOM要素を1件分組み立てる。 */
 function buildRowItem(a){
   const candidateStats = `
-      <div class="stat"><div class="k">対象年代</div><div class="v">${a.targetAge}</div></div>
+      <div class="stat"><div class="k">リモート対応</div><div class="v">${a.remoteRatio || "非公開（お問い合わせで確認）"}</div></div>
       <div class="stat"><div class="k">対応エリア</div><div class="v">${a.region}</div></div>
       <div class="stat"><div class="k">求人数（目安）</div><div class="v">${a.jobCount}</div></div>
       <div class="stat"><div class="k">口コミ</div><div class="v">${ratingBadge(a.review || (a.reviews[0]||null), a.real, a, "candidate")}</div></div>
   `;
   const companyStats = `
-      <div class="stat"><div class="k">成功報酬フィー</div><div class="v">${a.feeRate}</div></div>
-      <div class="stat"><div class="k">候補者（タレント）のレンジ</div><div class="v">${a.talentRange}</div></div>
+      <div class="stat"><div class="k">手数料体系</div><div class="v">${feeStructureLabel(a.feeStructure && a.feeStructure.type)}</div></div>
+      <div class="stat"><div class="k">登録フリーランス数</div><div class="v">${a.freelancerCount || "非公開（お問い合わせで確認）"}</div></div>
       <div class="stat"><div class="k">口コミ</div><div class="v">${ratingBadge(a.companyReviews[0]||null, a.real, a, "company")}</div></div>
   `;
 
@@ -1065,9 +1062,9 @@ function updateHomeChrome(){
     banner.classList.remove("show");
   } else {
     let label = "";
-    if(featuredOnly) label = "注目のエージェントのみ表示中　";
-    else if(highScoreOnly) label = "高評価エージェントのみ表示中　";
-    else if(activeChip !== "all") label = `${activeChip}のエージェントのみ表示中　`;
+    if(featuredOnly) label = "注目のサービスのみ表示中　";
+    else if(highScoreOnly) label = "高評価サービスのみ表示中　";
+    else if(activeChip !== "all") label = `${activeChip}のサービスのみ表示中　`;
     banner.innerHTML = `${label}<a href="javascript:void(0)" onclick="goHome()">← ホームに戻る</a>`;
     banner.classList.add("show");
   }
@@ -1199,7 +1196,7 @@ function renderHome(){
 
   const featuredAgents = shuffle(AGENTS.filter(a => a.featured===true)).slice(0, 4);
   if(featuredAgents.length > 0){
-    sections.push(buildHomeSection("注目のエージェント", featuredAgents, showFeaturedOnly, featuredSectionIconHTML(), true));
+    sections.push(buildHomeSection("注目のサービス", featuredAgents, showFeaturedOnly, featuredSectionIconHTML(), true));
   }
 
   highScoreThreshold = computeHighScoreThreshold(mode, 6);
@@ -1208,7 +1205,7 @@ function renderHome(){
     .sort((a,b)=>completenessScore(b, mode) - completenessScore(a, mode))
     .slice(0, 6);
   if(highScoreAgents.length > 0){
-    sections.push(buildHomeSection("高評価エージェント", highScoreAgents, showHighScoreOnly, highScoreSectionIconHTML()));
+    sections.push(buildHomeSection("高評価サービス", highScoreAgents, showHighScoreOnly, highScoreSectionIconHTML()));
   }
 
   CHIP_LABELS
@@ -1220,7 +1217,7 @@ function renderHome(){
         .slice(0, 6);
       if(categoryAgents.length > 0){
         sections.push(buildHomeSection(
-          `${categoryName}のエージェント`, categoryAgents, ()=>showCategoryList(categoryName), categoryIconHTML(categoryName)
+          `${categoryName}のサービス`, categoryAgents, ()=>showCategoryList(categoryName), categoryIconHTML(categoryName)
         ));
       }
     });
@@ -1320,7 +1317,7 @@ function openDetail(a){
 
     const useSearchCta = !a.affiliateUrl && isNoCompanyWebsite(a);
     const ctaTarget = a.affiliateUrl || (isNoCompanyWebsite(a) ? googleSearchUrl(a) : a.website);
-    const ctaLabel = useSearchCta ? "この会社について調べる" : "このエージェントの詳細を見る";
+    const ctaLabel = useSearchCta ? "この会社について調べる" : "このサービスの詳細を見る";
     const ctaSearchNoteHTML = useSearchCta
       ? `<div class="cta-sub">公式サイトの情報が確認できなかったため、検索結果を表示します</div>`
       : "";
@@ -1338,7 +1335,7 @@ function openDetail(a){
       </div>
 
       <div class="d-section">
-        <h4>このエージェントの特徴</h4>
+        <h4>このサービスの特徴</h4>
         <p class="body-text">${a.appeal}</p>
         <ul class="feature-list">${a.features.map(f=>`<li>${f}</li>`).join("")}</ul>
       </div>
@@ -1349,8 +1346,9 @@ function openDetail(a){
         <h4>基本情報</h4>
         <div class="info-grid">
           <div><div class="k">対応エリア</div><div class="v">${a.region}</div></div>
-          <div><div class="k">対象年代</div><div class="v">${a.targetAge}</div></div>
           <div><div class="k">何に特化しているか</div><div class="v">${a.category}</div></div>
+          <div><div class="k">契約形態</div><div class="v">${(a.contractTypes && a.contractTypes.length > 0) ? a.contractTypes.join("、") : "非公開（お問い合わせで確認）"}</div></div>
+          <div><div class="k">リモート対応</div><div class="v">${a.remoteRatio || "非公開（お問い合わせで確認）"}</div></div>
         </div>
       </div>
 
@@ -1394,15 +1392,15 @@ function openDetail(a){
       </div>
 
       <div class="d-section">
-        <h4>このエージェントの特徴</h4>
+        <h4>このサービスの特徴</h4>
         <p class="body-text">${a.companyAppeal || a.commitmentExplanation}</p>
         <ul class="feature-list">${a.features.map(f=>`<li>${f}</li>`).join("")}</ul>
       </div>
 
       <div class="d-section">
-        <h4>成功報酬について</h4>
-        <div class="fee-highlight">${a.feeRate}</div>
-        <p class="body-text">${a.feeExplanation}</p>
+        <h4>手数料体系について</h4>
+        <div class="fee-highlight">${feeStructureLabel(a.feeStructure && a.feeStructure.type)}</div>
+        ${(a.feeStructure && a.feeStructure.note) ? `<p class="body-text">${a.feeStructure.note}</p>` : ""}
       </div>
 
       <div class="d-section">
@@ -1413,17 +1411,9 @@ function openDetail(a){
       ${adSlotHTML("in-feed", "7953289398")}
 
       <div class="d-section">
-        <h4>実績・許可情報</h4>
-        <div class="info-grid cols-2">
-          <div><div class="k">決定率（内定承諾率）</div><div class="v">${a.companyDetail.placementRate}</div></div>
-          <div><div class="k">入社後の定着支援</div><div class="v">${a.companyDetail.onboardingSupport}</div></div>
-        </div>
-      </div>
-
-      <div class="d-section">
-        <h4>候補者（タレント）の傾向</h4>
+        <h4>登録フリーランスの傾向</h4>
         <div class="info-grid">
-          <div><div class="k">候補者のレンジ</div><div class="v">${a.talentRange}</div></div>
+          <div><div class="k">登録フリーランス数</div><div class="v">${a.freelancerCount || "非公開（お問い合わせで確認）"}</div></div>
           <div><div class="k">対応領域</div><div class="v">${a.category}</div></div>
           <div><div class="k">企業からの評価</div><div class="v">${ratingBadge(a.companyReviews[0]||null, a.real, a, "company")}</div></div>
         </div>
@@ -1532,7 +1522,7 @@ function visitInquiry(website){
 
 function updateAgentCountBadge(){
   const el = document.getElementById("agentCountBadge");
-  if(el) el.textContent = `全国のエージェント${AGENTS.length}社掲載中！`;
+  if(el) el.textContent = `全国のサービスを${AGENTS.length}件掲載中！`;
 }
 
 async function loadAgents(){

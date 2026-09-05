@@ -58,6 +58,12 @@ function nextId(agents) {
  * 実在照合済みの候補をagents.jsonのスキーマに組み立てる。数値実績・手数料等、
  * 発見・照合の過程では確認しようがない項目はすべてNOT_DISCLOSEDとし、AIによる
  * 創作を防ぐ（structure.js の assembleEntry と同じ「事実が無ければ非公開」方針）。
+ *
+ * targetAge・talentRange・companyDetail.placementRate/onboardingSupport・
+ * 数値ベースのfeeExplanationは、公式サイト本文から確度高く抽出できる項目では
+ * ないためスキーマから廃止し、代わりに contractTypes・remoteRatio・
+ * feeStructure・freelancerCount（いずれも buildDiscoveredAgentFields が
+ * ページ本文から抽出）を採用する。
  */
 function assembleDiscoveredEntry(candidate, ai, id) {
   return {
@@ -66,11 +72,13 @@ function assembleDiscoveredEntry(candidate, ai, id) {
     name: candidate.name,
     category: ai.category,
     categoryHint: ai.category === 'その他' ? (ai.categoryHint || null) : null,
-    targetAge: NOT_DISCLOSED,
     region: NOT_DISCLOSED,
     jobCount: NOT_DISCLOSED,
     feeRate: NOT_DISCLOSED,
-    talentRange: NOT_DISCLOSED,
+    contractTypes: ai.contractTypes || [],
+    remoteRatio: ai.remoteRatio || null,
+    feeStructure: ai.feeStructure || { type: 'unknown', note: null },
+    freelancerCount: ai.freelancerCount || null,
     oneLiner: ai.oneLiner,
     companyOneLiner: ai.companyOneLiner,
     appeal: ai.appeal,
@@ -80,7 +88,6 @@ function assembleDiscoveredEntry(candidate, ai, id) {
     reviewNote: REVIEW_NOTE,
     companyReviews: [],
     companyReviewNote: COMPANY_REVIEW_NOTE,
-    feeExplanation: NOT_DISCLOSED,
     commitmentExplanation: NOT_DISCLOSED,
     website: stripProtocol(candidate.website),
     faviconUrl: buildFaviconUrl(candidate.website),
@@ -90,7 +97,6 @@ function assembleDiscoveredEntry(candidate, ai, id) {
     sourceNote: 'AIによるWeb検索で発見・実在照合済み',
     companyDetail: {
       permitNumber: NOT_DISCLOSED,
-      placementRate: NOT_DISCLOSED,
       avgDays: NOT_DISCLOSED,
       trackRecord: NOT_DISCLOSED,
       refundPolicy: NOT_DISCLOSED,
@@ -101,7 +107,6 @@ function assembleDiscoveredEntry(candidate, ai, id) {
       sourcingMethod: NOT_DISCLOSED,
       reportingFreq: NOT_DISCLOSED,
       handoverPolicy: NOT_DISCLOSED,
-      onboardingSupport: NOT_DISCLOSED,
       confidentiality: NOT_DISCLOSED,
     },
     linkVerified: true,
@@ -152,7 +157,7 @@ async function main() {
       console.log('  VERIFIED — structuring via AI...');
       let ai;
       try {
-        ai = await buildDiscoveredAgentFields(candidate, anthropic, existingHints);
+        ai = await buildDiscoveredAgentFields(candidate, verification.pageText, anthropic, existingHints);
       } catch (err) {
         // 実在は確認済みだが構造化AI呼び出し自体が失敗（レート制限等）した場合は
         // スキップリストに入れず、次回の実行で再試行する。
