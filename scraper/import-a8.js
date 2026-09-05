@@ -26,8 +26,16 @@
  *   無しでも行える）。
  *
  * 使い方:
- *   node import-a8.js <path-to-xlsx> [--dry-run]
+ *   node import-a8.js [path-to-xlsx] [--dry-run]
  *   例: node import-a8.js ../data/a8-import/a8-freelance-20260906.xlsx --dry-run
+ *
+ * path-to-xlsx を省略した場合、data/a8-import/ 配下の .xlsx ファイルのうち、
+ * ファイル名の辞書順で最も新しいもの（findLatestA8File参照）を自動的に対象とする。
+ * 毎月Tatsuroさんが新しいExcelファイルをこのディレクトリに追加していく運用を想定した
+ * もの。ファイル名には a8-freelance-YYYYMMDD.xlsx のように日付を含める前提とする
+ * （更新日時ではなくファイル名でソートする理由: GitHub Actions上ではactions/checkout
+ * 時に全ファイルの更新日時がチェックアウト時刻にリセットされてしまい、更新日時では
+ * 「最新」を正しく判定できないため）。
  */
 
 const fs = require('fs');
@@ -42,6 +50,7 @@ const { promoteCategories } = require('./promote-categories');
 
 const AGENTS_PATH = path.join(__dirname, '..', 'agents.json');
 const CATEGORIES_PATH = path.join(__dirname, '..', 'categories.json');
+const A8_IMPORT_DIR = path.join(__dirname, '..', 'data', 'a8-import');
 
 /** このExcelは複数サイト共用テンプレートのため、この値の行のみを対象とする。 */
 const TARGET_SITE = 'フリーランス案件図鑑';
@@ -72,6 +81,21 @@ function parseArgs(argv) {
     else if (!args.file) args.file = raw;
   }
   return args;
+}
+
+/**
+ * data/a8-import/ 配下の .xlsx ファイルのうち、ファイル名の辞書順で最も新しいものを返す。
+ * 1件も無ければ null を返す。ファイル名に日付（YYYYMMDD等）を含める運用を前提としており、
+ * 辞書順ソートがそのまま時系列順になる（a8-freelance-20260906.xlsx < a8-freelance-20261001.xlsx）。
+ */
+function findLatestA8File() {
+  if (!fs.existsSync(A8_IMPORT_DIR)) return null;
+  const files = fs
+    .readdirSync(A8_IMPORT_DIR)
+    .filter(name => /\.xlsx$/i.test(name))
+    .sort();
+  if (files.length === 0) return null;
+  return path.join(A8_IMPORT_DIR, files[files.length - 1]);
 }
 
 function todayJst() {
@@ -249,14 +273,24 @@ function mergeIntoExisting(existing, { row, ai }) {
 
 async function main() {
   const { file, dryRun } = parseArgs(process.argv.slice(2));
-  if (!file) {
-    console.error('Usage: node import-a8.js <path-to-xlsx> [--dry-run]');
-    process.exit(1);
-  }
-  const filePath = path.isAbsolute(file) ? file : path.join(process.cwd(), file);
-  if (!fs.existsSync(filePath)) {
-    console.error(`File not found: ${filePath}`);
-    process.exit(1);
+
+  let filePath;
+  if (file) {
+    filePath = path.isAbsolute(file) ? file : path.join(process.cwd(), file);
+    if (!fs.existsSync(filePath)) {
+      console.error(`File not found: ${filePath}`);
+      process.exit(1);
+    }
+  } else {
+    filePath = findLatestA8File();
+    if (!filePath) {
+      console.error(
+        `Usage: node import-a8.js <path-to-xlsx> [--dry-run]\n` +
+          `(no path given, and no .xlsx file found under ${A8_IMPORT_DIR} to auto-detect)`
+      );
+      process.exit(1);
+    }
+    console.log(`No file specified — auto-detected latest file: ${path.basename(filePath)}`);
   }
 
   const rows = readRows(filePath);
@@ -270,7 +304,17 @@ async function main() {
   console.log(`${unique.length} unique compan${unique.length === 1 ? 'y' : 'ies'} to process.`);
 
   const agents = JSON.parse(fs.readFileSync(AGENTS_PATH, 'utf8'));
-  const byName = new Map(agents.map(a => [a.name, a]));
+  // name完全一致に加え、aliasNames（例: 別サービス名で統合された際の旧登録名・
+  // 持株会社名等）でも突き合わせる。A8の広告主名が、実際にはAI発見等で既に別名で
+  // 掲載済みの同一サービスの持株会社・旧社名だった場合（統合済み）に、再インポートの
+  // たびに重複追加してしまうのを防ぐため。
+  const byName = new Map();
+  for (const a of agents) {
+    byName.set(a.name, a);
+    for (const alias of a.aliasNames || []) {
+      byName.set(alias, a);
+    }
+  }
   let nextIdNum = nextA8IdCounter(agents);
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -366,6 +410,7 @@ module.exports = {
   dedupeByName,
   extractAffiliateUrl,
   nextA8IdCounter,
+  findLatestA8File,
   guessCategoryOfflineA8,
   buildOfflineA8Fields,
   buildNewEntry,
