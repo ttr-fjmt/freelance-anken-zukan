@@ -1,23 +1,33 @@
 'use strict';
 
 /**
- * A8.net アフィリエイト提携エージェントのExcel（data/a8-import/ 配下）を読み込み、
- * agents.json に featured エージェントとして取り込む。
+ * A8.net アフィリエイト提携サービスのExcel（data/a8-import/ 配下）を読み込み、
+ * agents.json に featured サービスとして取り込む。
  *
- * - 既存agents.jsonと会社名で突き合わせる:
- *   - マッチした場合 → 既存エントリを「マージ更新」する。category/region/targetAge/
- *     oneLiner/appeal等の紹介文まわりはExcel側（AI構造化結果）で上書きするが、
- *     website/feeRate/companyDetail等、Excelには元々情報が無い項目は既存の値を
- *     壊さないよう温存する（既存エントリが持つ厚みのある実データを失わないため）。
- *     id・source は変更しない。
+ * Excelはagent-zukan側と共通のテンプレート（サイト列で対象を判別する共用シート）
+ * のため、B列（サイト）が"フリーランス案件図鑑"の行のみを処理対象とする。
+ * G列（対象年代）はフリーランス版のスキーマに存在しない項目のため読み込まない。
+ *
+ * - 既存agents.jsonと会社名（完全一致）で突き合わせる:
+ *   - マッチした場合 → 既存エントリを featured: true に格上げし、category/region/
+ *     紹介文まわり・affiliateUrl を更新する。id・sourceは変更しない。
+ *     Excelには元々情報が無い項目（contractTypes/remoteRatio/feeStructure/
+ *     freelancerCount等）は、AI側が具体的な値を返さない限り既存の値を温存する。
  *   - マッチしない場合 → 新規エントリとして追加する（source: "a8"、id: "a8-NNN"）。
- * - AI構造化には structure.js の buildWithAI（source: "a8" 分岐）をそのまま再利用する。
- * - ANTHROPIC_API_KEY が無い環境では、buildOfflineA8() による簡易フォールバックで動作する
- *   （データマッピング・重複除去・突き合わせの検証はAPIキー無しでも行える）。
+ * - AI構造化には lib/agent-discovery.js の buildDiscoveredAgentFields をそのまま
+ *   再利用する（現行スキーマ(contractTypes/remoteRatio/feeStructure/freelancerCount)
+ *   と一致させるため。structure.jsのbuildWithAIは廃止済みの旧スキーマ
+ *   (targetAge/talentRange/companyDetail全項目)を前提としており流用できない）。
+ *   Excelには公式サイトの実際のページ本文が無いため、E列（特徴）・H列（なにに
+ *   特化しているか）の原文を pageText として渡し、そこからの抽出・要約として
+ *   扱わせる。
+ * - ANTHROPIC_API_KEY が無い環境では、buildOfflineA8Fields() による簡易フォール
+ *   バックで動作する（データマッピング・重複除去・突き合わせの検証はAPIキー
+ *   無しでも行える）。
  *
  * 使い方:
  *   node import-a8.js <path-to-xlsx> [--dry-run]
- *   例: node import-a8.js ../data/a8-import/a8-agents-20260904.xlsx --dry-run
+ *   例: node import-a8.js ../data/a8-import/a8-freelance-20260906.xlsx --dry-run
  */
 
 const fs = require('fs');
@@ -26,15 +36,21 @@ const path = require('path');
 const XLSX = require('xlsx');
 
 const { NOT_DISCLOSED } = require('./lib/schema');
-const { buildWithAI, topCategoryHints } = require('./structure');
+const { buildDiscoveredAgentFields, getAnthropicClient } = require('./lib/agent-discovery');
+const { topCategoryHints } = require('./structure');
+const { promoteCategories } = require('./promote-categories');
 
 const AGENTS_PATH = path.join(__dirname, '..', 'agents.json');
+const CATEGORIES_PATH = path.join(__dirname, '..', 'categories.json');
 
-const TALENT_RANGE_NOT_DISCLOSED = '非公開（具体的なレンジの記載なし）';
+/** このExcelは複数サイト共用テンプレートのため、この値の行のみを対象とする。 */
+const TARGET_SITE = 'フリーランス案件図鑑';
+
+const REVIEW_NOTE = '口コミデータは未収集です（今後のアップデートで追加予定）。';
+const COMPANY_REVIEW_NOTE = '企業からの口コミデータは未収集です（今後のアップデートで追加予定）。';
 
 const A8_COMPANY_DETAIL_DEFAULTS = {
   permitNumber: NOT_DISCLOSED,
-  placementRate: NOT_DISCLOSED,
   avgDays: NOT_DISCLOSED,
   trackRecord: NOT_DISCLOSED,
   refundPolicy: NOT_DISCLOSED,
@@ -45,7 +61,6 @@ const A8_COMPANY_DETAIL_DEFAULTS = {
   sourcingMethod: NOT_DISCLOSED,
   reportingFreq: NOT_DISCLOSED,
   handoverPolicy: NOT_DISCLOSED,
-  onboardingSupport: NOT_DISCLOSED,
   confidentiality: NOT_DISCLOSED,
 };
 
@@ -66,7 +81,7 @@ function todayJst() {
 function buildA8SourceNote(fileBaseName) {
   return (
     `A8.netアフィリエイト提携情報（${fileBaseName}）をもとに作成。取得日: ${todayJst()}。` +
-    `掲載情報は提携先の申告内容に基づきます。手数料・実績等の数値情報は今回のデータには含まれていません。`
+    `掲載情報は提携先の申告内容に基づきます。手数料体系・登録フリーランス数等の数値情報は今回のデータには含まれていません。`
   );
 }
 
@@ -83,23 +98,31 @@ function cell(value) {
   return s || null;
 }
 
+/**
+ * B列(サイト)が TARGET_SITE の行のみを対象にし、C・D・E・F・H列（広告主名・リンク・
+ * 特徴・対応エリア・なにに特化しているか）が全て埋まっている行だけを処理対象として返す。
+ * G列（対象年代）はフリーランス版のスキーマに存在しないため読み込まない。
+ */
 function readRows(filePath) {
   const wb = XLSX.readFile(filePath);
   const sheet = wb.Sheets[wb.SheetNames[0]];
   const raw = XLSX.utils.sheet_to_json(sheet, { defval: null });
   return raw
+    .filter(r => cell(r['サイト']) === TARGET_SITE)
     .map(r => ({
       name: cell(r['広告主名']),
       affiliateUrl: extractAffiliateUrl(r['リンク']),
-      feature: cell(r['このエージェントの特徴']),
+      feature: cell(r['特徴']),
       region: cell(r['対応エリア']),
-      targetAge: cell(r['対象年代']),
       specialty: cell(r['なにに特化しているか']),
     }))
-    .filter(r => r.name);
+    .filter(r => r.name && r.affiliateUrl && r.feature && r.region && r.specialty);
 }
 
-/** 広告主名（会社名）だけをキーにした重複除去。1件目（先頭行）を採用し、以降はスキップする。 */
+/**
+ * 広告主名（会社名）だけをキーにした重複除去。1件目（先頭行）を採用し、以降はスキップする。
+ * 完全に同一内容の行・同名で異なるリンクの行、どちらも同じルール（先勝ち）で処理される。
+ */
 function dedupeByName(rows) {
   const seen = new Map();
   const skipped = [];
@@ -117,45 +140,54 @@ function dedupeByName(rows) {
 function nextA8IdCounter(agents) {
   let max = 0;
   for (const a of agents) {
-    const m = /^a8-(\d+)$/.exec(a.id || '');
+    const m = /^a8-(\d+)$/.exec(String(a.id == null ? '' : a.id));
     if (m) max = Math.max(max, parseInt(m[1], 10));
   }
   return max + 1;
 }
 
-function guessCategoryOfflineA8(row) {
-  const hay = `${row.feature || ''} ${row.specialty || ''}`;
-  if (/IT|Web|エンジニア|システム|データサイエンス/i.test(hay)) return 'IT・Web';
-  if (/建設|施工|不動産|建築/.test(hay)) return '施工管理・建設';
-  if (/営業|マーケ|販売/.test(hay)) return '営業・マーケティング';
-  if (/外資|グローバル|海外/.test(hay)) return '外資・グローバル';
-  if (/スタートアップ|ベンチャー/.test(hay)) return 'スタートアップ・ベンチャー';
-  if (/地方|UIターン|Uターン|Iターン/i.test(hay)) return '地方転職・UIターン';
-  if (/新卒|第二新卒|ポテンシャル/.test(hay)) return '第二新卒・ポテンシャル層';
-  if (/管理部門|コンサル|経理|人事|バックオフィス/.test(hay)) return '管理部門・コンサル';
+/**
+ * ANTHROPIC_API_KEY が無い場合の非AIフォールバック。E・H列の原文からの機械的な
+ * キーワード判定のみ行う（buildDiscoveredAgentFieldsが本来担うAI判断の簡易代替）。
+ * 「転職支援」「転職エージェント」等、フリーランス/業務委託ではなく正社員雇用への
+ * 転職支援を主眼とするサービスは、既存カテゴリーのいずれにも無理に当てはめず
+ * 「その他」とする（例: M&A業界特化の転職エージェント等）。
+ */
+function guessCategoryOfflineA8(hay) {
+  if (/転職支援|転職エージェント|正社員/.test(hay) && !/フリーランス|業務委託|準委任/.test(hay)) {
+    return 'その他';
+  }
+  if (/IT|Web|エンジニア|システム|データサイエンス|プログラ/i.test(hay)) return 'IT・Web開発';
+  if (/デザイン|デザイナー|UI\/UX/i.test(hay)) return 'デザイン';
+  // 「動画編集」等の複合語がライティング側に誤爆しないよう、動画・クリエイティブの判定を先に行う。
+  if (/動画|映像|クリエイティブ|撮影/.test(hay)) return '動画・クリエイティブ';
+  if (/ライティング|記事作成|コピーライ|校正|編集(?!スキル|スクール)/.test(hay)) return 'ライティング・編集';
+  if (/コンサル|士業|税理士|弁護士|会計士|社労士/.test(hay)) return 'コンサル・士業';
+  if (/事務|バックオフィス|経理|人事|総務/.test(hay)) return '事務・バックオフィス';
+  if (/営業|マーケ|販売|広告/.test(hay)) return '営業・マーケティング';
+  if (/フリーランス|案件紹介|案件マッチング|複業|副業/.test(hay)) return 'フリーランス案件マッチング';
   return 'その他';
 }
 
 /** ANTHROPIC_API_KEY が無い場合の非AIフォールバック。事実（Excelの原文）の範囲を出ない組み立てのみ行う。 */
-function buildOfflineA8(row) {
-  const category = guessCategoryOfflineA8(row);
-  const features = [row.feature, row.specialty, row.region].filter(Boolean).slice(0, 3);
-  while (features.length < 1) features.push(NOT_DISCLOSED);
-
+function buildOfflineA8Fields(row) {
+  const hay = `${row.feature || ''} ${row.specialty || ''}`;
+  const category = guessCategoryOfflineA8(hay);
   return {
     category,
     categoryHint: null,
-    oneLiner: row.specialty ? `${row.specialty}に強みを持つ転職支援サービス。` : row.feature || NOT_DISCLOSED,
-    companyOneLiner: row.specialty ? `${row.specialty}に特化した採用支援サービス。` : row.feature || NOT_DISCLOSED,
-    appeal: row.feature || NOT_DISCLOSED,
-    companyAppeal: row.feature || NOT_DISCLOSED,
-    features,
+    oneLiner: (row.specialty ? `${row.specialty}に関する案件紹介サービス。` : row.feature || NOT_DISCLOSED).slice(0, 60),
+    companyOneLiner: (row.specialty ? `${row.specialty}に特化したサービス。` : row.feature || NOT_DISCLOSED).slice(0, 60),
+    appeal: (row.feature || NOT_DISCLOSED).slice(0, 200),
+    companyAppeal: (row.feature || NOT_DISCLOSED).slice(0, 200),
+    contractTypes: [],
+    remoteRatio: null,
+    feeStructure: { type: 'unknown', note: null },
+    freelancerCount: null,
   };
 }
 
-/**
- * 新規エントリを組み立てる（Excelに情報が無い項目は固定値、website/faviconUrlはnull）。
- */
+/** 新規エントリを組み立てる（Excelに情報が無い項目は固定値、website/faviconUrlはnull）。 */
 function buildNewEntry({ id, row, ai, sourceNote }) {
   return {
     id,
@@ -163,21 +195,22 @@ function buildNewEntry({ id, row, ai, sourceNote }) {
     name: row.name,
     category: ai.category,
     categoryHint: ai.category === 'その他' ? (ai.categoryHint || null) : null,
-    targetAge: row.targetAge || NOT_DISCLOSED,
     region: row.region || NOT_DISCLOSED,
     jobCount: NOT_DISCLOSED,
     feeRate: NOT_DISCLOSED,
-    talentRange: TALENT_RANGE_NOT_DISCLOSED,
+    contractTypes: ai.contractTypes || [],
+    remoteRatio: ai.remoteRatio || null,
+    feeStructure: ai.feeStructure || { type: 'unknown', note: null },
+    freelancerCount: ai.freelancerCount || null,
     oneLiner: ai.oneLiner,
     companyOneLiner: ai.companyOneLiner,
     appeal: ai.appeal,
     companyAppeal: ai.companyAppeal || ai.appeal,
-    features: ai.features,
+    features: [],
     reviews: [],
-    reviewNote: null,
+    reviewNote: REVIEW_NOTE,
     companyReviews: [],
-    companyReviewNote: null,
-    feeExplanation: NOT_DISCLOSED,
+    companyReviewNote: COMPANY_REVIEW_NOTE,
     commitmentExplanation: NOT_DISCLOSED,
     website: null,
     faviconUrl: null,
@@ -186,28 +219,29 @@ function buildNewEntry({ id, row, ai, sourceNote }) {
     real: true,
     sourceNote,
     companyDetail: { ...A8_COMPANY_DETAIL_DEFAULTS },
-    _sourceUrl: null,
-    _rawHash: null,
   };
 }
 
 /**
- * 既存エントリへのマージ更新。category/region/targetAge/紹介文まわり・featured・affiliateUrl
- * のみ上書きし、それ以外（website/feeRate/companyDetail/reviews/sourceNote/_sourceUrl等）は
- * 既存の値をそのまま温存する（Excel側に元々情報が無い項目で、既存の実データを消さないため）。
+ * 既存エントリへのマージ更新。category/region/紹介文まわり・featured・affiliateUrl
+ * のみ上書きし、それ以外（website/companyDetail/reviews/sourceNote等、Excelに元々
+ * 情報が無い項目）は既存の値をそのまま温存する。contractTypes等、AIが具体的な値を
+ * 返さなかった場合も既存の値を壊さない。id・sourceは変更しない。
  */
 function mergeIntoExisting(existing, { row, ai }) {
   return {
     ...existing,
     category: ai.category,
     categoryHint: ai.category === 'その他' ? (ai.categoryHint || null) : null,
-    targetAge: row.targetAge || existing.targetAge,
     region: row.region || existing.region,
     oneLiner: ai.oneLiner,
     companyOneLiner: ai.companyOneLiner,
     appeal: ai.appeal,
     companyAppeal: ai.companyAppeal || ai.appeal,
-    features: ai.features,
+    contractTypes: (ai.contractTypes && ai.contractTypes.length > 0) ? ai.contractTypes : existing.contractTypes,
+    remoteRatio: ai.remoteRatio || existing.remoteRatio,
+    feeStructure: (ai.feeStructure && ai.feeStructure.type !== 'unknown') ? ai.feeStructure : existing.feeStructure,
+    freelancerCount: ai.freelancerCount || existing.freelancerCount,
     affiliateUrl: row.affiliateUrl,
     featured: true,
   };
@@ -228,7 +262,7 @@ async function main() {
   const rows = readRows(filePath);
   const { unique, skipped } = dedupeByName(rows);
 
-  console.log(`Read ${rows.length} row(s) from ${path.basename(filePath)}.`);
+  console.log(`Read ${rows.length} "${TARGET_SITE}" row(s) from ${path.basename(filePath)}.`);
   if (skipped.length > 0) {
     console.log(`Skipped ${skipped.length} duplicate row(s) (same 広告主名 — first occurrence wins):`);
     skipped.forEach(r => console.log(`  - ${r.name}`));
@@ -240,11 +274,8 @@ async function main() {
   let nextIdNum = nextA8IdCounter(agents);
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
-  let anthropic = null;
-  if (apiKey) {
-    const Anthropic = require('@anthropic-ai/sdk');
-    anthropic = new Anthropic({ apiKey });
-  } else {
+  const anthropic = apiKey ? getAnthropicClient() : null;
+  if (!anthropic) {
     console.warn('ANTHROPIC_API_KEY is not set — running in offline fallback mode (no AI structuring).');
   }
   const existingHints = topCategoryHints(agents);
@@ -258,26 +289,24 @@ async function main() {
 
   for (const row of unique) {
     const existing = byName.get(row.name);
-    const rawForAI = {
-      companyName: row.name,
-      feature: row.feature,
-      specialty: row.specialty,
-      region: row.region,
-      targetAge: row.targetAge,
-    };
+    // Excelには公式サイトの実ページ本文が無いため、E・H列の原文をpageTextとして渡す
+    // （buildDiscoveredAgentFieldsは「実際に取得したページ本文からの抽出・要約」を
+    // 前提に設計されているため、ここではExcelの申告内容がその代わりとなる）。
+    const pageText = `${row.feature}\n\n特化領域: ${row.specialty}\n対応エリア: ${row.region}`;
+    const candidate = { name: row.name, website: '(A8.netアフィリエイト提携情報のため公式サイトURLは未取得)' };
 
     let ai;
     if (anthropic) {
       try {
-        ai = await buildWithAI(rawForAI, anthropic, 'a8', existingHints);
+        ai = await buildDiscoveredAgentFields(candidate, pageText, anthropic, existingHints);
         aiCalls += 1;
       } catch (err) {
         console.warn(`AI structuring failed for ${row.name}: ${err.message}. Falling back to offline builder.`);
-        ai = buildOfflineA8(row);
+        ai = buildOfflineA8Fields(row);
         offlineBuilds += 1;
       }
     } else {
-      ai = buildOfflineA8(row);
+      ai = buildOfflineA8Fields(row);
       offlineBuilds += 1;
     }
 
@@ -285,13 +314,13 @@ async function main() {
       const merged = mergeIntoExisting(existing, { row, ai });
       finalEntriesById.set(existing.id, merged);
       updated += 1;
-      console.log(`[update] ${row.name} (id=${existing.id})`);
+      console.log(`[update] ${row.name} (id=${existing.id}) category=${merged.category}`);
     } else {
       const id = `a8-${String(nextIdNum++).padStart(3, '0')}`;
       const entry = buildNewEntry({ id, row, ai, sourceNote });
       finalEntriesById.set(id, entry);
       added += 1;
-      console.log(`[add]    ${row.name} (id=${id})`);
+      console.log(`[add]    ${row.name} (id=${id}) category=${entry.category}${entry.categoryHint ? ` (hint: ${entry.categoryHint})` : ''}`);
     }
   }
 
@@ -311,6 +340,18 @@ async function main() {
 
   fs.writeFileSync(AGENTS_PATH, JSON.stringify(finalAgents, null, 2) + '\n', 'utf8');
   console.log(`Wrote ${finalAgents.length} agents to ${AGENTS_PATH}.`);
+
+  if (added > 0 || updated > 0) {
+    const categories = fs.existsSync(CATEGORIES_PATH) ? JSON.parse(fs.readFileSync(CATEGORIES_PATH, 'utf8')) : [];
+    const result = promoteCategories(finalAgents, categories);
+    if (result.promotedNames.length > 0 || result.reclassifiedCount > 0) {
+      fs.writeFileSync(AGENTS_PATH, JSON.stringify(finalAgents, null, 2) + '\n', 'utf8');
+      fs.writeFileSync(CATEGORIES_PATH, JSON.stringify(categories, null, 2) + '\n', 'utf8');
+      console.log(
+        `Category promotion: promoted=${result.promotedNames.join('、') || 'none'}, reclassified=${result.reclassifiedCount}`
+      );
+    }
+  }
 }
 
 if (require.main === module) {
@@ -325,7 +366,8 @@ module.exports = {
   dedupeByName,
   extractAffiliateUrl,
   nextA8IdCounter,
-  buildOfflineA8,
+  guessCategoryOfflineA8,
+  buildOfflineA8Fields,
   buildNewEntry,
   mergeIntoExisting,
   buildA8SourceNote,
