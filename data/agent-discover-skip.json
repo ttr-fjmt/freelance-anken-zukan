@@ -124,5 +124,53 @@
     "website": "https://app.any-crew.com/",
     "reason": "name_mismatch",
     "checkedAt": "2026-09-05T10:17:15.685Z"
+  },
+  "レバテックフリーランス（レバテック株式会社）": {
+    "name": "レバテックフリーランス（レバテック株式会社）",
+    "website": "https://freelance.levtech.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T10:55:27.226Z"
+  },
+  "テクフリ（アップフリー株式会社）": {
+    "name": "テクフリ（アップフリー株式会社）",
+    "website": "https://tech-free.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T10:55:27.226Z"
+  },
+  "ユウクリ": {
+    "name": "ユウクリ",
+    "website": "https://yucre.co.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T10:55:27.226Z"
+  },
+  "FLEXY（フレキシー）": {
+    "name": "FLEXY（フレキシー）",
+    "website": "https://flxy.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T10:55:27.226Z"
+  },
+  "World in Freelance": {
+    "name": "World in Freelance",
+    "website": "https://worldinfreelance.com",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T10:55:27.226Z"
+  },
+  "カケハシ（KAKEHASHI）": {
+    "name": "カケハシ（KAKEHASHI）",
+    "website": "https://kakehashi-works.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T10:55:27.226Z"
+  },
+  "MarketerAgent（マーケターエージェント）": {
+    "name": "MarketerAgent（マーケターエージェント）",
+    "website": "https://marketer-agent.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T10:55:27.226Z"
+  },
+  "Akkodisフリーランス（アコーディスフリーランス）": {
+    "name": "Akkodisフリーランス（アコーディスフリーランス）",
+    "website": "https://freelance.akkodis.co.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T10:55:27.226Z"
   }
 }
