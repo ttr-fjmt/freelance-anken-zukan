@@ -1,0 +1,126 @@
+name: Scrape agents and update agents.json
+
+on:
+  schedule:
+    # 毎日 18:30 UTC = 日本時間(JST) 3:30 に実行（深夜帯・低負荷な時間帯を狙う）
+    - cron: "30 18 * * *"
+  workflow_dispatch:
+    inputs:
+      prerender_limit:
+        description: "プリレンダリング対象を先頭N件に制限する（CI上での動作確認用。空なら全件処理）"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  # agents.json / agent/*/index.html / sitemap.xml / data/ssg-manifest.json をコミット・pushする
+  # 全ワークフロー（scrape-agents.yml / import-a8.yml / 今後追加されるもの）で共通のグループ名にし、
+  # ワークフローファイルが違っても互いに排他制御されるようにする（同時実行によるコンフリクト防止）。
+  group: repo-content-write
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: scraper/package-lock.json
+
+      - name: Cache Puppeteer's bundled Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/puppeteer
+          key: puppeteer-chromium-${{ runner.os }}-${{ hashFiles('scraper/package-lock.json') }}
+
+      - name: Install scraper dependencies
+        working-directory: scraper
+        run: npm ci
+
+      - name: Scrape jesra.or.jp (polite, robots.txt-aware crawl)
+        working-directory: scraper
+        run: node scrape.js
+
+      - name: Ingest MHLW "人材サービス総合サイト" (段階的取り込み, skips during maintenance window)
+        working-directory: scraper
+        run: node scrape-mhlw.js
+
+      - name: Structure raw data into agents.json via Claude Haiku 4.5
+        working-directory: scraper
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node structure.js
+
+      - name: Promote frequent "その他" category hints into official categories
+        working-directory: scraper
+        run: node promote-categories.js
+
+      - name: Infer official websites/favicons for MHLW-sourced agents (AI-assisted, HTTP-verified)
+        working-directory: scraper
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node enrich-mhlw-websites.js
+
+      - name: Install Chrome runtime dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            ca-certificates fonts-liberation libasound2t64 libatk-bridge2.0-0 libatk1.0-0 \
+            libcups2 libdbus-1-3 libdrm2 libgbm1 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 \
+            libpango-1.0-0 libpangocairo-1.0-0 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
+            libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 xdg-utils
+
+      - name: Prerender agent detail pages (static SSG via Puppeteer)
+        working-directory: scraper
+        env:
+          PRERENDER_LIMIT: ${{ github.event.inputs.prerender_limit }}
+        run: node prerender.js
+
+      - name: Generate category landing pages (SEO/AEO)
+        working-directory: scraper
+        run: node generate-category-pages.js
+
+      - name: Regenerate sitemap.xml
+        working-directory: scraper
+        run: node generate-sitemap.js
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add agents.json categories.json data/raw-agents.json sitemap.xml
+          # 50,000URL超過時にsitemapが分割された場合のみ生成される
+          git add sitemap-*.xml 2>/dev/null || true
+          # 生成物・中間ファイルは初回実行前は存在しない可能性があるため存在確認してから追加する
+          [ -f data/mhlw-agents.json ] && git add data/mhlw-agents.json
+          [ -f data/mhlw-cursor.json ] && git add data/mhlw-cursor.json
+          [ -f data/mhlw-website-skip.json ] && git add data/mhlw-website-skip.json
+          [ -f data/mhlw-website-enrich-cursor.json ] && git add data/mhlw-website-enrich-cursor.json
+          [ -f data/ssg-manifest.json ] && git add data/ssg-manifest.json
+          [ -d agent ] && git add agent
+          [ -d category ] && git add category
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: update agents.json from daily scrape ($(date -u +%Y-%m-%d))"
+
+          max_retries=2
+          attempt=0
+          until git push; do
+            attempt=$((attempt + 1))
+            if [ "$attempt" -gt "$max_retries" ]; then
+              echo "::error::push failed after $max_retries retries"
+              exit 1
+            fi
+            echo "push failed (attempt $attempt/$max_retries) — pulling --rebase and retrying..."
+            git pull --rebase origin main
+          done
