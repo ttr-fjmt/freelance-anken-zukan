@@ -430,5 +430,83 @@
     "website": "https://furusato-kengyo.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-05T14:46:57.226Z"
+  },
+  "プロエンジニア（ProEngineer）／インタナス株式会社": {
+    "name": "プロエンジニア（ProEngineer）／インタナス株式会社",
+    "website": "https://proengineer.internous.co.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "シュフティ（株式会社うるる）": {
+    "name": "シュフティ（株式会社うるる）",
+    "website": "https://app.shufti.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "エミリーエンジニア（株式会社ビスタクルーズ）": {
+    "name": "エミリーエンジニア（株式会社ビスタクルーズ）",
+    "website": "https://emilee.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "Marketing Piece（マーケティングピース）／株式会社ThinkPunks": {
+    "name": "Marketing Piece（マーケティングピース）／株式会社ThinkPunks",
+    "website": "https://marketingpiece.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "mijicaフリーランス": {
+    "name": "mijicaフリーランス",
+    "website": "https://mijica-freelance.com",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "エンジニアルーム（Engineer Room）／株式会社シ・エム・シ": {
+    "name": "エンジニアルーム（Engineer Room）／株式会社シ・エム・シ",
+    "website": "https://engineer-room.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "Tecgateフリーランス／株式会社セルバ": {
+    "name": "Tecgateフリーランス／株式会社セルバ",
+    "website": "https://tecgate.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "エクストリームフリーランス／株式会社エクストリームフリーランス": {
+    "name": "エクストリームフリーランス／株式会社エクストリームフリーランス",
+    "website": "https://www.xfreelance.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "ビザスク（Visasq）／株式会社ビザスク": {
+    "name": "ビザスク（Visasq）／株式会社ビザスク",
+    "website": "https://visasq.co.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "タイムチケット（TimeTicket）／株式会社タイムチケット": {
+    "name": "タイムチケット（TimeTicket）／株式会社タイムチケット",
+    "website": "https://www.timeticket.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "ストアカ（Street Academy）／株式会社ストリートアカデミー": {
+    "name": "ストアカ（Street Academy）／株式会社ストリートアカデミー",
+    "website": "https://www.street-academy.com/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "ミラテクフリーランス（Free Tech Hub）／合同会社レイハウオリ": {
+    "name": "ミラテクフリーランス（Free Tech Hub）／合同会社レイハウオリ",
+    "website": "https://free-tech-hub.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "ココナラ（Coconala）／株式会社ココナラ": {
+    "name": "ココナラ（Coconala）／株式会社ココナラ",
+    "website": "https://coconala.com/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-05T21:54:37.319Z"
   }
 }
