@@ -74,11 +74,18 @@ function extractJsonArray(text) {
  * 検索の切り口としてのみ追加するカテゴリー（掲載用のCATEGORIESには含めない）。
  * 「副業」「複業」文脈のサービス（例: 複業クラウド、シューマツワーカー等）は、実質的に
  * フリーランス向け案件マッチングと同じ業態のものが多く、過去の発見でも「その他」経由で
- * 見つかっていた。検索クエリの切り口を増やすためだけの用途であり、この名前自体が
- * agentのcategory値として使われることはない（buildDiscoveredAgentFieldsの分類先は
- * 引き続きCATEGORIES(9分類)のみ）。
+ * 見つかっていた。「医療・治験系」（治験コーディネーター等の医療系専門職向け）・
+ * 「翻訳・通訳系」（翻訳者・通訳者向け案件紹介）も同様に、CATEGORIESの既存8分類には
+ * 収まりにくいがフリーランスマッチングとして実在するニッチのため検索専用で追加する。
+ * 検索クエリの切り口を増やすためだけの用途であり、この名前自体がagentのcategory値
+ * として使われることはない（buildDiscoveredAgentFieldsの分類先は引き続き
+ * CATEGORIES(9分類)のみ。「その他」+categoryHintで自然に振り分けられる想定）。
  */
-const EXTRA_SEARCH_ONLY_CATEGORIES = ['副業・複業マッチング'];
+const EXTRA_SEARCH_ONLY_CATEGORIES = [
+  '副業・複業マッチング',
+  '医療・治験系',
+  '翻訳・通訳系',
+];
 
 // CATEGORIES（掲載用9分類、「その他」を除く8分類）+ 検索専用の追加分。
 // CATEGORIESが変わってもここを手で書き換える必要が無いよう、引き続き動的に導出する。
@@ -105,9 +112,9 @@ async function searchCategoryCandidates(category, excludeNames) {
         `日本国内で、「${category}」分野を中心に、フリーランス(業務委託・準委任契約)向けに` +
         `案件紹介・マッチングを行っているエージェント/サービスを、Web検索を使って` +
         `実在するものだけ探してください。\n\n` +
-        `対象は「フリーランス」向けに限定せず、会社員の「副業」「複業」向けの案件紹介・` +
-        `マッチングサービスも含めてください（実質的にフリーランス向けと同じ業態のサービスが` +
-        `多いため）。\n\n` +
+        `対象は「フリーランス」向けに限定せず、「副業」「複業」「業務委託」「個人事業主」` +
+        `「ギグワーク」「スキルシェア」といった関連する文脈のサービスも幅広く含めて` +
+        `検索してください（実質的にフリーランス向けと同じ業態のサービスが多いため）。\n\n` +
         `除外リスト(既に掲載済み・既に他カテゴリーで見つかった、これらは含めない): ${excludeNames.join('、')}\n\n` +
         `条件:\n` +
         `- 検索で実在を確認できた企業のみ回答すること。知識だけで` +
@@ -133,24 +140,145 @@ async function searchCategoryCandidates(category, excludeNames) {
   return extractJsonArray(lastText.text);
 }
 
+/** discoverFromComparisonArticles() が1回の呼び出しで提案を求める候補数の上限。 */
+const COMPARISON_ARTICLE_SEARCH_LIMIT = 10;
+
+/**
+ * discoverCandidates() の集計・カテゴリー別内訳で、比較記事経由のメタ発見を
+ * 1つの「カテゴリー」的な項目として扱うための表示ラベル。
+ */
+const COMPARISON_ARTICLE_LABEL = '比較記事経由（メタ発見）';
+
+/**
+ * searchCategoryCandidates() のように会社名を直接検索させるのではなく、Web上の
+ * 「フリーランスエージェント おすすめ比較」のような複数サービスを横並びで紹介する
+ * まとめ記事・比較記事を検索させ、記事内で言及されている運営会社名を横断的に抽出する、
+ * 別系統の発見経路。1社ずつの直接検索では見つけにくい、まとめ記事側でしか
+ * 言及されていないサービスのカバレッジを広げる狙い。
+ *
+ * 比較記事は公式サイトへの直リンクを持たない（アフィリエイトリンク経由等）ことが
+ * 多いため、公式サイトURLはAIに別途検索・推定させる。戻り値は searchCategoryCandidates()
+ * と同じ { name, website } 形式の候補配列（実在の最終判定は必ず呼び出し元が
+ * verifyCandidate() で行う。ここでの website はあくまでAIの推定値）。複数記事に
+ * またがって言及されていた場合は mentionCount（言及記事数の目安）も付与させるが、
+ * AIが省略しても動作に支障が無いようオプション扱いとする。
+ *
+ * maxCandidates は searchCategoryCandidates() と異なり呼び出し側から渡す（残り枠に
+ * 応じて1回の検索で提案させる件数を絞り、無駄なAPI呼び出しを抑えるため）。
+ */
+async function discoverFromComparisonArticles(excludeNames, maxCandidates) {
+  if (!(maxCandidates > 0)) return [];
+
+  const anthropic = getAnthropicClient();
+  const limit = Math.min(maxCandidates, COMPARISON_ARTICLE_SEARCH_LIMIT);
+
+  const response = await anthropic.messages.create({
+    model: DISCOVERY_MODEL,
+    max_tokens: 2000,
+    tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 6 }],
+    messages: [{
+      role: 'user',
+      content:
+        `日本国内で、「フリーランスエージェント おすすめ 比較」「業務委託 案件紹介 まとめ」` +
+        `「副業 複業 マッチングサービス 比較」のような、フリーランス(業務委託・準委任契約)・` +
+        `副業/複業向けの案件紹介・マッチングサービスを複数まとめて紹介・比較している記事を` +
+        `Web検索で複数探し、それらの記事内で言及されているサービスの運営会社名を横断的に` +
+        `抽出してください。\n\n` +
+        `1本の記事だけでなく、できるだけ複数の記事を検索・参照し、複数の記事にまたがって` +
+        `言及されている（＝信頼度が高いと考えられる）会社を優先してください。\n\n` +
+        `除外リスト(既に掲載済み・既に見つかった、これらは含めない): ${excludeNames.join('、')}\n\n` +
+        `条件:\n` +
+        `- 比較記事・まとめ記事側の情報だけに頼らず、可能であれば各社の公式サイトも別途` +
+        `  検索し、正しい公式サイトURLを特定すること（比較記事からのアフィリエイトリンク・` +
+        `  短縮URLではなく、そのサービス自体の公式サイトのURLを回答すること）\n` +
+        `- 実在するサービスのみ回答すること。知識だけで推測したり、実在確認ができない` +
+        `  サービスを創作しないこと\n` +
+        `- 最大${limit}件まで\n` +
+        `- 個人ブログの単発レビューではなく、複数サービスを横並びで紹介・比較している` +
+        `  記事を対象にすること\n\n` +
+        `検索が終わったら、最後に必ず以下の形式のJSON配列のみを出力` +
+        `してください(前後に説明文やコードフェンスを付けないこと)。mentionCountは` +
+        `言及していた記事の本数の目安で、わからない場合は省略して構いません。\n` +
+        `[{"name": "会社名", "website": "公式サイトURL", "mentionCount": 言及記事数}, ...]\n` +
+        `該当なしの場合は空配列[]を出力してください。`,
+    }],
+  });
+
+  const textBlocks = response.content.filter(b => b.type === 'text');
+  const lastText = textBlocks[textBlocks.length - 1];
+  if (!lastText) {
+    console.error(`agent-discovery: [${COMPARISON_ARTICLE_LABEL}] AI応答にtextブロックが含まれていませんでした。`);
+    return [];
+  }
+  return extractJsonArray(lastText.text);
+}
+
+/**
+ * 1回の検索呼び出しで見つかった候補群を、既存の除外セットと突き合わせて重複を除き、
+ * maxCandidates上限までverifyCandidate()まで通す共通処理。searchCategoryCandidates()の
+ * カテゴリーループ・discoverFromComparisonArticles()のメタ発見のどちらからも同じ形で
+ * 呼べるよう discoverCandidates() から切り出した（挙動は元のカテゴリーループと同一）。
+ * verified/skipped/perCategoryへは呼び出し元の配列へ直接push（同一の集計に積み上げる）。
+ */
+async function collectVerifiedCandidates(rawCandidates, label, excludeCores, maxCandidates, verified, skipped, perCategory) {
+  let found = 0;
+  let listed = 0;
+  let skippedInLabel = 0;
+
+  for (const candidate of rawCandidates) {
+    const core = companyNameCore(candidate.name);
+    if (excludeCores.has(core)) continue; // 既存掲載・他の検索経路との重複
+    excludeCores.add(core);
+    found += 1;
+
+    if (verified.length >= maxCandidates) {
+      // 上限到達後は、他に見つかっていた候補についても実在照合(HTTPリクエスト)を行わない。
+      continue;
+    }
+
+    const verification = await module.exports.verifyCandidate(candidate);
+    if (verification.ok) {
+      verified.push({
+        candidate,
+        category: label,
+        pageText: verification.pageText,
+        verifiedUrl: verification.verifiedUrl,
+        thinContent: verification.thinContent,
+      });
+      listed += 1;
+    } else {
+      skipped.push({ candidate, category: label, reason: verification.reason });
+      skippedInLabel += 1;
+    }
+  }
+
+  perCategory.push({ category: label, found, listed, skipped: skippedInLabel });
+  console.log(`agent-discovery: [${label}] 発見${found}件・掲載${listed}件・スキップ${skippedInLabel}件`);
+}
+
 /**
  * SEARCH_CATEGORIES を順番にループし、カテゴリーごとに searchCategoryCandidates() で
  * 発見した候補を、その場で verifyCandidate() まで通す（AIの「実在する」という自己申告を
- * 無条件に信用しない、という2段階方式の原則はここでも維持する）。
+ * 無条件に信用しない、という2段階方式の原則はここでも維持する）。カテゴリーループの後、
+ * discoverFromComparisonArticles() による比較記事経由のメタ発見も、同じ扱いの
+ * 追加の1項目として同じ集計・早期終了ロジックの対象に含める。
  *
- * - 見つかった候補はカテゴリーをまたいで重複させないよう、都度 excludeNames に追加する
+ * - 見つかった候補は検索経路をまたいで重複させないよう、都度 excludeNames に追加する
  *   （このループ内で見つかった分も含む。呼び出し元から渡された既存分と合わせて管理）。
  * - 累計の実在照合成功数（verified.length）が maxCandidates に達したら、以降の
- *   カテゴリーの検索呼び出し自体をスキップして終了する（無駄なAPI呼び出しを避けるため）。
- *   上限到達後にそのカテゴリー内で他に見つかっていた候補も、照合(HTTP fetch)はスキップする。
- * - 内部の searchCategoryCandidates / verifyCandidate 呼び出しは、テストでの差し替え
- *   （モック）を可能にするため、必ず module.exports 経由（後述）で行う。
+ *   カテゴリー・比較記事経由の検索呼び出し自体をスキップして終了する（無駄なAPI呼び出しを
+ *   避けるため）。上限到達後にそのカテゴリー内で他に見つかっていた候補も、照合
+ *   (HTTP fetch)はスキップする。
+ * - 内部の searchCategoryCandidates / discoverFromComparisonArticles / verifyCandidate
+ *   呼び出しは、テストでの差し替え（モック）を可能にするため、必ず module.exports 経由
+ *   （後述）で行う。
  *
  * 戻り値:
  *   {
  *     verified: [{ candidate, category, pageText }, ...],   // 実在照合まで通った候補
  *     skipped:  [{ candidate, category, reason }, ...],     // 不一致・fetch失敗した候補
  *     perCategory: [{ category, found, listed, skipped }, ...], // カテゴリー別の内訳
+ *                                                                // （比較記事経由も同じ形式で1項目として含む）
  *   }
  */
 async function discoverCandidates(excludeNames, maxCandidates) {
@@ -174,39 +302,23 @@ async function discoverCandidates(excludeNames, maxCandidates) {
       continue;
     }
 
-    let found = 0;
-    let listed = 0;
-    let skippedInCategory = 0;
+    await collectVerifiedCandidates(rawCandidates, category, excludeCores, maxCandidates, verified, skipped, perCategory);
+  }
 
-    for (const candidate of rawCandidates) {
-      const core = companyNameCore(candidate.name);
-      if (excludeCores.has(core)) continue; // 既存掲載・他カテゴリーとの重複
-      excludeCores.add(core);
-      found += 1;
-
-      if (verified.length >= maxCandidates) {
-        // 上限到達後は、同カテゴリー内の残り候補についても実在照合(HTTPリクエスト)を行わない。
-        continue;
-      }
-
-      const verification = await module.exports.verifyCandidate(candidate);
-      if (verification.ok) {
-        verified.push({
-          candidate,
-          category,
-          pageText: verification.pageText,
-          verifiedUrl: verification.verifiedUrl,
-          thinContent: verification.thinContent,
-        });
-        listed += 1;
-      } else {
-        skipped.push({ candidate, category, reason: verification.reason });
-        skippedInCategory += 1;
-      }
+  if (verified.length >= maxCandidates) {
+    console.log(`agent-discovery: 上限(${maxCandidates}件)に到達したため、比較記事経由の検索をスキップします。`);
+  } else {
+    let rawCandidates;
+    try {
+      rawCandidates = await module.exports.discoverFromComparisonArticles([...excludeCores], maxCandidates - verified.length);
+    } catch (err) {
+      console.warn(`agent-discovery: [${COMPARISON_ARTICLE_LABEL}] Web検索呼び出しに失敗しました: ${err.message}`);
+      rawCandidates = null;
+      perCategory.push({ category: COMPARISON_ARTICLE_LABEL, found: 0, listed: 0, skipped: 0 });
     }
-
-    perCategory.push({ category, found, listed, skipped: skippedInCategory });
-    console.log(`agent-discovery: [${category}] 発見${found}件・掲載${listed}件・スキップ${skippedInCategory}件`);
+    if (rawCandidates) {
+      await collectVerifiedCandidates(rawCandidates, COMPARISON_ARTICLE_LABEL, excludeCores, maxCandidates, verified, skipped, perCategory);
+    }
   }
 
   return { verified, skipped, perCategory };
@@ -605,6 +717,7 @@ module.exports = {
   extractJsonArray,
   SEARCH_CATEGORIES,
   searchCategoryCandidates,
+  discoverFromComparisonArticles,
   discoverCandidates,
   fetchWithVerifyUA,
   candidateFetchUrls,
