@@ -732,14 +732,23 @@ function renderRecommend(){
   scroll.scrollLeft = 0;
 }
 
-const recommendAutoScroll = { rafId: null, position: 0, paused: false, resumeTimer: null };
+const recommendAutoScroll = { rafId: null, position: 0, paused: false, resumeTimer: null, direction: 1 };
 
 /**
- * おすすめ枠をゆっくり自動で循環（ループ）スクロールさせる。ユーザーが触っている間は一時停止する。
+ * おすすめ枠をゆっくり自動でスクロールさせる。ユーザーが触っている間は一時停止する。
  *
  * 実際のスクロール位置とは別に recommendAutoScroll.position を浮動小数点のまま自前で積算し、
  * DOMへの反映（scrollLeftは多くのブラウザで整数pxに丸められる）とは切り離している
  * （丸めの影響で位置が進まなくなるのを防ぐため）。
+ *
+ * 通常（1セット分の幅がコンテナ幅より広い、＝featured等の件数が十分にある場合）は、
+ * 2セット描画した1セット目→2セット目への継ぎ目を利用した継ぎ目なしループで進め続ける。
+ * featured件数が少なく1セット分がコンテナ内に収まってしまう場合（図鑑4-3で判明した、
+ * デスクトップ幅でスライダーが動かないケース）は、継ぎ目なしループの前提が成立しない
+ * ため、実際にスクロール可能な範囲（描画済みの2セット分の幅 - コンテナ幅）の右端・
+ * 左端で向きを反転する、通常の往復スクロールに切り替える。
+ * どちらのモードかは幅（＝レイアウト）に応じて毎フレーム判定し直すため、リサイズで
+ * 幅が変わった場合も次のフレームから自動的に追従する。
  */
 function startRecommendAutoScroll(){
   const scroll = document.getElementById("recommendScroll");
@@ -757,11 +766,28 @@ function startRecommendAutoScroll(){
     if(!recommendAutoScroll.paused){
       // 2セット描画しているため、1セット分の幅がちょうどループの周期になる
       const oneSetWidth = scroll.scrollWidth / 2;
+      const delta = SPEED_PX_PER_SEC * dt;
       if(oneSetWidth > scroll.clientWidth){
-        let next = recommendAutoScroll.position + SPEED_PX_PER_SEC * dt;
+        // 継ぎ目なしループ
+        let next = recommendAutoScroll.position + delta;
         if(next >= oneSetWidth) next -= oneSetWidth; // 継ぎ目なく先頭へ（2セット目→1セット目相当の位置へ）
         recommendAutoScroll.position = next;
         scroll.scrollLeft = next;
+      } else {
+        // 通常の往復スクロール（件数が少なくコンテナ内に収まってしまう場合のフォールバック）
+        const maxScroll = scroll.scrollWidth - scroll.clientWidth;
+        if(maxScroll > 0){
+          let next = recommendAutoScroll.position + delta * recommendAutoScroll.direction;
+          if(next >= maxScroll){
+            next = maxScroll;
+            recommendAutoScroll.direction = -1;
+          } else if(next <= 0){
+            next = 0;
+            recommendAutoScroll.direction = 1;
+          }
+          recommendAutoScroll.position = next;
+          scroll.scrollLeft = next;
+        }
       }
     }
     recommendAutoScroll.rafId = requestAnimationFrame(step);
