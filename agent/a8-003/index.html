@@ -2,13 +2,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>株式会社アクロビジョン｜フリーランス案件図鑑</title>
-<meta name="description" id="meta-description" content="AI技術による自動マッチングで、ITエンジニアに最適な案件を紹介するエージェントサービス 株式会社アクロビジョン（フリーランス案件マッチング）の対応エリア・特徴・手数料の目安をフリーランス案件図鑑で確認できます。">
+<meta name="description" id="meta-description" content="AI自動マッチングで、IT系フリーランスエンジニアに豊富な案件をタイムリー提案するエージェントサービス 株式会社アクロビジョン（フリーランス案件マッチング）の対応エリア・特徴・手数料の目安をフリーランス案件図鑑で確認できます。">
 <meta property="og:title" id="og-title" content="株式会社アクロビジョン｜フリーランス案件図鑑">
-<meta property="og:description" id="og-description" content="AI技術による自動マッチングで、ITエンジニアに最適な案件を紹介するエージェントサービス 株式会社アクロビジョン（フリーランス案件マッチング）の対応エリア・特徴・手数料の目安をフリーランス案件図鑑で確認できます。">
+<meta property="og:description" id="og-description" content="AI自動マッチングで、IT系フリーランスエンジニアに豊富な案件をタイムリー提案するエージェントサービス 株式会社アクロビジョン（フリーランス案件マッチング）の対応エリア・特徴・手数料の目安をフリーランス案件図鑑で確認できます。">
 <meta property="og:type" content="website">
 <meta property="og:url" id="og-url" content="https://freelance-anken-zukan.net/agent/a8-003/">
 <link rel="canonical" href="https://freelance-anken-zukan.net/agent/a8-003/" id="canonical-link">
-<script src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202608310101/show_ads_impl.js?bust=122880848" fetchpriority="high"></script><script type="application/ld+json" id="ld-json">{"@context":"https://schema.org","@type":"EmploymentAgency","name":"株式会社アクロビジョン","description":"AI技術による自動マッチングで、登録者ごとにパーソナライズされた案件をタイムリーに提案します。全国拠点を活かし、関東中心ながらフルリモート案件も対応可能。フリーランス支援18年の実績に基づく安定感のあるサポートが特徴で、業界トップクラスの高単価報酬と案件の継続確保を支援します。","areaServed":"全国（関東中心、フルリモート案件も対応）","url":"https://px.a8.net/svt/ejp?a8mat=4BC3YO+E8M9EI+4LXM+5YJRM"}</script>
+<script src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202609030101/show_ads_impl.js?bust=122880885" fetchpriority="high"></script><script type="application/ld+json" id="ld-json">{"@context":"https://schema.org","@type":"EmploymentAgency","name":"株式会社アクロビジョン","description":"AI技術による自動マッチングで、登録者ごとにパーソナライズされた案件をタイムリーに提案。全国拠点とフルリモート案件対応で、地域を限定せずに仕事を獲得可能。18年の支援実績による業界経験を活かし、案件が途切れないようなサポートと長期的なキャリアビジョン相談も実施。","areaServed":"全国（関東中心、フルリモート案件も対応）","url":"https://px.a8.net/svt/ejp?a8mat=4BC3YO+E8M9EI+4LXM+5YJRM"}</script>
 <meta property="og:image" content="/ogp-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -45,7 +45,14 @@
   *{box-sizing:border-box;}
   body{
     margin:0;
-    background:var(--paper);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(29,95,168,0.24) 0%, transparent 42%),
+      radial-gradient(circle at 85% 15%, rgba(211,47,47,0.12) 0%, transparent 38%),
+      radial-gradient(circle at 20% 85%, rgba(106,76,147,0.13) 0%, transparent 40%),
+      radial-gradient(circle at 88% 88%, rgba(18,58,107,0.22) 0%, transparent 44%),
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.5) 0%, transparent 55%),
+      var(--paper);
+    background-attachment:fixed;
     color:var(--ink);
     font-family:'Zen Kaku Gothic New', sans-serif;
     -webkit-font-smoothing:antialiased;
@@ -54,11 +61,26 @@
 
   /* header */
   header{
+    position:relative;
     padding:64px 16px 44px;
     background:
       radial-gradient(600px 260px at 15% -20%, rgba(31,111,99,.10), transparent 60%),
       radial-gradient(500px 220px at 100% 0%, rgba(184,134,59,.10), transparent 55%),
       var(--paper);
+  }
+  .sister-site-link{
+    position:absolute;top:16px;right:16px;
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--accent);color:#fff;
+    font-size:12.5px;font-weight:700;
+    padding:8px 14px;border-radius:999px;
+    text-decoration:none;white-space:nowrap;
+    box-shadow:0 1px 4px rgba(0,0,0,.12);
+    transition:background-color .12s, box-shadow .12s;
+  }
+  .sister-site-link:hover{background:var(--accent-deep);box-shadow:0 2px 6px rgba(0,0,0,.16);}
+  @media (max-width:600px){
+    .sister-site-link{top:10px;right:10px;font-size:11px;padding:7px 11px;}
   }
   header .inner{max-width:860px;margin:0 auto;text-align:center;}
   h1{
@@ -388,10 +410,11 @@
 <body class="mode-candidate">
 
 <header>
+  <a class="sister-site-link" href="https://agent-zukan.net/" target="_blank" rel="noopener noreferrer">転職するならこちら →</a>
   <div class="inner">
     <h1 class="home-link" onclick="goHome()">フリーランス案件<span class="mark">図鑑</span></h1>
     <div class="badge-row">
-      <span class="agent-count-badge" id="agentCountBadge">全国のサービスを50件掲載中！</span>
+      <span class="agent-count-badge" id="agentCountBadge">全国のサービスを72件掲載中！</span>
       <span class="update-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8863B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg>
         新着サービス毎日更新！
@@ -460,14 +483,14 @@
           <div class="detail-head-rating"><span class="rating-badge"><span class="star">★★★★★</span><span class="star-empty"></span><span class="count">（図鑑スコア）</span></span></div>
           <span class="category-pill">フリーランス案件マッチング</span>
           <h2>株式会社アクロビジョン</h2>
-          <p class="one-liner">AI技術による自動マッチングで、ITエンジニアに最適な案件を紹介するエージェントサービス</p>
+          <p class="one-liner">AI自動マッチングで、IT系フリーランスエンジニアに豊富な案件をタイムリー提案するエージェントサービス</p>
         </div>
       </div>
 
       <div class="d-section">
         <h4>このサービスの特徴</h4>
-        <p class="body-text">AI技術による自動マッチングで、登録者ごとにパーソナライズされた案件をタイムリーに提案します。全国拠点を活かし、関東中心ながらフルリモート案件も対応可能。フリーランス支援18年の実績に基づく安定感のあるサポートが特徴で、業界トップクラスの高単価報酬と案件の継続確保を支援します。</p>
-        <ul class="feature-list"><li>AI自動マッチングによるパーソナライズ案件提案</li><li>全国拠点によるフルリモート案件対応</li><li>高単価報酬と継続的な案件確保支援</li></ul>
+        <p class="body-text">AI技術による自動マッチングで、登録者ごとにパーソナライズされた案件をタイムリーに提案。全国拠点とフルリモート案件対応で、地域を限定せずに仕事を獲得可能。18年の支援実績による業界経験を活かし、案件が途切れないようなサポートと長期的なキャリアビジョン相談も実施。</p>
+        <ul class="feature-list"><li>AI技術による自動マッチングで、スキルに合わせたパーソナライズ案件を提案</li><li>全国拠点とフルリモート案件対応で、地域を限定せずに稼働可能</li><li>18年の支援実績による安定感のあるサポートと長期的なキャリアビジョン相談</li></ul>
       </div>
 
       
@@ -478,7 +501,7 @@
           <div><div class="k">対応エリア</div><div class="v">全国（関東中心、フルリモート案件も対応）</div></div>
           <div><div class="k">何に特化しているか</div><div class="v">フリーランス案件マッチング</div></div>
           <div><div class="k">契約形態</div><div class="v">非公開（お問い合わせで確認）</div></div>
-          <div><div class="k">リモート対応</div><div class="v">フルリモート案件も対応</div></div>
+          <div><div class="k">リモート対応</div><div class="v">フルリモート案件対応</div></div>
         </div>
       </div>
 
@@ -489,7 +512,7 @@
       </div>
     </div>
 
-</div><ins class="adsbygoogle adsbygoogle-noablate" data-ad-hi="true" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="run-ad-auction" src="https://googleads.g.doubleclick.net/pagead/ads?client=ca-pub-5761092657360295&amp;output=html&amp;adk=1812271804&amp;adf=3025194257&amp;abgtt=6&amp;lmt=1788618754&amp;plat=1%3A8%2C2%3A8%2C3%3A2162688%2C4%3A2162688%2C9%3A32776%2C16%3A8388608%2C17%3A32%2C24%3A32%2C25%3A32%2C30%3A1048576%2C32%3A32%2C41%3A32%2C42%3A32%2C43%3A32%2C44%3A32&amp;format=0x0&amp;url=http%3A%2F%2Flocalhost%3A8935%2Findex.html%3Fssg%3D1%23%2Fagent%2Fa8-003&amp;pra=5&amp;aiof=11&amp;asro=0&amp;aimartd=4&amp;aieuf=1&amp;aicrs=1&amp;uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1Mi4wLjc5NzcuNTQiLG51bGwsMCxudWxsLCI2NCIsW1siTm90P0FfQnJhbmQiLCIyNC4wLjAuMCJdLFsiQ2hyb21pdW0iLCIxNTIuMC43OTc3LjU0Il1dLDBd&amp;dt=1788618754480&amp;bpp=3&amp;bdt=31&amp;idt=73&amp;shv=r20260902&amp;mjsv=m202608310101&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;cookie_enabled=1&amp;eoidce=1&amp;nras=1&amp;correlator=5010908513790&amp;frm=20&amp;pv=2&amp;u_tz=0&amp;u_his=2&amp;u_h=600&amp;u_w=800&amp;u_ah=600&amp;u_aw=800&amp;u_cd=24&amp;u_sd=1&amp;dmc=16&amp;adx=-12245933&amp;ady=-12245933&amp;biw=800&amp;bih=600&amp;scr_x=0&amp;scr_y=0&amp;eid=95399629%2C95400775%2C95401044%2C122880848%2C95340253%2C95340255&amp;oid=2&amp;pvsid=7153764888590918&amp;tmod=453204013&amp;uas=0&amp;nvt=1&amp;fsapi=1&amp;fc=1920&amp;brdim=10%2C10%2C10%2C10%2C800%2C0%2C780%2C580%2C800%2C600&amp;vis=1&amp;rsz=%7C%7Cs%7C&amp;abl=NS&amp;fu=32768&amp;bc=31&amp;bz=0.98&amp;ifi=1&amp;uci=a!1&amp;fsb=1&amp;dtd=87" data-google-container-id="a!1" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true"></iframe></div></ins>
+</div>
 
 <div class="wrap">
   <div class="ad-slot footer-ad">
@@ -763,14 +786,23 @@ function renderRecommend(){
   scroll.scrollLeft = 0;
 }
 
-const recommendAutoScroll = { rafId: null, position: 0, paused: false, resumeTimer: null };
+const recommendAutoScroll = { rafId: null, position: 0, paused: false, resumeTimer: null, direction: 1 };
 
 /**
- * おすすめ枠をゆっくり自動で循環（ループ）スクロールさせる。ユーザーが触っている間は一時停止する。
+ * おすすめ枠をゆっくり自動でスクロールさせる。ユーザーが触っている間は一時停止する。
  *
  * 実際のスクロール位置とは別に recommendAutoScroll.position を浮動小数点のまま自前で積算し、
  * DOMへの反映（scrollLeftは多くのブラウザで整数pxに丸められる）とは切り離している
  * （丸めの影響で位置が進まなくなるのを防ぐため）。
+ *
+ * 通常（1セット分の幅がコンテナ幅より広い、＝featured等の件数が十分にある場合）は、
+ * 2セット描画した1セット目→2セット目への継ぎ目を利用した継ぎ目なしループで進め続ける。
+ * featured件数が少なく1セット分がコンテナ内に収まってしまう場合（図鑑4-3で判明した、
+ * デスクトップ幅でスライダーが動かないケース）は、継ぎ目なしループの前提が成立しない
+ * ため、実際にスクロール可能な範囲（描画済みの2セット分の幅 - コンテナ幅）の右端・
+ * 左端で向きを反転する、通常の往復スクロールに切り替える。
+ * どちらのモードかは幅（＝レイアウト）に応じて毎フレーム判定し直すため、リサイズで
+ * 幅が変わった場合も次のフレームから自動的に追従する。
  */
 function startRecommendAutoScroll(){
   const scroll = document.getElementById("recommendScroll");
@@ -788,11 +820,28 @@ function startRecommendAutoScroll(){
     if(!recommendAutoScroll.paused){
       // 2セット描画しているため、1セット分の幅がちょうどループの周期になる
       const oneSetWidth = scroll.scrollWidth / 2;
+      const delta = SPEED_PX_PER_SEC * dt;
       if(oneSetWidth > scroll.clientWidth){
-        let next = recommendAutoScroll.position + SPEED_PX_PER_SEC * dt;
+        // 継ぎ目なしループ
+        let next = recommendAutoScroll.position + delta;
         if(next >= oneSetWidth) next -= oneSetWidth; // 継ぎ目なく先頭へ（2セット目→1セット目相当の位置へ）
         recommendAutoScroll.position = next;
         scroll.scrollLeft = next;
+      } else {
+        // 通常の往復スクロール（件数が少なくコンテナ内に収まってしまう場合のフォールバック）
+        const maxScroll = scroll.scrollWidth - scroll.clientWidth;
+        if(maxScroll > 0){
+          let next = recommendAutoScroll.position + delta * recommendAutoScroll.direction;
+          if(next >= maxScroll){
+            next = maxScroll;
+            recommendAutoScroll.direction = -1;
+          } else if(next <= 0){
+            next = 0;
+            recommendAutoScroll.direction = 1;
+          }
+          recommendAutoScroll.position = next;
+          scroll.scrollLeft = next;
+        }
       }
     }
     recommendAutoScroll.rafId = requestAnimationFrame(step);
@@ -1598,7 +1647,7 @@ loadAgents();
 </script>
 
 
-<iframe src="https://www.google.com/recaptcha/api2/aframe" width="0" height="0" style="display: none;"></iframe><div id="ssgCompanyContent" hidden="" aria-hidden="true">
+<ins class="adsbygoogle adsbygoogle-noablate" data-ad-hi="true" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="run-ad-auction" src="https://googleads.g.doubleclick.net/pagead/ads?client=ca-pub-5761092657360295&amp;output=html&amp;adk=1812271804&amp;adf=3025194257&amp;abgtt=6&amp;lmt=1788683045&amp;plat=1%3A8%2C2%3A8%2C3%3A2162688%2C4%3A2162688%2C9%3A32776%2C16%3A8388608%2C17%3A32%2C24%3A32%2C25%3A32%2C30%3A1048576%2C32%3A32%2C41%3A32%2C42%3A32%2C43%3A32%2C44%3A32&amp;format=0x0&amp;url=http%3A%2F%2Flocalhost%3A8935%2Findex.html%3Fssg%3D1%23%2Fagent%2Fa8-003&amp;pra=5&amp;asro=0&amp;aimartd=4&amp;aieuf=1&amp;aicrs=1&amp;uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1Mi4wLjc5NzcuNTQiLG51bGwsMCxudWxsLCI2NCIsW1siTm90P0FfQnJhbmQiLCIyNC4wLjAuMCJdLFsiQ2hyb21pdW0iLCIxNTIuMC43OTc3LjU0Il1dLDBd&amp;dt=1788683045885&amp;bpp=4&amp;bdt=179&amp;idt=87&amp;shv=r20260902&amp;mjsv=m202609030101&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;cookie_enabled=1&amp;eoidce=1&amp;nras=1&amp;correlator=454627626862&amp;frm=20&amp;pv=2&amp;u_tz=0&amp;u_his=2&amp;u_h=600&amp;u_w=800&amp;u_ah=600&amp;u_aw=800&amp;u_cd=24&amp;u_sd=1&amp;dmc=16&amp;adx=-12245933&amp;ady=-12245933&amp;biw=800&amp;bih=600&amp;scr_x=0&amp;scr_y=0&amp;eid=95399630%2C95400774%2C95401044%2C122880885&amp;oid=2&amp;pvsid=3310855482421948&amp;tmod=367640221&amp;uas=0&amp;nvt=1&amp;fsapi=1&amp;fc=1920&amp;brdim=10%2C10%2C10%2C10%2C800%2C0%2C780%2C580%2C800%2C600&amp;vis=1&amp;rsz=%7C%7Cs%7C&amp;abl=NS&amp;fu=32768&amp;bc=31&amp;bz=0.98&amp;ifi=1&amp;uci=a!1&amp;fsb=1&amp;dtd=106" data-google-container-id="a!1" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true"></iframe></div></ins><iframe src="https://www.google.com/recaptcha/api2/aframe" width="0" height="0" style="display: none;"></iframe><div id="ssgCompanyContent" hidden="" aria-hidden="true">
       <button class="back-btn" onclick="navigateToList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>一覧に戻る</button>
       <div class="detail-head-row">
         <div class="eyecatch-row hero">
@@ -1613,14 +1662,14 @@ loadAgents();
           <div class="detail-head-rating"><span class="rating-badge"><span class="star">★★★★★</span><span class="star-empty"></span><span class="count">（図鑑スコア）</span></span></div>
           <span class="category-pill">フリーランス案件マッチング</span>
           <h2>株式会社アクロビジョン</h2>
-          <p class="one-liner">18年の実績を持つ安定感のあるITフリーランスエンジニア向け案件紹介サービス</p>
+          <p class="one-liner">全国拠点と18年の支援実績で、高単価案件の安定供給を実現</p>
         </div>
       </div>
 
       <div class="d-section">
         <h4>このサービスの特徴</h4>
-        <p class="body-text">安定的な案件確保や保障を求めるフリーランスエンジニアに対し、長年の業界経歴を背景とした信頼性の高いマッチングサービスを提供できます。</p>
-        <ul class="feature-list"><li>AI自動マッチングによるパーソナライズ案件提案</li><li>全国拠点によるフルリモート案件対応</li><li>高単価報酬と継続的な案件確保支援</li></ul>
+        <p class="body-text">IT案件登録数が最大級で、業界トップクラスの高単価報酬を提供できる基盤を保有。長年の実績から、フリーランスの安定的な案件確保と報酬面での信頼を構築。</p>
+        <ul class="feature-list"><li>AI技術による自動マッチングで、スキルに合わせたパーソナライズ案件を提案</li><li>全国拠点とフルリモート案件対応で、地域を限定せずに稼働可能</li><li>18年の支援実績による安定感のあるサポートと長期的なキャリアビジョン相談</li></ul>
       </div>
 
       <div class="d-section">
