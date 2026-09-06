@@ -2,128 +2,38 @@
   "クラウドワークス テック": {
     "name": "クラウドワークス テック",
     "website": "https://crowdworks.jp/lp/tech/",
-    "reason": "fetch_failed",
-    "checkedAt": "2026-09-05T06:46:20.268Z"
-  },
-  "Findy Freelance（ファインディフリーランス）": {
-    "name": "Findy Freelance（ファインディフリーランス）",
-    "website": "https://freelance.findy-code.io/",
     "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "Webist（クリーク・アンド・リバー社）": {
-    "name": "Webist（クリーク・アンド・リバー社）",
-    "website": "https://www.cri.co.jp/professionals/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "Creative Village フリーランス案件紹介（C&Rクリエイティブ）": {
-    "name": "Creative Village フリーランス案件紹介（C&Rクリエイティブ）",
-    "website": "https://www.creativevillage.ne.jp/lp/job-match/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "ミライトマッチ（株式会社IT&Plucktice）": {
-    "name": "ミライトマッチ（株式会社IT&Plucktice）",
-    "website": "https://miwrite-match.jp/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
+    "checkedAt": "2026-09-06T11:36:45.846Z"
   },
   "フリコン（株式会社ヘルスベイシス）": {
     "name": "フリコン（株式会社ヘルスベイシス）",
     "website": "https://fricon.jp/",
     "reason": "fetch_failed",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
+    "checkedAt": "2026-09-06T11:36:45.846Z"
   },
   "Cabiner（キャビナー）": {
     "name": "Cabiner（キャビナー）",
     "website": "https://cabiner.jp/",
     "reason": "fetch_failed",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "MovieLance（ムービーランス）": {
-    "name": "MovieLance（ムービーランス）",
-    "website": "https://www.movielance.net/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "VideoWorks（ビデオワークス）": {
-    "name": "VideoWorks（ビデオワークス）",
-    "website": "https://videoworks.com/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
+    "checkedAt": "2026-09-06T11:36:45.846Z"
   },
   "ハイパフォコンサル（INTLOOP株式会社）": {
     "name": "ハイパフォコンサル（INTLOOP株式会社）",
     "website": "https://www.high-performer.jp/",
     "reason": "fetch_failed",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "AXIS Solutions（アクシスコンサルティング株式会社）": {
-    "name": "AXIS Solutions（アクシスコンサルティング株式会社）",
-    "website": "https://www.free-consul.biz/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "HiTalent（ハイタレント）": {
-    "name": "HiTalent（ハイタレント）",
-    "website": "https://hitalent.co.jp/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "ProConnect（プロコネクト）": {
-    "name": "ProConnect（プロコネクト）",
-    "website": "https://pro-connect.jp/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
+    "checkedAt": "2026-09-06T11:36:45.846Z"
   },
   "BTCエージェント（株式会社ビッグツリーテクノロジー&コンサルティング）": {
     "name": "BTCエージェント（株式会社ビッグツリーテクノロジー&コンサルティング）",
     "website": "https://btc-agent.com/",
     "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "Warisプロフェッショナル（Waris）": {
-    "name": "Warisプロフェッショナル（Waris）",
-    "website": "https://waris.jp",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "人事プロパートナーズ（Hajimari）": {
-    "name": "人事プロパートナーズ（Hajimari）",
-    "website": "https://itpropartners.com/hr",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "クラウドリンクス（CrowdLinks）": {
-    "name": "クラウドリンクス（CrowdLinks）",
-    "website": "https://crowdlinks.jp",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
+    "checkedAt": "2026-09-06T11:36:45.846Z"
   },
   "マーケティングプロパートナーズ（Hajimari）": {
     "name": "マーケティングプロパートナーズ（Hajimari）",
     "website": "https://marketing-pro-partners.com/",
     "reason": "fetch_failed",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "ミエルカコネクト（Faber Company）": {
-    "name": "ミエルカコネクト（Faber Company）",
-    "website": "https://mieruca-connect.com/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "サーキュレーション（ProSharing Consulting）": {
-    "name": "サーキュレーション（ProSharing Consulting）",
-    "website": "https://circu.co.jp/pro-sharing/professional/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
-  },
-  "Anycrew（エニィクルー）": {
-    "name": "Anycrew（エニィクルー）",
-    "website": "https://app.any-crew.com/",
-    "reason": "name_mismatch",
-    "checkedAt": "2026-09-05T10:17:15.685Z"
+    "checkedAt": "2026-09-06T11:36:45.846Z"
   },
   "レバテックフリーランス（レバテック株式会社）": {
     "name": "レバテックフリーランス（レバテック株式会社）",
