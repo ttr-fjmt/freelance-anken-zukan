@@ -586,7 +586,23 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
             'ページ本文から読み取れる具体的な特徴を、appealとは別に箇条書き用として1〜3件抽出する' +
             '（各項目は15〜25字程度の短い体言止め・簡潔な文で、appealの要約・言い換えでよい）。' +
             'creative作文ではなく、本文に実際に記載されている内容の抽出であること。' +
-            '本文から具体的な特徴を読み取れない場合は空配列 [] とする（無理に埋めない）。',
+            '本文から具体的な特徴を読み取れない場合は空配列 [] とする（無理に埋めない）。' +
+            'あくまで案件を探すフリーランス側にとっての魅力という視点で書くこと' +
+            '（企業側にとっての魅力は companyFeatures の方に書く）。',
+        },
+        companyFeatures: {
+          type: 'array',
+          items: { type: 'string' },
+          maxItems: 3,
+          description:
+            'ページ本文から読み取れる、案件を発注・掲載したい企業目線で魅力的な具体的事実を、' +
+            'featuresとは別の視点で箇条書き用として最大3件抽出する（各項目は15〜25字程度の' +
+            '短い体言止め・簡潔な文）。例: 掲載・発注のしやすさ、採用工数削減効果、料金体系の' +
+            '分かりやすさ、対応の速さ等、発注側企業にとってのメリットとなる事実。' +
+            'featuresの内容を企業向けに言い換えただけの焼き直しにしないこと。creative作文では' +
+            'なく、本文に実際に記載されている内容の抽出であること。ページ本文に企業目線で' +
+            '読み取れる具体的な事実が無い場合は、正直に空配列 [] とする' +
+            '（featuresの使い回しで埋めないこと）。',
         },
         companyAppeal: {
           type: 'string',
@@ -642,7 +658,7 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
       },
       required: [
         'category', 'oneLiner', 'companyOneLiner', 'appeal', 'companyAppeal', 'features',
-        'contractTypes', 'remoteRatio', 'region', 'feeStructure', 'freelancerCount',
+        'companyFeatures', 'contractTypes', 'remoteRatio', 'region', 'feeStructure', 'freelancerCount',
       ],
       additionalProperties: false,
     },
@@ -681,10 +697,16 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
         '厳守事項:\n' +
         '- creative作文ではなく、あくまで本文に実際に記載されている内容の抽出・要約であること。' +
         '本文に基づかない具体的な数値・条件・実績を創作しないこと。\n' +
-        '- 本文に記載が無い項目は、正直に null（contractTypes・featuresなら空配列 []、' +
-        'feeStructure.typeなら"unknown"）としてください。存在しない情報を推測で埋めないこと。\n' +
+        '- 本文に記載が無い項目は、正直に null（contractTypes・features・companyFeaturesなら' +
+        '空配列 []、feeStructure.typeなら"unknown"）としてください。存在しない情報を推測で' +
+        '埋めないこと。\n' +
         '- featuresは、appealの単なる分割ではなく、本文中の別々の具体的な事実（対応領域、実績、' +
-        '保証制度、サポート内容等）をそれぞれ短い箇条書きにすること。\n' +
+        '保証制度、サポート内容等）をそれぞれ短い箇条書きにすること。あくまでフリーランス側' +
+        '視点で書くこと。\n' +
+        '- companyFeaturesは、featuresとは別に、発注・掲載したい企業側にとって魅力的な具体的' +
+        '事実（掲載・発注のしやすさ、採用工数削減効果、料金体系の分かりやすさ等）を書くこと。' +
+        'featuresの言い換え・焼き直しは禁止。本文に企業側視点の情報が無ければ、無理に埋めず' +
+        '正直に空配列 [] とすること。\n' +
         '- appeal/companyAppealは、本文から読み取れる具体的で内容のある特徴を根拠に書くこと' +
         '（「特に情報なし」のような空虚な記述は避ける。ただし本文に手がかりが乏しい場合は無理に' +
         '誇張せず、読み取れる範囲で簡潔にまとめる）。\n' +
@@ -708,6 +730,7 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
   }
   result.categoryHint = result.category === 'その他' ? (result.categoryHint || null) : null;
   if (!Array.isArray(result.features)) result.features = [];
+  if (!Array.isArray(result.companyFeatures)) result.companyFeatures = [];
   if (!Array.isArray(result.contractTypes)) result.contractTypes = [];
   if (!result.feeStructure || typeof result.feeStructure !== 'object') {
     result.feeStructure = { type: 'unknown', note: null };

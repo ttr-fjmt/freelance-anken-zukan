@@ -615,11 +615,34 @@ const DEFAULT_CATEGORIES = [
 let CATEGORY_STYLE = {};
 let CHIP_LABELS = ["all"];
 
+/**
+ * categories.json は promoteCategories() が一定数のエージェントが集まった時点で
+ * カテゴリーを段階的に「昇格」させる設計のため、agent.category（またはcategoryHint）に
+ * 実際にはまだ categories.json に存在しない値が入っているケースがありうる
+ * （図鑑4-6: これが原因でCATEGORY_STYLE[agent.category]がundefinedになり、
+ * eyecatchHTML()がその場で例外を投げてホーム画面全体のレンダリングが止まっていた）。
+ * "その他"のスタイルも無い最悪のケースに備え、中立的な配色のデフォルト値も用意する。
+ */
+const DEFAULT_CATEGORY_STYLE = {
+  from: "#5C6570", to: "#38414A",
+  icon: `<path d="M14 22 h12 l4 6 h20 v22 a2 2 0 0 1-2 2 h-32 a2 2 0 0 1-2-2 v-26 a2 2 0 0 1 2-2 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>`,
+};
+
 /** categories.json（またはフォールバック）の配列から CATEGORY_STYLE / CHIP_LABELS を構築する。 */
 function applyCategoryData(list){
   CATEGORY_STYLE = {};
   list.forEach(c=>{ CATEGORY_STYLE[c.name] = { from:c.from, to:c.to, icon:c.icon }; });
   CHIP_LABELS = ["all", ...list.map(c=>c.name)];
+}
+
+/**
+ * カテゴリー名からスタイルを解決する。categories.jsonにまだ昇格していないカテゴリー
+ * （agent.category・categoryHint由来を問わず）が渡された場合でも、必ず何らかの
+ * スタイルを返す（"その他"→DEFAULT_CATEGORY_STYLEの順でフォールバックし、undefinedを
+ * 返してレンダリングを停止させることが無いようにする）。
+ */
+function resolveCategoryStyle(categoryName){
+  return CATEGORY_STYLE[categoryName] || CATEGORY_STYLE["その他"] || DEFAULT_CATEGORY_STYLE;
 }
 
 async function loadCategories(){
@@ -636,7 +659,7 @@ async function loadCategories(){
 }
 
 function eyecatchHTML(agent, variant, showNotableBadge){
-  const style = CATEGORY_STYLE[agent.category] || CATEGORY_STYLE["IT・Web"];
+  const style = resolveCategoryStyle(agent.category);
   const favicon = agent.faviconUrl
     ? `<img class="favicon" src="${agent.faviconUrl}" alt="" onerror="this.remove()">`
     : "";
@@ -1152,8 +1175,7 @@ function render(){
 
 /** カテゴリー用の小さなアイコンバッジ（一覧・詳細のeyecatchと同じ配色・SVGを流用）。 */
 function categoryIconHTML(categoryName){
-  const style = CATEGORY_STYLE[categoryName];
-  if(!style) return "";
+  const style = resolveCategoryStyle(categoryName);
   return `<span class="home-section-icon" style="background:linear-gradient(135deg, ${style.from}, ${style.to});"><svg viewBox="0 0 64 64" fill="none">${style.icon}</svg></span>`;
 }
 
@@ -1444,7 +1466,7 @@ function openDetail(a){
       <div class="d-section">
         <h4>このサービスの特徴</h4>
         <p class="body-text">${a.companyAppeal || a.commitmentExplanation}</p>
-        <ul class="feature-list">${a.features.map(f=>`<li>${f}</li>`).join("")}</ul>
+        <ul class="feature-list">${(a.companyFeatures && a.companyFeatures.length > 0) ? a.companyFeatures.map(f=>`<li>${f}</li>`).join("") : `<li>非公開（お問い合わせで確認）</li>`}</ul>
       </div>
 
       <div class="d-section">
