@@ -1,16 +1,12 @@
 name: Import A8 affiliate agents
 
-# 運用手順: 新しいExcelファイルを data/a8-import/ に追加してコミット・pushした後、
-# このワークフローを手動実行してください（fileを空欄のままにすると、
-# data/a8-import/ 配下でファイル名が最も新しい .xlsx を自動的に対象にします）。
+# 運用手順: data/a8-import/アフィリエイト案件_フリーランス案件図鑑.xlsx （固定ファイル名）を
+# 都度上書き更新してコミット・pushした後、このワークフローを手動実行してください。
+# 取り込んだ行はExcel側のA列（反映）が自動的にTRUEに更新され、agents.jsonと一緒に
+# コミットされます。
 
 on:
   workflow_dispatch:
-    inputs:
-      file:
-        description: "取り込むExcelファイルのパス（リポジトリルートからの相対パス。空欄なら data/a8-import/ 配下の最新ファイルを自動検出。例: data/a8-import/a8-freelance-20260906.xlsx）"
-        required: false
-        type: string
 
 permissions:
   contents: write
@@ -49,12 +45,7 @@ jobs:
         working-directory: scraper
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          if [ -n "${{ inputs.file }}" ]; then
-            node import-a8.js "../${{ inputs.file }}"
-          else
-            node import-a8.js
-          fi
+        run: node import-a8.js
 
       - name: Install Chrome runtime dependencies
         run: |
@@ -78,8 +69,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add agents.json categories.json sitemap.xml
-          # 明示的にfileが指定された場合も、自動検出の場合も、data/a8-import/配下を
-          # まとめて対象にする（新しいExcelファイルがコミットされていれば含まれる）。
+          # import-a8.jsが処理済み行のA列(反映)をTRUEに書き換えたExcelファイル自体も
+          # 一緒にコミットする。
           git add data/a8-import/
           [ -f data/ssg-manifest.json ] && git add data/ssg-manifest.json
           [ -d agent ] && git add agent

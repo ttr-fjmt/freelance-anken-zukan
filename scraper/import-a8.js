@@ -1,13 +1,19 @@
 'use strict';
 
 /**
- * A8.net アフィリエイト提携サービスのExcel（data/a8-import/ 配下）を読み込み、
- * agents.json に featured サービスとして取り込む。
+ * A8.net アフィリエイト提携サービスのExcel（data/a8-import/ 配下、固定ファイル名
+ * A8_FILE_NAME）を読み込み、agents.json に featured サービスとして取り込む。
  *
- * Excelはagent-zukan側と共通のテンプレート（サイト列で対象を判別する共用シート）
- * のため、B列（サイト）が"フリーランス案件図鑑"の行のみを処理対象とする。
- * G列（対象年代）はフリーランス版のスキーマに存在しない項目のため読み込まない。
+ * 以前はagent-zukan側と共用のテンプレート（サイト列で対象を判別する共用シート）を
+ * 使っており、かつファイル名に日付を含めて複数ファイルの中から最新を検出していたが、
+ * 今後はこのサイト専用の固定ファイル名で都度上書き更新される運用に変更された
+ * （図鑑4-5）。そのため、サイト列によるフィルタリング・複数ファイルからの最新検出
+ * ロジックは廃止した。列の対応付けはExcelのヘッダー行の文言（"広告主名"等）で解決
+ * するため、シート上の列の位置（アルファベット）自体には依存しない。
  *
+ * - 対象行は「広告主名・リンク・特徴」が埋まっている行のみ（対応エリア・特化領域は
+ *   空欄でも対象とする。空欄の場合はAIに特徴列の本文から推測させる。対象年代列は
+ *   今後一切参照しない）。
  * - 既存agents.jsonと会社名（完全一致）で突き合わせる:
  *   - マッチした場合 → 既存エントリを featured: true に格上げし、category/region/
  *     紹介文まわり・affiliateUrl を更新する。id・sourceは変更しない。
@@ -18,24 +24,19 @@
  *   再利用する（現行スキーマ(contractTypes/remoteRatio/feeStructure/freelancerCount)
  *   と一致させるため。structure.jsのbuildWithAIは廃止済みの旧スキーマ
  *   (targetAge/talentRange/companyDetail全項目)を前提としており流用できない）。
- *   Excelには公式サイトの実際のページ本文が無いため、E列（特徴）・H列（なにに
- *   特化しているか）の原文を pageText として渡し、そこからの抽出・要約として
- *   扱わせる。
+ *   Excelには公式サイトの実際のページ本文が無いため、特徴列・特化領域列の原文を
+ *   pageText として渡し、そこからの抽出・要約として扱わせる（対応エリア・
+ *   カテゴリーの推測もこの呼び出しに含まれる）。
  * - ANTHROPIC_API_KEY が無い環境では、buildOfflineA8Fields() による簡易フォール
  *   バックで動作する（データマッピング・重複除去・突き合わせの検証はAPIキー
  *   無しでも行える）。
+ * - 正常に処理（新規追加または既存更新）できた行は、読み込み元Excel自体のA列
+ *   （反映）をTRUEに書き換えて上書き保存する（markRowsReflected）。処理中に
+ *   エラーが起きた行はA列を更新せず、警告をログに出力するのみに留める。
  *
  * 使い方:
- *   node import-a8.js [path-to-xlsx] [--dry-run]
- *   例: node import-a8.js ../data/a8-import/a8-freelance-20260906.xlsx --dry-run
- *
- * path-to-xlsx を省略した場合、data/a8-import/ 配下の .xlsx ファイルのうち、
- * ファイル名の辞書順で最も新しいもの（findLatestA8File参照）を自動的に対象とする。
- * 毎月Tatsuroさんが新しいExcelファイルをこのディレクトリに追加していく運用を想定した
- * もの。ファイル名には a8-freelance-YYYYMMDD.xlsx のように日付を含める前提とする
- * （更新日時ではなくファイル名でソートする理由: GitHub Actions上ではactions/checkout
- * 時に全ファイルの更新日時がチェックアウト時刻にリセットされてしまい、更新日時では
- * 「最新」を正しく判定できないため）。
+ *   node import-a8.js [--dry-run]
+ *   （data/a8-import/<A8_FILE_NAME> を固定で読み込む。パスの指定はできない）
  */
 
 const fs = require('fs');
@@ -52,8 +53,8 @@ const AGENTS_PATH = path.join(__dirname, '..', 'agents.json');
 const CATEGORIES_PATH = path.join(__dirname, '..', 'categories.json');
 const A8_IMPORT_DIR = path.join(__dirname, '..', 'data', 'a8-import');
 
-/** このExcelは複数サイト共用テンプレートのため、この値の行のみを対象とする。 */
-const TARGET_SITE = 'フリーランス案件図鑑';
+/** 今後、A8案件のExcelはこの固定ファイル名で都度上書き更新される運用とする。 */
+const A8_FILE_NAME = 'アフィリエイト案件_フリーランス案件図鑑.xlsx';
 
 const REVIEW_NOTE = '口コミデータは未収集です（今後のアップデートで追加予定）。';
 const COMPANY_REVIEW_NOTE = '企業からの口コミデータは未収集です（今後のアップデートで追加予定）。';
@@ -74,58 +75,16 @@ const A8_COMPANY_DETAIL_DEFAULTS = {
 };
 
 function parseArgs(argv) {
-  const args = { file: null, dryRun: false };
+  const args = { dryRun: false };
   for (const raw of argv) {
     if (raw === '--dry-run') args.dryRun = true;
-    else if (raw.startsWith('--file=')) args.file = raw.slice('--file='.length);
-    else if (!args.file) args.file = raw;
   }
   return args;
 }
 
-/**
- * ファイル名から日付(YYYYMMDD、8桁)と、ハイフン以降の連番(無ければ0扱い)を抽出する。
- * 例: "a8-freelance-20260906.xlsx" → {date:20260906, seq:0}
- *     "a8-freelance-20260906-2.xlsx" → {date:20260906, seq:2}
- * どちらも抽出できないファイル名は date:0,seq:0 として最も古い扱いにする
- * （命名規則に沿わないファイルが誤って「最新」に選ばれないよう安全側に倒す）。
- */
-function parseA8FileNameOrder(fileName) {
-  const m = /(\d{8})(?:-(\d+))?\.xlsx$/i.exec(fileName);
-  if (!m) return { date: 0, seq: 0 };
-  return { date: Number(m[1]), seq: m[2] ? Number(m[2]) : 0 };
-}
-
-/**
- * data/a8-import/ 配下の .xlsx ファイルのうち、ファイル名に含まれる日付(YYYYMMDD)→
- * 連番(ハイフン以降、無ければ0)の順で数値比較し、最も新しいものを返す。
- * 1件も無ければ null を返す。
- *
- * 以前は単純な文字列（辞書順）ソートを使っていたが、"a8-freelance-20260906-2.xlsx"
- * のようなハイフン付き連番を含むファイル名では、ハイフン(-)がピリオド(.)より文字コード上
- * 小さいため、連番の無い "a8-freelance-20260906.xlsx" の方が辞書順で後ろに来てしまい、
- * 誤って「最新」と判定される問題があった（図鑑4-4）。日付・連番をそれぞれ数値として
- * 抽出して比較することで、この文字列比較特有の落とし穴（"-10" < "-2" になる問題も含む）
- * を回避する。
- *
- * GitHub Actions上ではcheckout時に全ファイルの更新日時(mtime)がリセットされるため、
- * mtime比較ではなく引き続きファイル名ベースの比較を採用している。
- */
-function findLatestA8File() {
-  if (!fs.existsSync(A8_IMPORT_DIR)) return null;
-  const files = fs
-    .readdirSync(A8_IMPORT_DIR)
-    .filter(name => /\.xlsx$/i.test(name));
-  if (files.length === 0) return null;
-
-  files.sort((a, b) => {
-    const orderA = parseA8FileNameOrder(a);
-    const orderB = parseA8FileNameOrder(b);
-    if (orderA.date !== orderB.date) return orderA.date - orderB.date;
-    return orderA.seq - orderB.seq;
-  });
-
-  return path.join(A8_IMPORT_DIR, files[files.length - 1]);
+/** data/a8-import/ 配下の固定ファイル名のフルパスを返す（dirを渡すとテスト用に差し替え可能）。 */
+function resolveA8FilePath(dir = A8_IMPORT_DIR) {
+  return path.join(dir, A8_FILE_NAME);
 }
 
 function todayJst() {
@@ -153,24 +112,31 @@ function cell(value) {
 }
 
 /**
- * B列(サイト)が TARGET_SITE の行のみを対象にし、C・D・E・F・H列（広告主名・リンク・
- * 特徴・対応エリア・なにに特化しているか）が全て埋まっている行だけを処理対象として返す。
- * G列（対象年代）はフリーランス版のスキーマに存在しないため読み込まない。
+ * 「広告主名・リンク・特徴」が埋まっている行のみを対象として返す。列の対応付けは
+ * ヘッダー行の文言で解決するため（サイト列の有無・列の並び順の変化に依存しない）、
+ * このExcelが今後サイト専用の固定レイアウトになっても引き続き動作する。
+ * 対応エリア・特化領域は空欄でも対象に含める（後段でAIに推測させるため）。
+ * 対象年代列は今後一切参照しない。
+ *
+ * 各行には sheetRowIndex（0-indexed。物理的なシート上の行番号は sheetRowIndex+1、
+ * ヘッダー行がr=0のため）を持たせる。XLSX.utils.sheet_to_json(sheet,{defval:null})は
+ * 範囲内の行を欠番なく順番に出力するため、出力配列のインデックスがそのまま
+ * 物理行番号に対応することを利用している（markRowsReflectedでの書き戻し用）。
  */
 function readRows(filePath) {
   const wb = XLSX.readFile(filePath);
   const sheet = wb.Sheets[wb.SheetNames[0]];
   const raw = XLSX.utils.sheet_to_json(sheet, { defval: null });
   return raw
-    .filter(r => cell(r['サイト']) === TARGET_SITE)
-    .map(r => ({
+    .map((r, i) => ({
+      sheetRowIndex: i,
       name: cell(r['広告主名']),
       affiliateUrl: extractAffiliateUrl(r['リンク']),
       feature: cell(r['特徴']),
       region: cell(r['対応エリア']),
       specialty: cell(r['なにに特化しているか']),
     }))
-    .filter(r => r.name && r.affiliateUrl && r.feature && r.region && r.specialty);
+    .filter(r => r.name && r.affiliateUrl && r.feature);
 }
 
 /**
@@ -201,7 +167,7 @@ function nextA8IdCounter(agents) {
 }
 
 /**
- * ANTHROPIC_API_KEY が無い場合の非AIフォールバック。E・H列の原文からの機械的な
+ * ANTHROPIC_API_KEY が無い場合の非AIフォールバック。特徴・特化領域の原文からの機械的な
  * キーワード判定のみ行う（buildDiscoveredAgentFieldsが本来担うAI判断の簡易代替）。
  * 「転職支援」「転職エージェント」等、フリーランス/業務委託ではなく正社員雇用への
  * 転職支援を主眼とするサービスは、既存カテゴリーのいずれにも無理に当てはめず
@@ -223,13 +189,28 @@ function guessCategoryOfflineA8(hay) {
   return 'その他';
 }
 
+/**
+ * ANTHROPIC_API_KEY が無い場合の非AIフォールバック。対応エリア列が空欄の場合に、
+ * 特徴・特化領域の原文からキーワードで簡易推定する（見つからなければnullを返し、
+ * 呼び出し元でNOT_DISCLOSEDにフォールバックする）。
+ */
+function guessRegionOfflineA8(hay) {
+  if (/全国/.test(hay)) return '全国（お問い合わせで確認）';
+  if (/在宅|リモートワーク|フルリモート|オンライン完結/.test(hay)) return '全国（オンライン対応）';
+  const prefectureMatch = /(北海道|東北|関東|中部|近畿|関西|中国|四国|九州|沖縄|東京|大阪|愛知|福岡|神奈川|埼玉|千葉|京都|兵庫)/.exec(hay);
+  if (prefectureMatch) return `${prefectureMatch[1]}近郊（お問い合わせで確認）`;
+  return null;
+}
+
 /** ANTHROPIC_API_KEY が無い場合の非AIフォールバック。事実（Excelの原文）の範囲を出ない組み立てのみ行う。 */
 function buildOfflineA8Fields(row) {
   const hay = `${row.feature || ''} ${row.specialty || ''}`;
   const category = guessCategoryOfflineA8(hay);
+  const region = row.region || guessRegionOfflineA8(hay);
   return {
     category,
     categoryHint: null,
+    region,
     oneLiner: (row.specialty ? `${row.specialty}に関する案件紹介サービス。` : row.feature || NOT_DISCLOSED).slice(0, 60),
     companyOneLiner: (row.specialty ? `${row.specialty}に特化したサービス。` : row.feature || NOT_DISCLOSED).slice(0, 60),
     appeal: (row.feature || NOT_DISCLOSED).slice(0, 200),
@@ -249,7 +230,7 @@ function buildNewEntry({ id, row, ai, sourceNote }) {
     name: row.name,
     category: ai.category,
     categoryHint: ai.category === 'その他' ? (ai.categoryHint || null) : null,
-    region: row.region || NOT_DISCLOSED,
+    region: row.region || ai.region || NOT_DISCLOSED,
     jobCount: NOT_DISCLOSED,
     feeRate: NOT_DISCLOSED,
     contractTypes: ai.contractTypes || [],
@@ -287,7 +268,7 @@ function mergeIntoExisting(existing, { row, ai }) {
     ...existing,
     category: ai.category,
     categoryHint: ai.category === 'その他' ? (ai.categoryHint || null) : null,
-    region: row.region || existing.region,
+    region: row.region || ai.region || existing.region,
     oneLiner: ai.oneLiner,
     companyOneLiner: ai.companyOneLiner,
     appeal: ai.appeal,
@@ -302,32 +283,42 @@ function mergeIntoExisting(existing, { row, ai }) {
   };
 }
 
-async function main() {
-  const { file, dryRun } = parseArgs(process.argv.slice(2));
+/**
+ * 正常に処理できた行（sheetRowIndexes）について、読み込み元Excel自体のA列（反映）を
+ * TRUE（既存のTRUE行と同じExcelブール型セル）に書き換えて上書き保存する。
+ * 対象外の行・他の列は一切変更しない。sheetRowIndexes が空の場合は何もしない
+ * （dry-run時や、1件も正常処理できなかった場合にファイルへ触れないため）。
+ */
+function markRowsReflected(filePath, sheetRowIndexes) {
+  if (!sheetRowIndexes || sheetRowIndexes.length === 0) return;
+  // cellStyles:true を読み書き両方に付けないと列幅(!cols)等の書式情報が失われるため
+  // （実データ・値自体はcellStyles無しでも完全に保持されることは確認済みだが、念のため
+  // 書式もできる限り保持する）。
+  const wb = XLSX.readFile(filePath, { cellStyles: true });
+  const sheet = wb.Sheets[wb.SheetNames[0]];
+  for (const sheetRowIndex of sheetRowIndexes) {
+    const addr = XLSX.utils.encode_cell({ r: sheetRowIndex + 1, c: 0 }); // +1: ヘッダー行(r=0)の分
+    sheet[addr] = { t: 'b', v: true, w: 'TRUE' };
+  }
+  XLSX.writeFile(wb, filePath, { cellStyles: true });
+}
 
-  let filePath;
-  if (file) {
-    filePath = path.isAbsolute(file) ? file : path.join(process.cwd(), file);
-    if (!fs.existsSync(filePath)) {
-      console.error(`File not found: ${filePath}`);
-      process.exit(1);
-    }
-  } else {
-    filePath = findLatestA8File();
-    if (!filePath) {
-      console.error(
-        `Usage: node import-a8.js <path-to-xlsx> [--dry-run]\n` +
-          `(no path given, and no .xlsx file found under ${A8_IMPORT_DIR} to auto-detect)`
-      );
-      process.exit(1);
-    }
-    console.log(`No file specified — auto-detected latest file: ${path.basename(filePath)}`);
+async function main() {
+  const { dryRun } = parseArgs(process.argv.slice(2));
+
+  const filePath = resolveA8FilePath();
+  if (!fs.existsSync(filePath)) {
+    console.error(
+      `A8取り込み対象のExcelファイルが見つかりません: ${filePath}\n` +
+        `data/a8-import/ に "${A8_FILE_NAME}" という名前でExcelファイルを配置してください。`
+    );
+    process.exit(1);
   }
 
   const rows = readRows(filePath);
   const { unique, skipped } = dedupeByName(rows);
 
-  console.log(`Read ${rows.length} "${TARGET_SITE}" row(s) from ${path.basename(filePath)}.`);
+  console.log(`Read ${rows.length} row(s) from ${path.basename(filePath)}.`);
   if (skipped.length > 0) {
     console.log(`Skipped ${skipped.length} duplicate row(s) (same 広告主名 — first occurrence wins):`);
     skipped.forEach(r => console.log(`  - ${r.name}`));
@@ -361,48 +352,60 @@ async function main() {
   let added = 0;
   let aiCalls = 0;
   let offlineBuilds = 0;
+  const reflectedSheetRowIndexes = [];
 
   for (const row of unique) {
-    const existing = byName.get(row.name);
-    // Excelには公式サイトの実ページ本文が無いため、E・H列の原文をpageTextとして渡す
-    // （buildDiscoveredAgentFieldsは「実際に取得したページ本文からの抽出・要約」を
-    // 前提に設計されているため、ここではExcelの申告内容がその代わりとなる）。
-    const pageText = `${row.feature}\n\n特化領域: ${row.specialty}\n対応エリア: ${row.region}`;
-    const candidate = { name: row.name, website: '(A8.netアフィリエイト提携情報のため公式サイトURLは未取得)' };
+    try {
+      const existing = byName.get(row.name);
+      // Excelには公式サイトの実ページ本文が無いため、特徴・特化領域・対応エリアの
+      // 原文をpageTextとして渡す（buildDiscoveredAgentFieldsは「実際に取得した
+      // ページ本文からの抽出・要約」を前提に設計されているため、ここではExcelの
+      // 申告内容がその代わりとなる）。対応エリア・特化領域が空欄の行では、この
+      // pageTextから対応エリア（ai.region）・カテゴリーをAIに推測させる。
+      const pageTextLines = [row.feature];
+      if (row.specialty) pageTextLines.push(`特化領域: ${row.specialty}`);
+      if (row.region) pageTextLines.push(`対応エリア: ${row.region}`);
+      const pageText = pageTextLines.join('\n\n');
+      const candidate = { name: row.name, website: '(A8.netアフィリエイト提携情報のため公式サイトURLは未取得)' };
 
-    let ai;
-    if (anthropic) {
-      try {
-        ai = await buildDiscoveredAgentFields(candidate, pageText, anthropic, existingHints);
-        aiCalls += 1;
-      } catch (err) {
-        console.warn(`AI structuring failed for ${row.name}: ${err.message}. Falling back to offline builder.`);
+      let ai;
+      if (anthropic) {
+        try {
+          ai = await buildDiscoveredAgentFields(candidate, pageText, anthropic, existingHints);
+          aiCalls += 1;
+        } catch (err) {
+          console.warn(`AI structuring failed for ${row.name}: ${err.message}. Falling back to offline builder.`);
+          ai = buildOfflineA8Fields(row);
+          offlineBuilds += 1;
+        }
+      } else {
         ai = buildOfflineA8Fields(row);
         offlineBuilds += 1;
       }
-    } else {
-      ai = buildOfflineA8Fields(row);
-      offlineBuilds += 1;
-    }
 
-    if (existing) {
-      const merged = mergeIntoExisting(existing, { row, ai });
-      finalEntriesById.set(existing.id, merged);
-      updated += 1;
-      console.log(`[update] ${row.name} (id=${existing.id}) category=${merged.category}`);
-    } else {
-      const id = `a8-${String(nextIdNum++).padStart(3, '0')}`;
-      const entry = buildNewEntry({ id, row, ai, sourceNote });
-      finalEntriesById.set(id, entry);
-      added += 1;
-      console.log(`[add]    ${row.name} (id=${id}) category=${entry.category}${entry.categoryHint ? ` (hint: ${entry.categoryHint})` : ''}`);
+      if (existing) {
+        const merged = mergeIntoExisting(existing, { row, ai });
+        finalEntriesById.set(existing.id, merged);
+        updated += 1;
+        console.log(`[update] ${row.name} (id=${existing.id}) category=${merged.category} region=${merged.region}`);
+      } else {
+        const id = `a8-${String(nextIdNum++).padStart(3, '0')}`;
+        const entry = buildNewEntry({ id, row, ai, sourceNote });
+        finalEntriesById.set(id, entry);
+        added += 1;
+        console.log(`[add]    ${row.name} (id=${id}) category=${entry.category}${entry.categoryHint ? ` (hint: ${entry.categoryHint})` : ''} region=${entry.region}`);
+      }
+
+      reflectedSheetRowIndexes.push(row.sheetRowIndex);
+    } catch (err) {
+      console.warn(`[skip]   ${row.name}: 処理中にエラーが発生したため、Excelの反映チェック(A列)は更新しません: ${err.message}`);
     }
   }
 
   console.log(`\nDone. updated=${updated} added=${added} ai=${aiCalls} offline=${offlineBuilds}`);
 
   if (dryRun) {
-    console.log('[dry-run] agents.json was not modified.');
+    console.log('[dry-run] agents.json / Excelファイルは変更しませんでした。');
     return;
   }
 
@@ -427,6 +430,11 @@ async function main() {
       );
     }
   }
+
+  markRowsReflected(filePath, reflectedSheetRowIndexes);
+  if (reflectedSheetRowIndexes.length > 0) {
+    console.log(`Marked ${reflectedSheetRowIndexes.length} row(s) as reflected (A列=TRUE) in ${path.basename(filePath)}.`);
+  }
 }
 
 if (require.main === module) {
@@ -437,14 +445,17 @@ if (require.main === module) {
 }
 
 module.exports = {
+  A8_FILE_NAME,
+  resolveA8FilePath,
   readRows,
   dedupeByName,
   extractAffiliateUrl,
   nextA8IdCounter,
-  findLatestA8File,
   guessCategoryOfflineA8,
+  guessRegionOfflineA8,
   buildOfflineA8Fields,
   buildNewEntry,
   mergeIntoExisting,
   buildA8SourceNote,
+  markRowsReflected,
 };

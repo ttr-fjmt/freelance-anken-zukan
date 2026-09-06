@@ -601,6 +601,12 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
             'ページ本文から読み取れる契約形態（例: "業務委託", "準委任", "請負"）。' +
             '複数記載があれば全て列挙する。本文に記載が読み取れなければ空配列 [] とする（推測で埋めない）。',
         },
+        region: {
+          type: ['string', 'null'],
+          description:
+            'ページ本文から読み取れる対応エリア・対応地域（例: "全国（オンライン対応）", ' +
+            '"関東中心、一部リモート可"等）。記載が読み取れなければ null とする（推測で埋めない）。',
+        },
         remoteRatio: {
           type: ['string', 'null'],
           description:
@@ -636,7 +642,7 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
       },
       required: [
         'category', 'oneLiner', 'companyOneLiner', 'appeal', 'companyAppeal', 'features',
-        'contractTypes', 'remoteRatio', 'feeStructure', 'freelancerCount',
+        'contractTypes', 'remoteRatio', 'region', 'feeStructure', 'freelancerCount',
       ],
       additionalProperties: false,
     },
