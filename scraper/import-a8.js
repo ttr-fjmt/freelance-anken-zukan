@@ -84,17 +84,47 @@ function parseArgs(argv) {
 }
 
 /**
- * data/a8-import/ 配下の .xlsx ファイルのうち、ファイル名の辞書順で最も新しいものを返す。
- * 1件も無ければ null を返す。ファイル名に日付（YYYYMMDD等）を含める運用を前提としており、
- * 辞書順ソートがそのまま時系列順になる（a8-freelance-20260906.xlsx < a8-freelance-20261001.xlsx）。
+ * ファイル名から日付(YYYYMMDD、8桁)と、ハイフン以降の連番(無ければ0扱い)を抽出する。
+ * 例: "a8-freelance-20260906.xlsx" → {date:20260906, seq:0}
+ *     "a8-freelance-20260906-2.xlsx" → {date:20260906, seq:2}
+ * どちらも抽出できないファイル名は date:0,seq:0 として最も古い扱いにする
+ * （命名規則に沿わないファイルが誤って「最新」に選ばれないよう安全側に倒す）。
+ */
+function parseA8FileNameOrder(fileName) {
+  const m = /(\d{8})(?:-(\d+))?\.xlsx$/i.exec(fileName);
+  if (!m) return { date: 0, seq: 0 };
+  return { date: Number(m[1]), seq: m[2] ? Number(m[2]) : 0 };
+}
+
+/**
+ * data/a8-import/ 配下の .xlsx ファイルのうち、ファイル名に含まれる日付(YYYYMMDD)→
+ * 連番(ハイフン以降、無ければ0)の順で数値比較し、最も新しいものを返す。
+ * 1件も無ければ null を返す。
+ *
+ * 以前は単純な文字列（辞書順）ソートを使っていたが、"a8-freelance-20260906-2.xlsx"
+ * のようなハイフン付き連番を含むファイル名では、ハイフン(-)がピリオド(.)より文字コード上
+ * 小さいため、連番の無い "a8-freelance-20260906.xlsx" の方が辞書順で後ろに来てしまい、
+ * 誤って「最新」と判定される問題があった（図鑑4-4）。日付・連番をそれぞれ数値として
+ * 抽出して比較することで、この文字列比較特有の落とし穴（"-10" < "-2" になる問題も含む）
+ * を回避する。
+ *
+ * GitHub Actions上ではcheckout時に全ファイルの更新日時(mtime)がリセットされるため、
+ * mtime比較ではなく引き続きファイル名ベースの比較を採用している。
  */
 function findLatestA8File() {
   if (!fs.existsSync(A8_IMPORT_DIR)) return null;
   const files = fs
     .readdirSync(A8_IMPORT_DIR)
-    .filter(name => /\.xlsx$/i.test(name))
-    .sort();
+    .filter(name => /\.xlsx$/i.test(name));
   if (files.length === 0) return null;
+
+  files.sort((a, b) => {
+    const orderA = parseA8FileNameOrder(a);
+    const orderB = parseA8FileNameOrder(b);
+    if (orderA.date !== orderB.date) return orderA.date - orderB.date;
+    return orderA.seq - orderB.seq;
+  });
+
   return path.join(A8_IMPORT_DIR, files[files.length - 1]);
 }
 
