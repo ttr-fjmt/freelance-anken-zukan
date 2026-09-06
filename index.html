@@ -63,11 +63,26 @@
 
   /* header */
   header{
+    position:relative;
     padding:64px 16px 44px;
     background:
       radial-gradient(600px 260px at 15% -20%, rgba(31,111,99,.10), transparent 60%),
       radial-gradient(500px 220px at 100% 0%, rgba(184,134,59,.10), transparent 55%),
       var(--paper);
+  }
+  .sister-site-link{
+    position:absolute;top:16px;right:16px;
+    display:inline-flex;align-items:center;gap:4px;
+    background:var(--accent);color:#fff;
+    font-size:12.5px;font-weight:700;
+    padding:8px 14px;border-radius:999px;
+    text-decoration:none;white-space:nowrap;
+    box-shadow:0 1px 4px rgba(0,0,0,.12);
+    transition:background-color .12s, box-shadow .12s;
+  }
+  .sister-site-link:hover{background:var(--accent-deep);box-shadow:0 2px 6px rgba(0,0,0,.16);}
+  @media (max-width:600px){
+    .sister-site-link{top:10px;right:10px;font-size:11px;padding:7px 11px;}
   }
   header .inner{max-width:860px;margin:0 auto;text-align:center;}
   h1{
@@ -397,6 +412,7 @@
 <body class="mode-candidate">
 
 <header>
+  <a class="sister-site-link" href="https://agent-zukan.net/" target="_blank" rel="noopener noreferrer">転職するならこちら →</a>
   <div class="inner">
     <h1 class="home-link" onclick="goHome()">フリーランス案件<span class="mark">図鑑</span></h1>
     <div class="badge-row">
