@@ -16,7 +16,7 @@ data/a8-import/アフィリエイト案件_フリーランス案件図鑑.xlsx �
 
 4. git push -u origin main でリモートにpushする
 5. push完了後、以下をユーザーに案内する:
-   「GitHubの Actions タブから『Import A8 affiliate programs』
+   「GitHubの Actions タブから『Import A8 affiliate agents』
    ワークフローを手動実行してください
    (https://github.com/ttr-fjmt/freelance-anken-zukan/actions/workflows/import-a8.yml
    → Run workflow → 何も入力せず実行)」
