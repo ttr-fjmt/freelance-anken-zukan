@@ -418,5 +418,41 @@
     "website": "https://coconala.com/",
     "reason": "name_mismatch",
     "checkedAt": "2026-09-05T21:54:37.319Z"
+  },
+  "コンプロフリーランス（ConProFREELANCE）／株式会社コンフィデンス・プロ": {
+    "name": "コンプロフリーランス（ConProFREELANCE）／株式会社コンフィデンス・プロ",
+    "website": "https://conpro-freelance.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T00:30:34.434Z"
+  },
+  "マーケティングコミットサロン": {
+    "name": "マーケティングコミットサロン",
+    "website": "https://marketingcommit.com/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-07T00:30:34.434Z"
+  },
+  "CoProJect": {
+    "name": "CoProJect",
+    "website": "https://co-project.co.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T00:30:34.434Z"
+  },
+  "side bizz（サイドビズ）": {
+    "name": "side bizz（サイドビズ）",
+    "website": "https://sidebizz.net",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-07T00:30:34.434Z"
+  },
+  "シェアーズマーケット": {
+    "name": "シェアーズマーケット",
+    "website": "https://sharesmarket.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T00:30:34.434Z"
+  },
+  "HRモンスター": {
+    "name": "HRモンスター",
+    "website": "https://hr-monster.com",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T00:30:34.434Z"
   }
 }
