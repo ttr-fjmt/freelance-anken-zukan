@@ -60,6 +60,10 @@ jobs:
         working-directory: scraper
         run: node prerender.js
 
+      - name: Generate category landing pages
+        working-directory: scraper
+        run: node generate-category-pages.js
+
       - name: Regenerate sitemap.xml
         working-directory: scraper
         run: node generate-sitemap.js
@@ -74,6 +78,7 @@ jobs:
           git add data/a8-import/
           [ -f data/ssg-manifest.json ] && git add data/ssg-manifest.json
           [ -d agent ] && git add agent
+          [ -d category ] && git add category
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0

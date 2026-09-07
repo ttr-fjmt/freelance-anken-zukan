@@ -8,11 +8,14 @@
 <meta property="og:type" content="website">
 <meta property="og:url" id="og-url" content="https://freelance-anken-zukan.net/agent/68/">
 <link rel="canonical" href="https://freelance-anken-zukan.net/agent/68/" id="canonical-link">
-<script src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202608310101/show_ads_impl.js" fetchpriority="high"></script><script type="application/ld+json" id="ld-json">{"@context":"https://schema.org","@type":"EmploymentAgency","name":"PMO NAVI（エッジテクノロジー株式会社）","description":"10年以上の実績を持つプロフェッショナル人材エージェントが、PM/PMO・DXコンサルタント・ITコンサルタント等の案件を多数保有。大手企業からスタートアップまで、常時多数の非公開案件を含めたプロジェクトを紹介可能。営業スタッフによる継続的な新規案件開拓で安定した稼働をサポート。","areaServed":"非公開（お問い合わせで確認）","url":"https://pmo-navi.com"}</script>
-<meta property="og:image" content="/ogp-image.png">
+<script src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202609010101/show_ads_impl.js?bust=122880829" fetchpriority="high"></script><script type="application/ld+json" id="ld-json">{"@context":"https://schema.org","@type":"Service","name":"PMO NAVI（エッジテクノロジー株式会社）","description":"10年以上の実績を持つプロフェッショナル人材エージェントが、PM/PMO・DXコンサルタント・ITコンサルタント等の案件を多数保有。大手企業からスタートアップまで、常時多数の非公開案件を含めたプロジェクトを紹介可能。営業スタッフによる継続的な新規案件開拓で安定した稼働をサポート。","serviceType":"フリーランス案件マッチング","areaServed":"非公開（お問い合わせで確認）","provider":{"@type":"Organization","name":"PMO NAVI（エッジテクノロジー株式会社）"},"url":"https://pmo-navi.com"}</script>
+<meta property="og:image" content="https://freelance-anken-zukan.net/ogp-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="twitter-title" content="PMO NAVI（エッジテクノロジー株式会社）｜フリーランス案件図鑑">
+<meta name="twitter:description" id="twitter-description" content="PM/PMO・ITコンサルタント領域を中心としたフリーランス案件紹介サービス PMO NAVI（エッジテクノロジー株式会社）（フリーランス案件マッチング）の対応エリア・特徴・手数料の目安をフリーランス案件図鑑で確認できます。">
+<meta name="twitter:image" content="https://freelance-anken-zukan.net/ogp-image.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -288,6 +291,56 @@
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(-8px);}
 
+  /* あなたに合うサービス診断アシスタント */
+  #assistantWidget{position:fixed;bottom:20px;right:20px;z-index:500;}
+  .assistant-fab{
+    width:60px;height:60px;border-radius:50%;background:var(--accent);
+    border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 14px rgba(18,58,107,.32);transition:transform .15s;
+  }
+  .assistant-fab:hover{transform:scale(1.05);}
+  .assistant-fab svg{width:28px;height:28px;}
+  .assistant-panel{
+    position:absolute;bottom:76px;right:0;width:320px;max-width:calc(100vw - 40px);
+    max-height:70vh;overflow-y:auto;background:#fff;border-radius:16px;
+    box-shadow:0 8px 28px rgba(0,0,0,.18);
+  }
+  .assistant-panel-head{
+    background:var(--accent);color:#fff;padding:14px 18px;font-weight:700;font-size:14px;
+    position:sticky;top:0;
+  }
+  .assistant-panel-body{padding:18px;}
+  .assistant-progress-label{font-size:11px;color:var(--ink-faint);margin-bottom:6px;}
+  .assistant-progress-bar{height:4px;background:#EFEAE0;border-radius:2px;margin-bottom:16px;overflow:hidden;}
+  .assistant-progress-bar-fill{height:100%;background:var(--gold);transition:width .2s;}
+  .assistant-question{font-weight:700;font-size:15px;color:var(--ink);margin-bottom:14px;}
+  .assistant-options{display:flex;flex-direction:column;gap:8px;}
+  .assistant-option{
+    border:1.5px solid var(--line);padding:10px 14px;border-radius:10px;font-size:13px;
+    color:var(--ink);cursor:pointer;text-align:left;background:#fff;
+  }
+  .assistant-option:hover{border-color:var(--accent);}
+  .assistant-option.selected{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-deep);font-weight:700;}
+  .assistant-result-comment{font-size:12px;color:var(--ink-soft);margin:0 0 12px;line-height:1.6;}
+  .assistant-result-card{
+    display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;
+    padding:10px;position:relative;margin-bottom:10px;cursor:pointer;
+  }
+  .assistant-result-card:hover{border-color:var(--accent);}
+  .assistant-result-info{flex:1;min-width:0;}
+  .assistant-result-info h5{margin:0 0 2px;font-size:13px;font-weight:700;color:var(--ink);}
+  .assistant-result-info p{margin:0;font-size:11px;color:var(--ink-soft);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .assistant-more-link{
+    text-align:center;font-size:12px;color:var(--accent);font-weight:700;padding:10px;
+    border:1.5px solid var(--accent);border-radius:999px;cursor:pointer;margin-top:4px;
+  }
+  .assistant-back-link{font-size:12px;color:var(--ink-faint);cursor:pointer;margin-bottom:12px;display:inline-block;}
+  @media (max-width:600px){
+    #assistantWidget{bottom:16px;right:16px;}
+    .assistant-panel{width:calc(100vw - 32px);}
+  }
+
   .ad-slot{
     position:relative;
     border:1px dashed var(--line);
@@ -512,7 +565,7 @@
       </div>
     </div>
 
-</div><ins class="adsbygoogle adsbygoogle-noablate" data-ad-hi="true" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="run-ad-auction" src="https://googleads.g.doubleclick.net/pagead/ads?client=ca-pub-5761092657360295&amp;output=html&amp;adk=1812271804&amp;adf=3025194257&amp;abgtt=6&amp;lmt=1788741266&amp;plat=1%3A8%2C2%3A8%2C3%3A2162688%2C4%3A2162688%2C9%3A32776%2C16%3A8388608%2C17%3A32%2C24%3A32%2C25%3A32%2C30%3A1048576%2C32%3A32%2C41%3A32%2C42%3A32%2C43%3A32%2C44%3A32&amp;format=0x0&amp;url=http%3A%2F%2Flocalhost%3A8935%2Findex.html%3Fssg%3D1%23%2Fagent%2F68&amp;pra=5&amp;aiof=11&amp;asro=0&amp;aimartd=4&amp;aieuf=1&amp;aicrs=1&amp;uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1Mi4wLjc5NzcuNTQiLG51bGwsMCxudWxsLCI2NCIsW1siTm90P0FfQnJhbmQiLCIyNC4wLjAuMCJdLFsiQ2hyb21pdW0iLCIxNTIuMC43OTc3LjU0Il1dLDBd&amp;dt=1788741266487&amp;bpp=3&amp;bdt=32&amp;idt=93&amp;shv=r20260901&amp;mjsv=m202608310101&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;cookie_enabled=1&amp;eoidce=1&amp;nras=1&amp;correlator=4997588586540&amp;frm=20&amp;pv=2&amp;u_tz=0&amp;u_his=2&amp;u_h=600&amp;u_w=800&amp;u_ah=600&amp;u_aw=800&amp;u_cd=24&amp;u_sd=1&amp;dmc=16&amp;adx=-12245933&amp;ady=-12245933&amp;biw=800&amp;bih=600&amp;scr_x=0&amp;scr_y=0&amp;eid=95399630%2C95400775%2C95401044&amp;oid=2&amp;pvsid=1919239877831433&amp;tmod=21437962&amp;uas=0&amp;nvt=1&amp;fsapi=1&amp;fc=1920&amp;brdim=10%2C10%2C10%2C10%2C800%2C0%2C780%2C580%2C800%2C600&amp;vis=1&amp;rsz=%7C%7Cs%7C&amp;abl=NS&amp;fu=32768&amp;bc=31&amp;bz=0.98&amp;ifi=1&amp;uci=a!1&amp;fsb=1&amp;dtd=112" data-google-container-id="a!1" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true"></iframe></div></ins>
+</div>
 
 <div class="wrap">
   <div class="ad-slot footer-ad">
@@ -522,11 +575,29 @@
 </div>
 
 <footer>
-  掲載情報は、AIによるWeb検索で発見したサービスについて、実際に公式サイトへアクセスして実在確認を行った上で、週次で自動更新しています。取得できなかった項目は「非公開（お問い合わせで確認）」と表示しています。図鑑スコアは実際の利用者口コミではなく、掲載情報の充実度に基づく当サイト独自の指標です。個別サービスのCTAボタンからは各社の公式サイトへ遷移します。
+  掲載情報は、AIによるWeb検索で発見したサービスについて、実際に公式サイトへアクセスして実在確認を行った上で、日次で自動更新しています。取得できなかった項目は「非公開（お問い合わせで確認）」と表示しています。図鑑スコアは実際の利用者口コミではなく、掲載情報の充実度に基づく当サイト独自の指標です。個別サービスのCTAボタンからは各社の公式サイトへ遷移します。
   <div class="footer-links"><a href="faq.html">よくある質問</a> / <a href="privacy.html">プライバシーポリシー</a></div>
 </footer>
 
 <div class="toast" id="toast"></div>
+
+<div id="assistantWidget">
+  <button id="assistantFab" class="assistant-fab" onclick="toggleAssistant()" aria-label="あなたに合うサービス診断">
+    <svg viewBox="0 0 24 24" fill="none">
+      <line x1="12" y1="2.5" x2="12" y2="5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"></line>
+      <circle cx="12" cy="2" r="1.1" fill="#fff"></circle>
+      <rect x="5" y="5" width="14" height="12" rx="4" stroke="#fff" stroke-width="1.8"></rect>
+      <circle cx="9" cy="10.5" r="1.3" fill="#fff"></circle>
+      <circle cx="15" cy="10.5" r="1.3" fill="#fff"></circle>
+      <path d="M9 14 Q12 15.5 15 14" stroke="#fff" stroke-width="1.5" stroke-linecap="round" fill="none"></path>
+      <line x1="2.5" y1="10" x2="5" y2="10" stroke="#fff" stroke-width="1.8" stroke-linecap="round"></line>
+      <line x1="19" y1="10" x2="21.5" y2="10" stroke="#fff" stroke-width="1.8" stroke-linecap="round"></line>
+      <line x1="8" y1="17" x2="8" y2="19.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"></line>
+      <line x1="16" y1="17" x2="16" y2="19.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"></line>
+    </svg>
+  </button>
+  <div id="assistantPanel" class="assistant-panel" style="display:none;"></div>
+</div>
 
 <script>
 let AGENTS = [];
@@ -537,7 +608,7 @@ let AGENTS = [];
 const SSG_MODE = new URLSearchParams(location.search).get("ssg") === "1";
 
 const DEFAULT_TITLE = "フリーランス案件図鑑｜案件探しには、もう困らない";
-const DEFAULT_DESCRIPTION = "フリーランス案件図鑑は、全国の人材紹介サービスを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いサービスを、それぞれ迷わず見つけられます。";
+const DEFAULT_DESCRIPTION = "フリーランス案件図鑑は、フリーランス向けの案件紹介・マッチングサービスを比較できるサイトです。「案件を受注したい」フリーランスの方にも、「案件を掲載・発注したい」企業の方にも、それぞれに必要な情報を提供します。";
 
 function truncateText(str, max){
   if(!str) return "";
@@ -583,16 +654,23 @@ function updateJsonLdForList(){
   });
 }
 
-/** エージェント詳細表示時のJSON-LD（EmploymentAgency型）。
+/** サービス詳細表示時のJSON-LD（Service型）。EmploymentAgency（LocalBusinessのサブタイプ、
+ * 物理店舗を持つ人材紹介事業者向け）は、店舗を持たないフリーランス向け案件マッチング
+ * サービスの実態に合わないため、非店舗型サービスに適したService型を使う。
  * 図鑑スコア等は実際の口コミ評価ではなく独自算出値のため、AggregateRating等の評価系
  * プロパティは絶対に含めない（Googleのスキーママークアップポリシー違反のリスクがあるため）。 */
 function updateJsonLdForAgent(a){
   const data = {
     "@context": "https://schema.org",
-    "@type": "EmploymentAgency",
+    "@type": "Service",
     "name": a.name,
     "description": a.appeal,
+    "serviceType": a.category,
     "areaServed": a.region,
+    "provider": {
+      "@type": "Organization",
+      "name": a.name,
+    },
   };
   const url = buildAgentSchemaUrl(a);
   if(url) data.url = url;
@@ -605,6 +683,8 @@ function updateMetaForList(){
   setMetaContent("og-title", DEFAULT_TITLE);
   setMetaContent("og-description", DEFAULT_DESCRIPTION);
   setMetaContent("og-url", location.href.split("#")[0]);
+  setMetaContent("twitter-title", DEFAULT_TITLE);
+  setMetaContent("twitter-description", DEFAULT_DESCRIPTION);
   updateCanonical(SITE_ORIGIN + "/");
   updateJsonLdForList();
 }
@@ -620,6 +700,8 @@ function updateMetaForAgent(a){
   setMetaContent("og-title", title);
   setMetaContent("og-description", description);
   setMetaContent("og-url", location.href);
+  setMetaContent("twitter-title", title);
+  setMetaContent("twitter-description", description);
   // 企業モードはハッシュ遷移のURLのため、canonicalはトップページのままにする
   // （求職者モードの実パス /agent/{id}/ のみ、そのURLをcanonicalにする）。
   updateCanonical(mode === "candidate" ? SITE_ORIGIN + agentUrlPath(a) : SITE_ORIGIN + "/");
@@ -911,6 +993,239 @@ const FEE_OPTIONS = ["all","マージン制","月額固定制","成果報酬制"
 
 let activePrefecture = "all";
 let activeFee = "all";
+
+// あなたに合うサービス診断アシスタント。
+// agent-zukan(姉妹サイト)の同機能を踏まえつつ、このサイト固有のデータ実態に合わせて
+// 質問軸を翻訳している。region（対応エリア）の非公開率が非常に高い（実測95%超）ため、
+// agent-zukanの「対応してほしいエリア」に相当する質問は採用せず、代わりに受注者側は
+// remoteRatio（働き方）、発注者側はcontractTypes（発注形態）という、実際にある程度
+// データが揃っている軸を1問目に採用する。
+let assistantStep = 0; // 0=未開始, 1〜3=質問, 4=結果
+let assistantAnswers = { style: null, category: null, priority: null };
+
+const ASSISTANT_REMOTE_STYLE_OPTIONS = [
+  { value: "full", label: "フルリモート希望" },
+  { value: "partial", label: "一部リモートでもOK" },
+  { value: "any", label: "常駐もOK（働き方はこだわらない）" },
+];
+
+const ASSISTANT_CONTRACT_STYLE_OPTIONS = [
+  { value: "spot", label: "単発・スポットで依頼したい" },
+  { value: "continuous", label: "継続的な契約をしたい" },
+  { value: "hire", label: "正社員・契約社員採用も視野に" },
+  { value: "any", label: "特にこだわらない" },
+];
+
+const ASSISTANT_PRIORITY_OPTIONS = {
+  candidate: [
+    { value: "reward", label: "報酬の高さ" },
+    { value: "continuity", label: "継続案件の多さ" },
+    { value: "support", label: "サポートの手厚さ" },
+    { value: "speed", label: "スピード重視（すぐ稼働したい）" },
+  ],
+  company: [
+    { value: "cost", label: "コストの適正さ" },
+    { value: "expertise", label: "専門性の高さ" },
+    { value: "flexibility", label: "対応の柔軟さ" },
+    { value: "speed", label: "スピード重視（すぐ発注したい）" },
+  ],
+};
+
+// 「重視したいこと」は、feeStructure等の数値項目の公開率が低い実データを踏まえ、
+// 結果の並び順には反映せず、結果画面の一言コメントのみに使う（誠実な扱い）。
+const ASSISTANT_PRIORITY_COMMENTS = {
+  candidate: {
+    reward: "報酬の高さを重視する方に、特に注目していただきたいサービスです。",
+    continuity: "継続案件の多さを重視する方に、特に注目していただきたいサービスです。",
+    support: "サポートの手厚さを重視する方に、特に注目していただきたいサービスです。",
+    speed: "スピード重視ですぐ動きたい方に、特に注目していただきたいサービスです。",
+  },
+  company: {
+    cost: "コストの適正さを重視する方に、特に注目していただきたいサービスです。",
+    expertise: "専門性の高さを重視する方に、特に注目していただきたいサービスです。",
+    flexibility: "対応の柔軟さを重視する方に、特に注目していただきたいサービスです。",
+    speed: "スピード重視ですぐ動きたい方に、特に注目していただきたいサービスです。",
+  },
+};
+
+/** 受注者向け: remoteRatio（自由記述）からのキーワード判定。厳密な分類ではなく、
+ * データの実態に即した緩やかな絞り込みとして扱う。 */
+function matchesAssistantRemoteStyle(agent, style){
+  if(!style || style === "any") return true;
+  const text = agent.remoteRatio || "";
+  if(style === "full") return /フルリモート/.test(text);
+  if(style === "partial") return /リモート/.test(text);
+  return true;
+}
+
+/** 発注者向け: contractTypes（配列）からのキーワード判定。 */
+function matchesAssistantContractStyle(agent, style){
+  if(!style || style === "any") return true;
+  const types = agent.contractTypes || [];
+  if(style === "spot") return types.some(t => /スポット/.test(t));
+  if(style === "continuous") return types.some(t => /業務委託|準委任|プロジェクト型|顧問/.test(t));
+  if(style === "hire") return types.some(t => /正社員|契約社員|派遣/.test(t));
+  return true;
+}
+
+/** 結果表示件数はデスクトップ幅で5件、モバイル幅で3件と画面幅に応じて変える。 */
+function getAssistantResultCount(){
+  return window.innerWidth >= 768 ? 5 : 3;
+}
+
+function toggleAssistant(){
+  const panel = document.getElementById("assistantPanel");
+  if(assistantStep === 0){
+    assistantStep = 1;
+    assistantAnswers = { style: null, category: null, priority: null };
+    panel.style.display = "block";
+    renderAssistantStep();
+  } else {
+    assistantStep = 0;
+    panel.style.display = "none";
+  }
+}
+
+function renderAssistantStep(){
+  const panel = document.getElementById("assistantPanel");
+  if(assistantStep === 4){
+    panel.innerHTML = buildAssistantResultsHTML();
+    return;
+  }
+  const stepIndex = assistantStep; // 1,2,3
+  const titles = mode === "company"
+    ? ["どのような形で発注したいですか？", "どんな分野の人材を探していますか？", "一番重視したいことは？"]
+    : ["希望する働き方は？", "どんな分野の案件を探していますか？", "一番重視したいことは？"];
+  const title = titles[stepIndex-1];
+
+  let optionsHTML = "";
+  if(stepIndex === 1){
+    const opts = mode === "company" ? ASSISTANT_CONTRACT_STYLE_OPTIONS : ASSISTANT_REMOTE_STYLE_OPTIONS;
+    optionsHTML = opts.map(o =>
+      `<div class="assistant-option${assistantAnswers.style===o.value ? ' selected':''}" onclick="selectAssistantAnswer('style','${o.value}')">${o.label}</div>`
+    ).join("");
+  } else if(stepIndex === 2){
+    const cats = CHIP_LABELS.filter(c => c !== "all");
+    optionsHTML = cats.map(c =>
+      `<div class="assistant-option${assistantAnswers.category===c ? ' selected':''}" onclick="selectAssistantAnswer('category','${c}')">${c}</div>`
+    ).join("") + `<div class="assistant-option${assistantAnswers.category==='__any__' ? ' selected':''}" onclick="selectAssistantAnswer('category','__any__')">特にこだわらない</div>`;
+  } else if(stepIndex === 3){
+    const opts = ASSISTANT_PRIORITY_OPTIONS[mode === "company" ? "company" : "candidate"];
+    optionsHTML = opts.map(o =>
+      `<div class="assistant-option${assistantAnswers.priority===o.value ? ' selected':''}" onclick="selectAssistantAnswer('priority','${o.value}')">${o.label}</div>`
+    ).join("");
+  }
+
+  panel.innerHTML = `
+    <div class="assistant-panel-head">あなたに合うサービス診断</div>
+    <div class="assistant-panel-body">
+      ${stepIndex > 1 ? `<span class="assistant-back-link" onclick="assistantStep=${stepIndex-1};renderAssistantStep();">← 戻る</span>` : ""}
+      <div class="assistant-progress-label">質問 ${stepIndex} / 3</div>
+      <div class="assistant-progress-bar"><div class="assistant-progress-bar-fill" style="width:${stepIndex/3*100}%;"></div></div>
+      <div class="assistant-question">${title}</div>
+      <div class="assistant-options">${optionsHTML}</div>
+    </div>
+  `;
+}
+
+function selectAssistantAnswer(key, value){
+  assistantAnswers[key] = value;
+  if(assistantStep < 3){
+    setTimeout(()=>{ assistantStep += 1; renderAssistantStep(); }, 150);
+  } else {
+    setTimeout(()=>{ assistantStep = 4; renderAssistantStep(); }, 150);
+  }
+}
+
+/**
+ * 診断結果として、画面幅に応じた件数（PC5件/モバイル3件）を選ぶ。featured
+ * （アフィリエイトあり）を優先し、残り枠をdisplaySortValue順で埋める。
+ * 働き方/発注形態・カテゴリーが厳しすぎて件数に満たない場合は、条件を
+ * 段階的に緩めるフォールバックを行う（カテゴリー無視→働き方/発注形態無視の順）。
+ *
+ * 「重視したいこと」の回答は、現状のデータ充実度（feeStructure等の数値項目の
+ * 公開率が低い）を踏まえ、結果の並び順を大きく変える精緻なロジックにはせず、
+ * 結果見出し下の一言コメントに反映する程度の控えめな使い方にとどめる。
+ * 過剰にAIっぽい精度を演出しないこと。
+ */
+function computeAssistantRecommendations(){
+  const style = assistantAnswers.style;
+  const cat = assistantAnswers.category;
+  const need = getAssistantResultCount();
+
+  function pool(useStyle, useCat){
+    return AGENTS.filter(a => {
+      const okStyle = !useStyle || (mode === "company"
+        ? matchesAssistantContractStyle(a, style)
+        : matchesAssistantRemoteStyle(a, style));
+      const okCat = !useCat || cat === "__any__" || a.category === cat;
+      return okStyle && okCat;
+    });
+  }
+
+  let candidates = pool(true, true);
+  if(candidates.length < need) candidates = pool(true, false);
+  if(candidates.length < need) candidates = pool(false, true);
+  if(candidates.length < need) candidates = AGENTS.slice();
+
+  const sorted = candidates.slice().sort((a,b) => displaySortValue(b, mode) - displaySortValue(a, mode));
+  return sorted.slice(0, need);
+}
+
+function buildAssistantResultsHTML(){
+  const results = computeAssistantRecommendations();
+  const priorityKey = assistantAnswers.priority;
+  const comments = ASSISTANT_PRIORITY_COMMENTS[mode === "company" ? "company" : "candidate"];
+  const comment = priorityKey ? (comments[priorityKey] || "") : "";
+
+  const cardsHTML = results.map(a => {
+    const excerpt = mode === "company" ? (a.companyAppeal || a.appeal || "") : (a.appeal || "");
+    return `
+      <div class="assistant-result-card" onclick="closeAssistantAndNavigate('${a.id}')">
+        ${eyecatchHTML(a, "thumb", true)}
+        <div class="assistant-result-info">
+          <h5>${a.name}</h5>
+          <p>${excerpt}</p>
+        </div>
+        ${a.featured ? '<span class="pr-label" style="position:absolute;bottom:8px;right:8px;">PR</span>' : ''}
+      </div>
+    `;
+  }).join("");
+
+  return `
+    <div class="assistant-panel-head">あなたにおすすめの${results.length}件</div>
+    <div class="assistant-panel-body">
+      <span class="assistant-back-link" onclick="assistantStep=3;renderAssistantStep();">← 質問をやり直す</span>
+      ${comment ? `<p class="assistant-result-comment">${comment}</p>` : ""}
+      ${cardsHTML}
+      <div class="assistant-more-link" onclick="applyAssistantFiltersAndGoToList()">条件を保ったまま一覧で見る →</div>
+    </div>
+  `;
+}
+
+function closeAssistantAndNavigate(agentId){
+  assistantStep = 0;
+  document.getElementById("assistantPanel").style.display = "none";
+  const agent = AGENTS.find(a => String(a.id) === String(agentId));
+  if(agent) navigateToDetail(agent);
+}
+
+/** 診断結果のカテゴリー条件を、既存のカテゴリーフィルターにそのまま反映して一覧表示に
+ * 遷移する（既存のonCategoryChangeと同じactiveChipを更新し、render()を呼ぶ）。
+ * 働き方/発注形態の条件に対応する既存フィルターUIは無いため、そちらは引き継がない。 */
+function applyAssistantFiltersAndGoToList(){
+  assistantStep = 0;
+  document.getElementById("assistantPanel").style.display = "none";
+  featuredOnly = false;
+  highScoreOnly = false;
+  homeMode = false;
+  if(assistantAnswers.category && assistantAnswers.category !== "__any__"){
+    activeChip = assistantAnswers.category;
+  }
+  buildFilterSelects();
+  render();
+  window.scrollTo({ top: document.getElementById("filterBanner")?.offsetTop || 0, behavior: "smooth" });
+}
 
 const LEAD_TEXT = {
   candidate: `日本全国には、本当にたくさんの転職サービスがあります。その中から、あなたに一番合った1社を見つけられます。`,
@@ -1669,7 +1984,7 @@ loadAgents();
 </script>
 
 
-<iframe src="https://www.google.com/recaptcha/api2/aframe" width="0" height="0" style="display: none;"></iframe><div id="ssgCompanyContent" hidden="" aria-hidden="true">
+<ins class="adsbygoogle adsbygoogle-noablate" data-ad-hi="true" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="run-ad-auction" src="https://googleads.g.doubleclick.net/pagead/ads?client=ca-pub-5761092657360295&amp;output=html&amp;adk=1812271804&amp;adf=3025194257&amp;abgtt=6&amp;lmt=1788778139&amp;plat=1%3A16777224%2C2%3A8%2C3%3A2162688%2C4%3A2162688%2C9%3A32776%2C16%3A8388608%2C17%3A32%2C24%3A32%2C25%3A32%2C30%3A1048576%2C32%3A32%2C41%3A32%2C42%3A32%2C43%3A32%2C44%3A32&amp;format=0x0&amp;url=http%3A%2F%2Flocalhost%3A8935%2Findex.html%3Fssg%3D1%23%2Fagent%2F68&amp;pra=5&amp;asro=0&amp;aimartd=4&amp;aieuf=1&amp;aicrs=1&amp;uach=WyJXaW5kb3dzIiwiMTkuMC4wIiwieDg2IiwiIiwiMTUyLjAuNzk3Ny41NCIsbnVsbCwwLG51bGwsIjY0IixbWyJOb3Q_QV9CcmFuZCIsIjI0LjAuMC4wIl0sWyJDaHJvbWl1bSIsIjE1Mi4wLjc5NzcuNTQiXV0sMF0.&amp;dt=1788778139789&amp;bpp=1&amp;bdt=202&amp;idt=29&amp;shv=r20260902&amp;mjsv=m202609010101&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;cookie_enabled=1&amp;eoidce=1&amp;nras=1&amp;correlator=1695481192663&amp;frm=20&amp;pv=2&amp;u_tz=540&amp;u_his=2&amp;u_h=600&amp;u_w=800&amp;u_ah=600&amp;u_aw=800&amp;u_cd=24&amp;u_sd=1&amp;dmc=16&amp;adx=-12245933&amp;ady=-12245933&amp;biw=800&amp;bih=600&amp;scr_x=0&amp;scr_y=0&amp;eid=95399630%2C95400774%2C95401044%2C122880829&amp;oid=2&amp;pvsid=7106512094099728&amp;tmod=985236776&amp;uas=0&amp;nvt=1&amp;fsapi=1&amp;fc=1920&amp;brdim=10%2C10%2C10%2C10%2C800%2C0%2C780%2C580%2C800%2C600&amp;vis=1&amp;rsz=%7C%7Cs%7C&amp;abl=NS&amp;fu=32768&amp;bc=31&amp;bz=0.98&amp;ifi=1&amp;uci=a!1&amp;fsb=1&amp;dtd=40" data-google-container-id="a!1" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true"></iframe></div></ins><iframe src="https://www.google.com/recaptcha/api2/aframe" width="0" height="0" style="display: none;"></iframe><div id="ssgCompanyContent" hidden="" aria-hidden="true">
       <button class="back-btn" onclick="navigateToList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>一覧に戻る</button>
       <div class="detail-head-row">
         <div class="eyecatch-row hero">
@@ -1727,4 +2042,4 @@ loadAgents();
         
         <div class="cta-sub" style="margin-top:8px;">AIによるWeb検索で発見・実在照合済み</div>
       </div>
-    </div></body><iframe id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20260901/r20190131/zrt_lookup.html" style="display: none;"></iframe></html>
+    </div></body><iframe id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20260902/r20190131/zrt_lookup.html" style="display: none;"></iframe></html>

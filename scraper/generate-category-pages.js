@@ -6,11 +6,11 @@
  *
  * - 各カテゴリーの色・アイコン（categories.json）と、index.html の共通CSS（<style>ブロック）を
  *   そのまま流用し、見た目をトップページと揃える。
- * - カード表示はホーム画面の buildHomeCardHTML（index.html）相当（アイコン・カテゴリーピル・
- *   社名・特徴抜粋のみ、stats-gridは持たない）を、このスクリプト内で自己完結的に再実装する
- *   （ブラウザJSではなくNode側で静的HTMLとして書き出すため）。
- * - 1ページ最大200件（completenessScore降順）。超過分は「もっと見る」で
- *   トップページの該当カテゴリー絞り込み（/?category=...）へ誘導する。
+ * - カード表示はホーム画面の buildHomeCardHTML（index.html、候補者モード固定・注目バッジ無し。
+ *   ホームのカテゴリー別セクションと同じ表示条件）を、このスクリプト内で自己完結的に
+ *   再実装する（ブラウザJSではなくNode側で静的HTMLとして書き出すため）。
+ * - 1ページ最大200件（displaySortValue降順）。超過分は「もっと見る」で
+ *   トップページの該当カテゴリー絞り込みへ誘導する。
  * - 該当エージェントが0件のカテゴリーはページを生成しない（薄いページを作らないため）。
  *
  * GitHub Actionsパイプラインでは prerender.js の後・generate-sitemap.js の前に実行する想定。
@@ -25,19 +25,20 @@ const CATEGORIES_PATH = path.join(ROOT, 'categories.json');
 const INDEX_HTML_PATH = path.join(ROOT, 'index.html');
 const CATEGORY_DIR = path.join(ROOT, 'category');
 
-const BASE_URL = 'https://agent-zukan.net';
+const BASE_URL = 'https://freelance-anken-zukan.net';
 const MAX_AGENTS_PER_PAGE = 200;
 
-// 初期投入済み9カテゴリーの手動スラッグ対応表（ローマ字変換ではなく分かりやすい英語表記）。
+// 初期投入済み9カテゴリー（scraper/lib/schema.js の CATEGORIES と一致させること）の
+// 手動スラッグ対応表（ローマ字変換ではなく分かりやすい英語表記）。
 const ORIGINAL_SLUG_MAP = {
-  'IT・Web': 'it-web',
-  '管理部門・コンサル': 'management-consulting',
-  '施工管理・建設': 'construction',
+  'IT・Web開発': 'it-web',
+  'デザイン': 'design',
+  'ライティング・編集': 'writing-editing',
+  '動画・クリエイティブ': 'video-creative',
+  'コンサル・士業': 'consulting',
+  '事務・バックオフィス': 'back-office',
   '営業・マーケティング': 'sales-marketing',
-  '外資・グローバル': 'global',
-  'スタートアップ・ベンチャー': 'startup',
-  '地方転職・UIターン': 'regional',
-  '第二新卒・ポテンシャル層': 'second-newgrad',
+  'フリーランス案件マッチング': 'freelance-matching',
   'その他': 'other',
 };
 
@@ -87,21 +88,48 @@ function isDisclosed(value) {
   return !String(value).startsWith('非公開');
 }
 
-/** index.html の completenessScore(agent, "candidate") と同じロジック（求職者モード固定）。 */
+/** index.html の completenessScore(agent, "candidate") と同じロジック（候補者モード固定）。 */
 function completenessScore(agent) {
   let score = 0;
-  if (isDisclosed(agent.targetAge)) score++;
   if (isDisclosed(agent.region)) score++;
   if (isDisclosed(agent.jobCount)) score++;
   if ((agent.reviews && agent.reviews.length > 0) || agent.reviewNote) score++;
   if (agent.features && agent.features.length > 0) score++;
   if (agent.appeal && agent.appeal.length > 0) score++;
+  if ((agent.contractTypes && agent.contractTypes.length > 0) || isDisclosed(agent.remoteRatio)) score++;
   return score;
 }
 
-/** index.html の displaySortValue(agent, mode) と同じロジック（求職者モード固定）。featuredを最優先、同順位内はcompletenessScore降順。 */
+/** index.html の displaySortValue(agent, "candidate") と同じロジック。featuredを最優先、同順位内はcompletenessScore降順。 */
 function displaySortValue(agent) {
   return (agent.featured ? 1 : 0) * 1000 + completenessScore(agent);
+}
+
+/** index.html の zukanScore(agent, "candidate") と同じロジック（6点満点）。 */
+function zukanScore(agent) {
+  if (agent.featured) return 5;
+  const raw = completenessScore(agent);
+  const ratio = raw / 6;
+  return Math.max(1, Math.min(4, Math.round(1 + ratio * 4)));
+}
+
+/** index.html の zukanScoreBadge(agent, "candidate") と同じロジック。 */
+function zukanScoreBadge(agent) {
+  const score = zukanScore(agent);
+  const filled = '★'.repeat(score);
+  const empty = '☆'.repeat(5 - score);
+  return `<span class="rating-badge"><span class="star">${filled}</span><span class="star-empty">${empty}</span><span class="count">（図鑑スコア）</span></span>`;
+}
+
+/** index.html の ratingBadge(review, estimated, agent, "candidate") と同じロジック。
+ * 実際の口コミ（agent.reviews[0]）があればそちらを優先し、無ければ図鑑スコアにフォールバックする。 */
+function ratingBadge(agent) {
+  const review = agent.reviews && agent.reviews[0];
+  if (!review) return zukanScoreBadge(agent);
+  const tag = agent.real
+    ? `<span class="count">（推定）</span>`
+    : `<span class="count">（${review.count}件）</span>`;
+  return `<span class="rating-badge"><span class="star">★</span>${review.rating.toFixed(1)}${tag}</span>`;
 }
 
 function escapeHtml(str) {
@@ -112,53 +140,23 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
-/** index.html の eyecatchHTML(agent, "thumb") 相当。 */
+/** index.html の eyecatchHTML(agent, "thumb", showNotableBadge) と同じロジック。
+ * カテゴリー別一覧は、ホームのカテゴリー別セクション（buildHomeSectionの通常呼び出し）と
+ * 同じ表示条件のため、showNotableBadgeは常にfalse（「注目！」バッジは付けない）。 */
 function eyecatchHTML(agent, categoryStyle) {
-  if (agent.featured) {
-    return `<div class="eyecatch-square thumb featured">
-        <div class="featured-star"><span class="featured-text">イチオシ!</span></div>
-      </div>`;
-  }
-  const style = categoryStyle[agent.category] || Object.values(categoryStyle)[0];
+  const style = categoryStyle[agent.category] || categoryStyle['その他'] || Object.values(categoryStyle)[0];
   const favicon = agent.faviconUrl
     ? `<img class="favicon" src="${escapeHtml(agent.faviconUrl)}" alt="" onerror="this.remove()">`
     : '';
-  return `<div class="eyecatch-square thumb" style="background:linear-gradient(135deg, ${style.from}, ${style.to});">
-      <svg viewBox="0 0 64 64" fill="none">${style.icon}</svg>
-      ${favicon}
+  return `<div class="eyecatch-row thumb">
+      <div class="eyecatch-square thumb" style="background:linear-gradient(135deg, ${style.from}, ${style.to});">
+        <svg viewBox="0 0 64 64" fill="none">${style.icon}</svg>
+        ${favicon}
+      </div>
     </div>`;
 }
 
-/** index.html の zukanScore(agent, "candidate") 相当。featuredは無条件5。 */
-function zukanScore(agent) {
-  if (agent.featured) return 5;
-  const raw = completenessScore(agent);
-  const ratio = raw / 6;
-  return Math.max(1, Math.min(4, Math.round(1 + ratio * 4)));
-}
-
-/** index.html の zukanScoreBadge(agent, "candidate") 相当。 */
-function zukanScoreBadge(agent) {
-  const score = zukanScore(agent);
-  const filled = '★'.repeat(score);
-  const empty = '☆'.repeat(5 - score);
-  return `<span class="rating-badge"><span class="star">${filled}</span><span class="star-empty">${empty}</span><span class="count">（図鑑スコア）</span></span>`;
-}
-
-/** index.html の ratingBadge(review, estimated, agent, "candidate") 相当。
- * 実際の口コミ（agent.reviews[0]）があればそちらを優先し、無ければ図鑑スコアにフォールバックする。 */
-function ratingBadge(agent) {
-  const review = agent.reviews && agent.reviews[0];
-  if (!review) return zukanScoreBadge(agent);
-  const tag = agent.real
-    ? '<span class="count">（推定）</span>'
-    : `<span class="count">（${review.count}件）</span>`;
-  return `<span class="rating-badge"><span class="star">★</span>${review.rating.toFixed(1)}${tag}</span>`;
-}
-
-/** index.html の buildHomeCardHTML(agent, "candidate") 相当（求職者モード固定）。
- * featured/非featuredを問わず、イチオシバッジ/アイコンと社名の間に★評価バッジ
- * （ratingBadge/zukanScoreBadge）を表示する（buildHomeCardHTMLと同じ見た目・位置）。 */
+/** index.html の buildHomeCardHTML(agent, "candidate", false) と同じロジック（候補者モード固定）。 */
 function homeCardHTML(agent, categoryStyle) {
   const excerpt = agent.appeal || '';
   const ratingHTML = `<div class="home-card-rating">${ratingBadge(agent)}</div>`;
@@ -172,11 +170,14 @@ function homeCardHTML(agent, categoryStyle) {
     </a>`;
 }
 
+/** ItemList内の各項目には、agent/{id}/index.htmlに焼き込まれるJSON-LD（Service型）と
+ * 一貫性を持たせるため、EmploymentAgencyではなくServiceを使う。AggregateRating等の
+ * 評価系プロパティは含めない（図鑑スコアは独自算出値であり実際の口コミ評価ではないため）。 */
 function buildCollectionPageJsonLd({ categoryName, pageUrl, description, pageAgents }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: `${categoryName}に強い転職エージェント一覧`,
+    name: `${categoryName}のサービス一覧`,
     description,
     url: pageUrl,
     mainEntity: {
@@ -185,8 +186,9 @@ function buildCollectionPageJsonLd({ categoryName, pageUrl, description, pageAge
         '@type': 'ListItem',
         position: idx + 1,
         item: {
-          '@type': 'EmploymentAgency',
+          '@type': 'Service',
           name: a.name,
+          serviceType: a.category,
           url: `${BASE_URL}/agent/${encodeURIComponent(a.id)}/`,
         },
       })),
@@ -196,8 +198,8 @@ function buildCollectionPageJsonLd({ categoryName, pageUrl, description, pageAge
 
 function buildPageHtml({ categoryName, slug, styleBlock, totalCount, pageAgents, categoryStyle }) {
   const pageUrl = `${BASE_URL}/category/${slug}/`;
-  const title = `${categoryName}に強い転職エージェント一覧｜転職エージェント図鑑`;
-  const description = `${categoryName}に強みを持つ転職エージェント・人材紹介会社を${totalCount}社掲載。対応エリアや特徴を比較して、あなたに合った1社を見つけられます。`;
+  const title = `${categoryName}のサービス一覧｜フリーランス案件図鑑`;
+  const description = `${categoryName}に対応するフリーランス向け案件紹介・マッチングサービスを${totalCount}件掲載。対応エリアや特徴を比較して、あなたに合ったサービスを見つけられます。`;
   const jsonLd = buildCollectionPageJsonLd({
     categoryName,
     pageUrl,
@@ -206,7 +208,7 @@ function buildPageHtml({ categoryName, slug, styleBlock, totalCount, pageAgents,
   });
   const truncated = totalCount > MAX_AGENTS_PER_PAGE;
   const moreLinkHtml = truncated
-    ? `<a class="home-more-link" href="/?category=${encodeURIComponent(categoryName)}">もっと見る（全${totalCount}社）→</a>`
+    ? `<a class="home-more-link" href="/?category=${encodeURIComponent(categoryName)}">もっと見る（全${totalCount}件）→</a>`
     : '';
 
   return `<!DOCTYPE html>
@@ -225,36 +227,32 @@ function buildPageHtml({ categoryName, slug, styleBlock, totalCount, pageAgents,
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${escapeHtml(title)}">
+<meta name="twitter:description" content="${escapeHtml(description)}">
+<meta name="twitter:image" content="${BASE_URL}/ogp-image.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WBGS0QRR5M"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6S43LSBK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-WBGS0QRR5M');
+  gtag('config', 'G-YS6S43LSBK');
 </script>
 ${styleBlock}
 </head>
 <body>
-<header>
-  <div class="inner">
-    <h1 class="home-link" onclick="location.href='/'">転職エージェント<span class="mark">図鑑</span></h1>
-    <p class="tagline">迷わず選べる、エージェントの図鑑。</p>
-  </div>
-</header>
 <div class="wrap">
   <a class="back-btn" href="/" style="display:inline-flex;text-decoration:none;margin-top:24px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>トップに戻る</a>
 
+  <h1>${escapeHtml(categoryName)}のサービス一覧</h1>
+  <p>${escapeHtml(categoryName)}に対応するフリーランス向け案件紹介・マッチングサービスを${totalCount}件掲載しています。「案件を受注したい」フリーランスの方は、対応エリアや特徴を比較して、あなたに合ったサービスを見つけられます。</p>
+
   <div class="home-section" style="margin-top:24px;">
-    <div class="home-section-head">
-      <h3><span>${escapeHtml(categoryName)}に強い転職エージェント（${totalCount}社）</span></h3>
-    </div>
     <div class="home-section-grid">
       ${pageAgents.map(a => homeCardHTML(a, categoryStyle)).join('\n      ')}
     </div>
@@ -262,8 +260,8 @@ ${styleBlock}
   </div>
 </div>
 <footer>
-  掲載情報は、厚生労働省委託「職業紹介優良事業者認定制度」（jesra.or.jp）および厚生労働省「人材サービス総合サイト」の公開データをもとに、自動クロールにより毎日更新しています。
-  <div class="footer-links"><a href="/">トップページ</a> / <a href="/privacy.html">プライバシーポリシー</a> / <a href="/faq.html">よくある質問</a></div>
+  掲載情報は、AIによるWeb検索で発見したサービスについて、実際に公式サイトへアクセスして実在確認を行った上で、日次で自動更新しています。取得できなかった項目は「非公開（お問い合わせで確認）」と表示しています。図鑑スコアは実際の利用者口コミではなく、掲載情報の充実度に基づく当サイト独自の指標です。個別サービスのCTAボタンからは各社の公式サイトへ遷移します。
+  <div class="footer-links"><a href="/">トップページ</a> / <a href="/faq.html">よくある質問</a> / <a href="/privacy.html">プライバシーポリシー</a></div>
 </footer>
 </body>
 </html>

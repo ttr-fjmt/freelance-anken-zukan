@@ -79,10 +79,20 @@ function buildEntries(agents, categories = []) {
       priority: '0.6',
     });
   }
-  // 【引き続き一時対応】/category/{slug}/ のカテゴリーランディングページは、
-  // generate-category-pages.js相当の生成処理をまだ実装していないため、実在しないURLを
-  // 送らないよう引き続き含めない。このページ種別のプリレンダリングを実装した時点で、
-  // agent-zukan側のgenerate-sitemap.jsを参考に該当ループを追加すること。
+  // scraper/generate-category-pages.js が /category/{slug}/index.html を実際に生成する
+  // ようになったため、このループを復活させる。該当エージェントが0件のカテゴリーは
+  // generate-category-pages.js側もページを生成しない（薄いページを作らないため）ので、
+  // ここでも同じ条件（1件以上・slug割り当て済み）でのみ含める。
+  for (const c of categories) {
+    if (!c.slug) continue;
+    const hasAgent = agents.some(a => a.category === c.name);
+    if (!hasAgent) continue;
+    entries.push({
+      loc: `${BASE_URL}/category/${encodeURIComponent(c.slug)}/`,
+      changefreq: 'daily',
+      priority: '0.7',
+    });
+  }
   return entries;
 }
 

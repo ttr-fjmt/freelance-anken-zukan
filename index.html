@@ -4,17 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>フリーランス案件図鑑｜案件探しには、もう困らない</title>
-<meta name="description" id="meta-description" content="フリーランス案件図鑑は、全国の人材紹介サービスを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いサービスを、それぞれ迷わず見つけられます。">
+<meta name="description" id="meta-description" content="フリーランス案件図鑑は、フリーランス向けの案件紹介・マッチングサービスを比較できるサイトです。「案件を受注したい」フリーランスの方にも、「案件を掲載・発注したい」企業の方にも、それぞれに必要な情報を提供します。">
 <meta property="og:title" id="og-title" content="フリーランス案件図鑑｜案件探しには、もう困らない">
-<meta property="og:description" id="og-description" content="フリーランス案件図鑑は、全国の人材紹介サービスを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いサービスを、それぞれ迷わず見つけられます。">
+<meta property="og:description" id="og-description" content="フリーランス案件図鑑は、フリーランス向けの案件紹介・マッチングサービスを比較できるサイトです。「案件を受注したい」フリーランスの方にも、「案件を掲載・発注したい」企業の方にも、それぞれに必要な情報を提供します。">
 <meta property="og:type" content="website">
 <meta property="og:url" id="og-url" content="https://freelance-anken-zukan.net/">
 <link rel="canonical" href="https://freelance-anken-zukan.net/" id="canonical-link">
 <script type="application/ld+json" id="ld-json">{"@context":"https://schema.org","@type":"WebSite","name":"フリーランス案件図鑑","url":"https://freelance-anken-zukan.net/"}</script>
-<meta property="og:image" content="/ogp-image.png">
+<meta property="og:image" content="https://freelance-anken-zukan.net/ogp-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="twitter-title" content="フリーランス案件図鑑｜案件探しには、もう困らない">
+<meta name="twitter:description" id="twitter-description" content="フリーランス案件図鑑は、フリーランス向けの案件紹介・マッチングサービスを比較できるサイトです。「案件を受注したい」フリーランスの方にも、「案件を掲載・発注したい」企業の方にも、それぞれに必要な情報を提供します。">
+<meta name="twitter:image" content="https://freelance-anken-zukan.net/ogp-image.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -534,7 +537,7 @@
 </div>
 
 <footer>
-  掲載情報は、AIによるWeb検索で発見したサービスについて、実際に公式サイトへアクセスして実在確認を行った上で、週次で自動更新しています。取得できなかった項目は「非公開（お問い合わせで確認）」と表示しています。図鑑スコアは実際の利用者口コミではなく、掲載情報の充実度に基づく当サイト独自の指標です。個別サービスのCTAボタンからは各社の公式サイトへ遷移します。
+  掲載情報は、AIによるWeb検索で発見したサービスについて、実際に公式サイトへアクセスして実在確認を行った上で、日次で自動更新しています。取得できなかった項目は「非公開（お問い合わせで確認）」と表示しています。図鑑スコアは実際の利用者口コミではなく、掲載情報の充実度に基づく当サイト独自の指標です。個別サービスのCTAボタンからは各社の公式サイトへ遷移します。
   <div class="footer-links"><a href="faq.html">よくある質問</a> / <a href="privacy.html">プライバシーポリシー</a></div>
 </footer>
 
@@ -567,7 +570,7 @@ let AGENTS = [];
 const SSG_MODE = new URLSearchParams(location.search).get("ssg") === "1";
 
 const DEFAULT_TITLE = "フリーランス案件図鑑｜案件探しには、もう困らない";
-const DEFAULT_DESCRIPTION = "フリーランス案件図鑑は、全国の人材紹介サービスを対応エリア・業界・手数料などの条件で一覧・比較できるサイトです。求職者はキャリアに合った1社を、採用企業は費用対効果の高いサービスを、それぞれ迷わず見つけられます。";
+const DEFAULT_DESCRIPTION = "フリーランス案件図鑑は、フリーランス向けの案件紹介・マッチングサービスを比較できるサイトです。「案件を受注したい」フリーランスの方にも、「案件を掲載・発注したい」企業の方にも、それぞれに必要な情報を提供します。";
 
 function truncateText(str, max){
   if(!str) return "";
@@ -613,16 +616,23 @@ function updateJsonLdForList(){
   });
 }
 
-/** エージェント詳細表示時のJSON-LD（EmploymentAgency型）。
+/** サービス詳細表示時のJSON-LD（Service型）。EmploymentAgency（LocalBusinessのサブタイプ、
+ * 物理店舗を持つ人材紹介事業者向け）は、店舗を持たないフリーランス向け案件マッチング
+ * サービスの実態に合わないため、非店舗型サービスに適したService型を使う。
  * 図鑑スコア等は実際の口コミ評価ではなく独自算出値のため、AggregateRating等の評価系
  * プロパティは絶対に含めない（Googleのスキーママークアップポリシー違反のリスクがあるため）。 */
 function updateJsonLdForAgent(a){
   const data = {
     "@context": "https://schema.org",
-    "@type": "EmploymentAgency",
+    "@type": "Service",
     "name": a.name,
     "description": a.appeal,
+    "serviceType": a.category,
     "areaServed": a.region,
+    "provider": {
+      "@type": "Organization",
+      "name": a.name,
+    },
   };
   const url = buildAgentSchemaUrl(a);
   if(url) data.url = url;
@@ -635,6 +645,8 @@ function updateMetaForList(){
   setMetaContent("og-title", DEFAULT_TITLE);
   setMetaContent("og-description", DEFAULT_DESCRIPTION);
   setMetaContent("og-url", location.href.split("#")[0]);
+  setMetaContent("twitter-title", DEFAULT_TITLE);
+  setMetaContent("twitter-description", DEFAULT_DESCRIPTION);
   updateCanonical(SITE_ORIGIN + "/");
   updateJsonLdForList();
 }
@@ -650,6 +662,8 @@ function updateMetaForAgent(a){
   setMetaContent("og-title", title);
   setMetaContent("og-description", description);
   setMetaContent("og-url", location.href);
+  setMetaContent("twitter-title", title);
+  setMetaContent("twitter-description", description);
   // 企業モードはハッシュ遷移のURLのため、canonicalはトップページのままにする
   // （求職者モードの実パス /agent/{id}/ のみ、そのURLをcanonicalにする）。
   updateCanonical(mode === "candidate" ? SITE_ORIGIN + agentUrlPath(a) : SITE_ORIGIN + "/");
