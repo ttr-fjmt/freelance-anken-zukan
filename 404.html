@@ -876,7 +876,7 @@ function startRecommendAutoScroll(){
   if(!scroll || recommendAutoScroll.rafId) return;
   if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  const SPEED_PX_PER_SEC = 70;
+  const SPEED_PX_PER_SEC = 33;
   let lastTime = null;
 
   function step(timestamp){
