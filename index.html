@@ -1314,12 +1314,56 @@ function computeHighScoreThreshold(currentMode, targetCount){
   return threshold;
 }
 
+/**
+ * フリーテキスト検索の類義語辞書。姉妹サイト「転職エージェント図鑑」の同機能と仕組み
+ * （キーに一致したら類義語群に展開し、複数語でOR検索する方式）は共通だが、辞書の中身は
+ * このサイト固有の語彙（働き方・契約形態、9カテゴリーの専門分野、報酬形態）で構成する。
+ * 各エントリはagents.jsonの実データでヒット件数を確認したうえで採用している
+ * （広すぎる語は無関係な誤ヒットの温床になるため避ける。例:「PR」は「BPR」に誤爆するため
+ * 不採用とし、「広報」で代替した）。
+ */
+const SEARCH_SYNONYMS = {
+  "リモート": ["リモート", "在宅", "フルリモート", "テレワーク"],
+  "単発": ["単発", "スポット"],
+  "継続": ["継続", "長期", "プロジェクト型"],
+  "副業": ["副業", "複業", "スキマ時間"],
+  "エンジニア": ["エンジニア", "IT", "システム開発", "プログラ", "インフラ", "DX"],
+  "デザイナー": ["デザイナー", "デザイン", "グラフィック", "UI", "UX"],
+  "ライター": ["ライター", "ライティング", "記事作成"],
+  "動画": ["動画", "映像", "撮影", "クリエイター", "クリエイティブ"],
+  "コンサル": ["コンサル", "コンサルタント", "戦略", "士業", "税理士"],
+  "事務": ["事務", "バックオフィス", "経理", "アシスタント", "秘書"],
+  "営業": ["営業", "マーケティング", "広告", "SNS", "広報"],
+  "高単価": ["高単価", "高額"],
+};
+
+/** 検索語がSEARCH_SYNONYMSのいずれかのキーを含んでいれば、対応する類義語群に展開する。
+ * 該当キーが無ければ元の検索語のまま（＝従来通りの部分一致）を返す。 */
+function expandSearchQuery(q){
+  const key = Object.keys(SEARCH_SYNONYMS).find(k => q.includes(k));
+  return key ? SEARCH_SYNONYMS[key] : [q];
+}
+
+/** 検索対象を横断的にまとめた文字列（小文字化済み）。SEARCH_SYNONYMSによる類義語展開の
+ * マッチ先として使う。name/category相当に加え、remoteRatio・feeStructure.note・
+ * contractTypes・features等、このサイト固有のフィールドも対象に含める。 */
+function buildSearchHaystack(agent){
+  return [
+    agent.name, agent.category, agent.region,
+    agent.oneLiner, agent.companyOneLiner, agent.appeal, agent.companyAppeal,
+    agent.remoteRatio, agent.feeStructure && agent.feeStructure.note,
+    ...(agent.contractTypes || []),
+    ...(agent.features || []), ...(agent.companyFeatures || []),
+  ].filter(Boolean).join(" ").toLowerCase();
+}
+
 function matches(agent, query){
   const passCategory = activeChip==="all" || agent.category===activeChip;
   const passPrefecture = matchesPrefecture(agent, activePrefecture);
   const passFee = mode==="company" ? matchesFee(agent, activeFee) : true;
   const q = query.trim().toLowerCase();
-  const passQuery = !q || agent.name.toLowerCase().includes(q) || agent.category.toLowerCase().includes(q);
+  const terms = q ? expandSearchQuery(q).map(t => t.toLowerCase()) : [];
+  const passQuery = !q || terms.some(t => buildSearchHaystack(agent).includes(t));
   const passFeatured = !featuredOnly || agent.featured===true;
   const passHighScore = !highScoreOnly || (agent.featured!==true && completenessScore(agent, mode) >= highScoreThreshold);
   return passCategory && passPrefecture && passFee && passQuery && passFeatured && passHighScore;
