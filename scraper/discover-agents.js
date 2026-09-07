@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * 週次で、新規のフリーランス向け案件紹介エージェント/サービスをClaude(web_search)に
+ * 日次で、新規のフリーランス向け案件紹介エージェント/サービスをClaude(web_search)に
  * カテゴリー別に発見させ、実際にHTTPアクセスして実在照合したうえで agents.json に
  * 追加するエントリーポイント（.github/workflows/discover-agents.yml から呼び出される）。
  *
