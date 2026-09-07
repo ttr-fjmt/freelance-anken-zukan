@@ -454,5 +454,53 @@
     "website": "https://hr-monster.com",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-07T00:30:34.434Z"
+  },
+  "coconalaテック（株式会社ococnaラテック）": {
+    "name": "coconalaテック（株式会社ococnaラテック）",
+    "website": "https://agent.coconala.com/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-07T20:22:51.987Z"
+  },
+  "AGREEGATE TECH（アグリゲートテック）": {
+    "name": "AGREEGATE TECH（アグリゲートテック）",
+    "website": "https://agreegate.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T20:22:51.987Z"
+  },
+  "ライターステーション": {
+    "name": "ライターステーション",
+    "website": "https://writerstation.co.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T20:22:51.987Z"
+  },
+  "Experty（エキスパティー）": {
+    "name": "Experty（エキスパティー）",
+    "website": "https://experty.co.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T20:22:51.987Z"
+  },
+  "PMOフリーコンサル": {
+    "name": "PMOフリーコンサル",
+    "website": "https://pmo-freelance.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T20:22:51.987Z"
+  },
+  "PROKUL（プロクル）／エンファクトリー": {
+    "name": "PROKUL（プロクル）／エンファクトリー",
+    "website": "https://pro.prokul.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T20:22:51.987Z"
+  },
+  "Amelia（翻訳者ネットワーク アメリア）／フェロー・アカデミー株式会社": {
+    "name": "Amelia（翻訳者ネットワーク アメリア）／フェロー・アカデミー株式会社",
+    "website": "https://www.amelia.ne.jp",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-07T20:22:51.987Z"
+  },
+  "1on1Freelance（バレットグループ株式会社）": {
+    "name": "1on1Freelance（バレットグループ株式会社）",
+    "website": "https://1on1-freelance.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-07T20:22:51.987Z"
   }
 }
