@@ -18,8 +18,6 @@
 <meta name="twitter:image" content="https://freelance-anken-zukan.net/ogp-image.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap" rel="stylesheet">
 <!-- Google AdSense: 実際に配信する際は client=ca-pub-5761092657360295 をご自身のパブリッシャーIDに置き換えてください -->
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5761092657360295" crossorigin="anonymous"></script>
 <!-- Google tag (gtag.js) -->
@@ -77,12 +75,6 @@
     border:1px solid var(--brand-border);border-radius:999px;padding:2px 10px;
     font-weight:700;font-size:12px;white-space:nowrap;
   }
-  .update-badge{
-    display:inline-flex;align-items:center;gap:5px;background:transparent;
-    color:#8A6A1D;border:1px solid var(--gold);border-radius:999px;
-    padding:2px 10px;font-weight:700;font-size:12px;white-space:nowrap;
-  }
-  .update-badge svg{flex-shrink:0;width:12px;height:12px;}
 
   /* 姉妹サイトへのリンク。色は行き先のサイトのブランド色に合わせる。 */
   .sister-links{display:flex;gap:8px;flex-wrap:wrap;}
@@ -450,12 +442,7 @@
   .cta-btn:hover{opacity:.92;}
   .cta-sub{font-size:11.5px;color:var(--ink-faint);margin-top:10px;text-align:center;}
 
-  @media (max-width:340px){
-    h1{font-size:28px;}
-  }
-
   @media (max-width:600px){
-    .agent-count-badge, .update-badge{font-size:12.5px;padding-left:12px;padding-right:12px;}
     .select-row{flex-direction:column;}
     .stats-grid{grid-template-columns:repeat(2,1fr);}
     .stats-grid.company{grid-template-columns:repeat(1,1fr);}
@@ -490,14 +477,10 @@
   <div class="header-inner">
     <h1 class="home-link" onclick="goHome()">フリーランス案件<span class="mark">図鑑</span></h1>
     <span class="agent-count-badge" id="agentCountBadge">全国のサービスを123件掲載中！</span>
-    <span class="update-badge">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#B8863B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg>
-      毎日更新
-    </span>
     <span class="header-spacer"></span>
     <nav class="sister-links" aria-label="図鑑シリーズの姉妹サイト">
       <a class="to-agent" href="https://agent-zukan.net/" target="_blank" rel="noopener noreferrer">転職エージェント探すなら →</a>
-      <a class="to-skillup" href="https://skillup-zukan.net/" target="_blank" rel="noopener noreferrer">学び直しの講座探すなら →</a>
+      <a class="to-skillup" href="https://skillup-zukan.net/" target="_blank" rel="noopener noreferrer">スキルアップするなら →</a>
     </nav>
   </div>
 </header>

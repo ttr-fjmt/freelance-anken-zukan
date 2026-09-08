@@ -40,7 +40,9 @@ const SITE_ORIGIN = 'https://freelance-anken-zukan.net';
 const MANIFEST_PATH = path.join(ROOT, 'data', 'ssg-manifest.json');
 const OUT_DIR = path.join(ROOT, 'agent');
 
-const PORT = 8935;
+// 検証用サーバーのポート。姉妹サイトの静的化と同時に動かすと衝突するため、
+// 環境変数で変えられるようにしている。
+const PORT = parseInt(process.env.PRERENDER_PORT || "8935", 10);
 const SIZE_TARGET_BYTES = 90 * 1024; // 目安90KB（候補者モード本体+企業モード補助コンテンツの分、agent-zukanの60KBより少し高めに設定）
 const SIZE_ERROR_THRESHOLD_BYTES = 250 * 1024; // これを超えたら明らかに異常としてエラー停止
 
@@ -267,7 +269,10 @@ async function main() {
     await new Promise(resolve => server.close(resolve));
   }
 
-  manifest[TEMPLATE_KEY] = templateHash;
+  // 一部だけを処理した回（PRERENDER_LIMIT）では記録しない。
+  // ここで記録してしまうと、次の実行で「テンプレートは処理済み」と判断され、
+  // 残りのページが古い見た目のまま二度と作り直されなくなる。
+  if (!LIMIT) manifest[TEMPLATE_KEY] = templateHash;
   writeJson(MANIFEST_PATH, manifest);
   console.log(
     `Prerender finished: generated=${generated}, skipped(unchanged)=${skipped}, pruned=${pruned}, ` +
