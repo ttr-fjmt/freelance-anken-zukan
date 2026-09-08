@@ -22,6 +22,42 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <!-- Google AdSense: 実際に配信する際は client=ca-pub-5761092657360295 をご自身のパブリッシャーIDに置き換えてください -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5761092657360295" crossorigin="anonymous"></script>
+<!-- 運営者自身のアクセスを計測しないためのスイッチ。
+     ?ga=off を一度開くと、そのブラウザでは以後計測しない（?ga=on で解除、?ga=status で確認）。
+     設定はブラウザごとに保存されるので、パソコンとスマホでそれぞれ1回開く必要がある。
+     gtag の設定より前に置くこと。最初のページビューが送られる前に効かせるため。 -->
+<script>
+(function () {
+  var MEASUREMENT_ID = 'G-YS6S43LSBK';
+  var KEY = 'analytics-opt-out';
+  var mode = null;
+  try {
+    mode = new URLSearchParams(location.search).get('ga');
+    if (mode === 'off') localStorage.setItem(KEY, '1');
+    if (mode === 'on') localStorage.removeItem(KEY);
+    if (localStorage.getItem(KEY) === '1') window['ga-disable-' + MEASUREMENT_ID] = true;
+  } catch (e) {
+    // プライベートモード等で localStorage が使えなくても、サイト本体は動かす。
+  }
+  if (mode !== 'off' && mode !== 'on' && mode !== 'status') return;
+
+  // 効いているかどうかを画面で分かるようにする（操作した本人にだけ出る）。
+  var off = false;
+  try { off = localStorage.getItem(KEY) === '1'; } catch (e) { off = false; }
+  var text = off
+    ? 'このブラウザからのアクセスは計測しません（解除するには ?ga=on）'
+    : 'このブラウザからのアクセスを計測します（除外するには ?ga=off）';
+  document.addEventListener('DOMContentLoaded', function () {
+    var el = document.createElement('div');
+    el.textContent = text;
+    el.style.cssText = 'position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:9999;' +
+      'background:#2B2118;color:#fff;font-size:13px;line-height:1.6;padding:12px 18px;border-radius:8px;' +
+      'box-shadow:0 4px 16px rgba(0,0,0,.25);max-width:calc(100vw - 32px);text-align:center';
+    document.body.appendChild(el);
+    setTimeout(function () { el.remove(); }, 8000);
+  });
+})();
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6S43LSBK"></script>
 <script>
