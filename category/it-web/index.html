@@ -32,160 +32,178 @@
 </script>
 <style>
   :root{
-    --ink:#17211D;
-    --paper:#F8F5EE;
-    --surface:#FFFFFF;
-    --line:#E4DFD1;
-    --accent:#1D5FA8;
-    --accent-deep:#123A6B;
-    --accent-soft:#DCE8F5;
-    --gold:#B8863B;
-    --gold-soft:#F1E4CC;
-    --ink-soft:#5B6660;
-    --ink-faint:#8B9490;
-    --star:#E0A400;
+    /* ブランド色は3サイトで意図的に分けている（このサイトは青）。
+       名前と考え方はスキルアップ図鑑に合わせ、UIの作りを揃えられるようにした。 */
+    --brand:#1D5FA8; --brand-dark:#123A6B; --brand-light:#E9F1FA; --brand-border:#C4D9EE;
+    --ink:#17211D; --ink-sub:#5B6660; --ink-faint:#8B9490;
+    --bg:#F7F9FC; --card:#FFFFFF; --line:#E2E7EE;
+    --ok:#2E7D5B; --ok-bg:#E8F5EE;
+    --gold:#B8863B; --gold-soft:#F1E4CC; --star:#E0A400;
+    --radius:12px;
+    --shadow:0 1px 3px rgba(23,33,29,.07),0 4px 16px rgba(23,33,29,.04);
+
+    /* 旧い変数名。既存のCSSが多く参照しているので、別名として残す。 */
+    --paper:var(--bg); --surface:var(--card);
+    --accent:var(--brand); --accent-deep:var(--brand-dark); --accent-soft:var(--brand-light);
+    --ink-soft:var(--ink-sub);
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
-    background:
-      radial-gradient(circle at 15% 20%, rgba(29,95,168,0.24) 0%, transparent 42%),
-      radial-gradient(circle at 85% 15%, rgba(211,47,47,0.12) 0%, transparent 38%),
-      radial-gradient(circle at 20% 85%, rgba(106,76,147,0.13) 0%, transparent 40%),
-      radial-gradient(circle at 88% 88%, rgba(18,58,107,0.22) 0%, transparent 44%),
-      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.5) 0%, transparent 55%),
-      var(--paper);
-    background-attachment:fixed;
+    background:var(--bg);
     color:var(--ink);
-    font-family:'Zen Kaku Gothic New', sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+    line-height:1.7;
     -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;
   }
-  .wrap{max-width:860px;margin:0 auto;padding:0 16px 100px;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px 100px;}
 
-  /* header */
+  /* ヘッダー：上に貼り付く細いバー */
   header{
-    position:relative;
-    padding:64px 16px 44px;
-    background:
-      radial-gradient(600px 260px at 15% -20%, rgba(31,111,99,.10), transparent 60%),
-      radial-gradient(500px 220px at 100% 0%, rgba(184,134,59,.10), transparent 55%),
-      var(--paper);
+    background:var(--card);border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:20;
   }
-  .sister-site-link{
-    position:absolute;top:16px;right:16px;
-    display:inline-flex;align-items:center;gap:4px;
-    background:#1F6F63;color:#fff;
-    font-size:12.5px;font-weight:700;
-    padding:8px 14px;border-radius:999px;
-    text-decoration:none;white-space:nowrap;
-    box-shadow:0 1px 4px rgba(0,0,0,.12);
-    transition:background-color .12s, box-shadow .12s;
+  .header-inner{
+    max-width:900px;margin:0 auto;padding:12px 16px;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
   }
-  .sister-site-link:hover{background:#123F38;box-shadow:0 2px 6px rgba(0,0,0,.16);}
-  @media (max-width:600px){
-    .sister-site-link{top:10px;right:10px;font-size:11px;padding:7px 11px;}
-  }
-  header .inner{max-width:860px;margin:0 auto;text-align:center;}
-  h1{
-    font-family:'Shippori Mincho', serif;
-    font-weight:600;
-    font-size:clamp(30px,5vw,42px);
-    line-height:1.4;
-    margin:0 0 16px;
-    letter-spacing:.01em;
-    white-space:nowrap;
-  }
-  h1 .mark{ color:var(--accent-deep); border-bottom:3px solid var(--gold); padding-bottom:2px; }
-  h1.home-link{cursor:pointer;width:fit-content;margin-left:auto;margin-right:auto;}
-  .badge-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0 0 24px;}
+  h1{margin:0;font-size:19px;font-weight:800;letter-spacing:.01em;line-height:1.4;white-space:nowrap;}
+  h1 .mark{color:var(--brand);border:0;padding:0;}
+  h1.home-link{cursor:pointer;}
+  .header-spacer{flex:1;}
   .agent-count-badge{
-    display:inline-flex;align-items:center;background:var(--accent);color:#fff;
-    border-radius:999px;padding:6px 14px;font-weight:700;font-size:13px;
+    display:inline-flex;align-items:center;background:var(--brand-light);color:var(--brand-dark);
+    border:1px solid var(--brand-border);border-radius:999px;padding:2px 10px;
+    font-weight:700;font-size:12px;white-space:nowrap;
   }
   .update-badge{
-    display:inline-flex;align-items:center;gap:6px;background:transparent;
-    color:#8A6A1D;border:1.5px solid var(--gold);border-radius:999px;
-    padding:5px 14px 5px 10px;font-weight:700;font-size:13px;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:5px;background:transparent;
+    color:#8A6A1D;border:1px solid var(--gold);border-radius:999px;
+    padding:2px 10px;font-weight:700;font-size:12px;white-space:nowrap;
   }
-  .update-badge svg{flex-shrink:0;}
-  header p.tagline{
-    font-size:13.5px;
-    color:var(--accent);
-    font-weight:600;
-    letter-spacing:.04em;
-    margin:0;
+  .update-badge svg{flex-shrink:0;width:12px;height:12px;}
+
+  /* 姉妹サイトへのリンク。色は行き先のサイトのブランド色に合わせる。 */
+  .sister-links{display:flex;gap:8px;flex-wrap:wrap;}
+  .sister-links a{
+    display:inline-flex;align-items:center;color:#fff;font-size:12px;font-weight:700;
+    padding:7px 13px;border-radius:999px;text-decoration:none;white-space:nowrap;
+    box-shadow:0 1px 4px rgba(23,33,29,.14);transition:filter .12s;
+  }
+  .sister-links a:hover{filter:brightness(.88);}
+  .sister-links .to-agent{background:#1F6F63;}
+  .sister-links .to-skillup{background:#E67E22;}
+
+  /* 見出し帯と、職種から探す近道 */
+  .site-hero{
+    background:linear-gradient(180deg,var(--brand-light),var(--bg));
+    border-bottom:1px solid var(--line);padding:26px 0 24px;
+  }
+  .site-hero-inner{max-width:900px;margin:0 auto;padding:0 16px;}
+  .site-hero h2{margin:0 0 8px;font-size:22px;line-height:1.5;}
+  .site-hero p{margin:0;color:var(--ink-sub);font-size:14px;}
+  .cat-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px;}
+  .cat-nav a{
+    display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+    padding:12px 6px 10px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    text-decoration:none;color:var(--ink);font-size:12px;font-weight:700;line-height:1.35;
+    transition:border-color .15s,box-shadow .15s,transform .15s;
+  }
+  .cat-nav a:hover{border-color:var(--brand);box-shadow:var(--shadow);transform:translateY(-1px);}
+  .cat-nav .ic{
+    width:34px;height:34px;border-radius:10px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cat-nav .ic svg{width:20px;height:20px;}
+  .cat-nav .n{color:var(--ink-faint);font-size:11px;font-weight:600;}
+  @media (min-width:760px){ .cat-nav{grid-template-columns:repeat(6,1fr);} }
+  @media (max-width:600px){
+    .site-hero h2{font-size:19px;}
+    .sister-links{gap:6px;width:100%;}
+    .sister-links a{font-size:11px;padding:6px 10px;flex:1;justify-content:center;}
   }
 
-  /* segmented mode toggle */
-  .segment{max-width:860px;margin:28px auto 0;padding:0 16px;}
-  .segment .track{display:flex;background:var(--surface);border-radius:10px;padding:4px;gap:4px;}
+  body.view-detail .site-hero,
+  body.view-detail .segment{display:none;}
+
+  /* 受注／発注の切り替え。見出し帯のすぐ下に、白いカードとして置く。 */
+  .segment{max-width:900px;margin:20px auto 0;padding:0 16px;}
+  .segment .track{
+    display:flex;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:4px;gap:4px;box-shadow:var(--shadow);
+  }
   .mode-btn{
     flex:1;padding:11px 16px;background:none;border:none;border-radius:7px;
-    font-family:inherit;font-size:13.5px;font-weight:700;color:var(--ink-soft);
+    font-family:inherit;font-size:13.5px;font-weight:700;color:var(--ink-sub);
     cursor:pointer;transition:background .15s, color .15s;
   }
-  .mode-btn.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08);}
+  .mode-btn.active{background:var(--brand);color:#fff;}
 
-  /* recommend carousel */
-  .recommend-section{margin-top:32px;}
+  /* おすすめ（横スクロール） */
+  .recommend-section{margin-top:26px;}
   .recommend-label{
-    font-size:14px;font-weight:700;color:var(--accent-deep);margin-bottom:12px;
+    font-size:15px;font-weight:800;color:var(--ink);margin-bottom:12px;
     display:flex;align-items:center;gap:8px;
   }
   .recommend-scroll{
     display:flex;gap:12px;overflow-x:auto;
-    padding:2px 2px 8px;margin:0 -2px;-webkit-overflow-scrolling:touch;
+    padding:2px 2px 10px;margin:0 -2px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
   }
   .recommend-card{
     position:relative;
-    flex:0 0 auto;width:168px;cursor:pointer;background:var(--surface);
+    flex:0 0 auto;width:186px;cursor:pointer;background:var(--card);
     border:1px solid var(--line);border-radius:12px;padding:14px;
-    display:flex;flex-direction:column;gap:10px;transition:border-color .12s, box-shadow .12s;
+    display:flex;flex-direction:column;gap:10px;
+    transition:border-color .15s, box-shadow .15s;
   }
-  .recommend-card:hover{border-color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.06);}
+  .recommend-card:hover{border-color:var(--brand);box-shadow:var(--shadow);}
   .recommend-card .category-pill{font-size:10.5px;padding:3px 8px;align-self:flex-start;}
   .recommend-card h4{
-    font-size:13.5px;font-weight:700;margin:0;line-height:1.4;color:var(--ink);
+    font-size:13.5px;font-weight:800;margin:0;line-height:1.4;color:var(--ink);
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   }
   .recommend-card .recommend-oneliner{
-    font-size:11.5px;color:var(--ink-soft);line-height:1.6;margin:0;
+    font-size:11.5px;color:var(--ink-sub);line-height:1.6;margin:0;
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
   }
 
   .filter-banner{
     display:none;
-    background:var(--accent-soft);color:var(--accent-deep);font-size:13px;font-weight:600;
-    padding:10px 14px;border-radius:8px;margin-top:32px;
+    background:var(--brand-light);color:var(--brand-dark);font-size:13px;font-weight:600;
+    padding:10px 14px;border-radius:8px;margin-top:26px;
   }
   .filter-banner.show{display:block;}
-  .filter-banner a{color:var(--accent-deep);text-decoration:underline;font-weight:700;margin-left:8px;cursor:pointer;}
+  .filter-banner a{color:var(--brand-dark);text-decoration:underline;font-weight:700;margin-left:8px;cursor:pointer;}
 
-  /* filter bar */
-  .filter-bar{margin-top:32px;}
+  /* 絞り込み。スキルアップ図鑑と同じく、白いカードにまとめる。 */
+  .filter-bar{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;margin-top:22px;box-shadow:var(--shadow);
+  }
   .filter-banner.show + .filter-bar{margin-top:14px;}
   .filter-bar input[type="text"]{
-    width:100%;padding:12px 14px;border:1px solid var(--line);background:var(--surface);
-    font-family:inherit;font-size:14px;color:var(--ink);border-radius:8px;margin-bottom:14px;
+    width:100%;padding:10px 12px;border:1px solid var(--line);background:var(--bg);
+    font-family:inherit;font-size:15px;color:var(--ink);border-radius:8px;margin-bottom:12px;
   }
-  .filter-bar input[type="text"]:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .filter-bar input[type="text"]:focus{outline:2px solid var(--brand);outline-offset:-1px;background:#fff;}
   .home-top-link{
-    display:none;font-size:12.5px;color:var(--accent);font-weight:600;
-    text-decoration:none;margin:-6px 0 14px;cursor:pointer;
+    display:none;font-size:12.5px;color:var(--brand-dark);font-weight:700;
+    text-decoration:none;margin:-4px 0 12px;cursor:pointer;
   }
   .home-top-link.show{display:block;}
   .home-top-link:hover{text-decoration:underline;}
-  .select-row{display:flex;flex-wrap:wrap;gap:8px;}
-  .select-field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:4px;}
-  .select-label{font-size:12px;color:var(--ink-soft);font-weight:700;}
+  .select-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+  .select-field{display:flex;flex-direction:column;gap:4px;}
+  .select-label{font-size:11px;color:var(--ink-sub);font-weight:700;}
   .select-row select{
-    width:100%;padding:10px 12px;border:1px solid var(--line);background:var(--surface);
-    font-family:inherit;font-size:13px;color:var(--ink);border-radius:8px;cursor:pointer;
+    width:100%;padding:8px 10px;border:1px solid var(--line);background:#fff;
+    font-family:inherit;font-size:14px;color:var(--ink);border-radius:8px;cursor:pointer;
   }
-  .select-row select:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .select-row select:focus{outline:2px solid var(--brand);outline-offset:-1px;}
   .select-field.fee-select{display:none;}
   body.mode-company .select-field.fee-select{display:flex;}
-  .result-count{font-size:12px;color:var(--ink-faint);margin-top:14px;}
+  .result-count{font-size:13px;color:var(--ink-sub);margin-top:12px;}
 
   /* home（セクション別トップ表示） */
   .home-section{margin-bottom:36px;}
@@ -223,6 +241,18 @@
     font-size:12px;color:var(--ink-soft);line-height:1.65;margin:0;
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
   }
+
+
+  /* カードの左端に、その職種の色の帯を出す（スキルアップ図鑑と同じ見せ方）。
+     色は JS が --cat に入れる。取れなかった場合はブランド色にする。 */
+  .row-item, .home-card, .recommend-card{overflow:hidden;}
+  .row-item::before, .home-card::before, .recommend-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:var(--cat, var(--brand));
+  }
+  .row-item{padding-left:21px;}
+  .home-card{padding-left:17px;}
+  .recommend-card{padding-left:17px;}
 
   /* list */
   .ledger{margin-top:8px;}
@@ -341,26 +371,20 @@
     .assistant-panel{width:calc(100vw - 32px);}
   }
 
-  .ad-slot{
-    position:relative;
-    border:1px dashed var(--line);
-    border-radius:8px;
-    background:var(--surface);
-    min-height:100px;
-    display:flex;align-items:center;justify-content:center;
-    margin:24px 0;
-    overflow:hidden;
-  }
+  /* 広告枠。配信されなかったときに、点線の空箱と「広告」の見出しだけが
+     残らないようにする（スキルアップ図鑑と同じ扱い）。 */
+  .ad-slot{position:relative;margin:24px 0;}
+  .ad-slot:empty{display:none;margin:0;}
+  .ad-slot ins{display:block;width:100%;}
   .ad-slot .ad-label{
-    position:absolute;top:8px;left:10px;
-    font-size:10px;color:var(--ink-faint);letter-spacing:.04em;
+    position:absolute;top:-15px;left:2px;
+    font-size:10px;color:var(--ink-faint);letter-spacing:.04em;display:none;
   }
-  .ad-slot .ad-placeholder{
-    font-size:12px;color:var(--ink-faint);
-  }
-  .ad-slot.banner{min-height:90px;}
-  .ad-slot.in-feed{min-height:110px;}
-  .ad-slot.footer-ad{min-height:90px;margin:32px 0 8px;}
+  .ad-slot:has(ins[data-ad-status="filled"]) .ad-label{display:block;}
+  .ad-slot:has(ins[data-ad-status="unfilled"]){display:none;margin:0;}
+  ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;}
+  .ad-slot .ad-placeholder{font-size:12px;color:var(--ink-faint);}
+  .ad-slot.footer-ad{margin:32px 0 8px;}
 
   footer{max-width:860px;margin:48px auto 0;padding:20px 16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-faint);line-height:1.8;}
   .footer-links{margin-top:10px;}

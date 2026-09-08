@@ -8,7 +8,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" id="og-url" content="https://freelance-anken-zukan.net/agent/a8-032/">
 <link rel="canonical" href="https://freelance-anken-zukan.net/agent/a8-032/" id="canonical-link">
-<script src="https://pagead2.googlesyndication.com/pagead/managed/js/adsense/m202609010101/show_ads_impl.js?bust=122880829" fetchpriority="high"></script><script type="application/ld+json" id="ld-json">{"@context":"https://schema.org","@type":"Service","name":"株式会社スリーシェイク","description":"運営企業がテックカンパニーのため、エンジニア視点に立ったきめ細やかなサポートが受けられます。掲載案件の約95%が自社開発やプライム案件で、不要なマージンが発生せず、スキルが正当に評価された高単価な報酬が期待できます。また、掲載案件の70%以上がフルリモート案件と、柔軟な働き方に対応しています。","serviceType":"フリーランス案件マッチング","areaServed":"非公開（お問い合わせで確認）","provider":{"@type":"Organization","name":"株式会社スリーシェイク"},"url":"https://www.rentracks.jp/adx/r.html?idx=0.75317.387295.10438.14912&dna=169938"}</script>
+<script type="application/ld+json" id="ld-json">{"@context":"https://schema.org","@type":"Service","name":"株式会社スリーシェイク","description":"運営企業がテックカンパニーのため、エンジニア視点に立ったきめ細やかなサポートが受けられます。掲載案件の約95%が自社開発やプライム案件で、不要なマージンが発生せず、スキルが正当に評価された高単価な報酬が期待できます。また、掲載案件の70%以上がフルリモート案件と、柔軟な働き方に対応しています。","serviceType":"フリーランス案件マッチング","areaServed":"非公開（お問い合わせで確認）","provider":{"@type":"Organization","name":"株式会社スリーシェイク"},"url":"https://www.rentracks.jp/adx/r.html?idx=0.75317.387295.10438.14912&dna=169938"}</script>
 <meta property="og:image" content="https://freelance-anken-zukan.net/ogp-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap" rel="stylesheet">
 <!-- Google AdSense: 実際に配信する際は client=ca-pub-5761092657360295 をご自身のパブリッシャーIDに置き換えてください -->
-<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5761092657360295" crossorigin="anonymous" data-checked-head="true"></script>
+<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5761092657360295" crossorigin="anonymous"></script>
 <!-- Google tag (gtag.js) -->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YS6S43LSBK"></script>
 <script>
@@ -32,160 +32,178 @@
 </script>
 <style>
   :root{
-    --ink:#17211D;
-    --paper:#F8F5EE;
-    --surface:#FFFFFF;
-    --line:#E4DFD1;
-    --accent:#1D5FA8;
-    --accent-deep:#123A6B;
-    --accent-soft:#DCE8F5;
-    --gold:#B8863B;
-    --gold-soft:#F1E4CC;
-    --ink-soft:#5B6660;
-    --ink-faint:#8B9490;
-    --star:#E0A400;
+    /* ブランド色は3サイトで意図的に分けている（このサイトは青）。
+       名前と考え方はスキルアップ図鑑に合わせ、UIの作りを揃えられるようにした。 */
+    --brand:#1D5FA8; --brand-dark:#123A6B; --brand-light:#E9F1FA; --brand-border:#C4D9EE;
+    --ink:#17211D; --ink-sub:#5B6660; --ink-faint:#8B9490;
+    --bg:#F7F9FC; --card:#FFFFFF; --line:#E2E7EE;
+    --ok:#2E7D5B; --ok-bg:#E8F5EE;
+    --gold:#B8863B; --gold-soft:#F1E4CC; --star:#E0A400;
+    --radius:12px;
+    --shadow:0 1px 3px rgba(23,33,29,.07),0 4px 16px rgba(23,33,29,.04);
+
+    /* 旧い変数名。既存のCSSが多く参照しているので、別名として残す。 */
+    --paper:var(--bg); --surface:var(--card);
+    --accent:var(--brand); --accent-deep:var(--brand-dark); --accent-soft:var(--brand-light);
+    --ink-soft:var(--ink-sub);
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
-    background:
-      radial-gradient(circle at 15% 20%, rgba(29,95,168,0.24) 0%, transparent 42%),
-      radial-gradient(circle at 85% 15%, rgba(211,47,47,0.12) 0%, transparent 38%),
-      radial-gradient(circle at 20% 85%, rgba(106,76,147,0.13) 0%, transparent 40%),
-      radial-gradient(circle at 88% 88%, rgba(18,58,107,0.22) 0%, transparent 44%),
-      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.5) 0%, transparent 55%),
-      var(--paper);
-    background-attachment:fixed;
+    background:var(--bg);
     color:var(--ink);
-    font-family:'Zen Kaku Gothic New', sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+    line-height:1.7;
     -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;
   }
-  .wrap{max-width:860px;margin:0 auto;padding:0 16px 100px;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px 100px;}
 
-  /* header */
+  /* ヘッダー：上に貼り付く細いバー */
   header{
-    position:relative;
-    padding:64px 16px 44px;
-    background:
-      radial-gradient(600px 260px at 15% -20%, rgba(31,111,99,.10), transparent 60%),
-      radial-gradient(500px 220px at 100% 0%, rgba(184,134,59,.10), transparent 55%),
-      var(--paper);
+    background:var(--card);border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:20;
   }
-  .sister-site-link{
-    position:absolute;top:16px;right:16px;
-    display:inline-flex;align-items:center;gap:4px;
-    background:#1F6F63;color:#fff;
-    font-size:12.5px;font-weight:700;
-    padding:8px 14px;border-radius:999px;
-    text-decoration:none;white-space:nowrap;
-    box-shadow:0 1px 4px rgba(0,0,0,.12);
-    transition:background-color .12s, box-shadow .12s;
+  .header-inner{
+    max-width:900px;margin:0 auto;padding:12px 16px;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
   }
-  .sister-site-link:hover{background:#123F38;box-shadow:0 2px 6px rgba(0,0,0,.16);}
-  @media (max-width:600px){
-    .sister-site-link{top:10px;right:10px;font-size:11px;padding:7px 11px;}
-  }
-  header .inner{max-width:860px;margin:0 auto;text-align:center;}
-  h1{
-    font-family:'Shippori Mincho', serif;
-    font-weight:600;
-    font-size:clamp(30px,5vw,42px);
-    line-height:1.4;
-    margin:0 0 16px;
-    letter-spacing:.01em;
-    white-space:nowrap;
-  }
-  h1 .mark{ color:var(--accent-deep); border-bottom:3px solid var(--gold); padding-bottom:2px; }
-  h1.home-link{cursor:pointer;width:fit-content;margin-left:auto;margin-right:auto;}
-  .badge-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0 0 24px;}
+  h1{margin:0;font-size:19px;font-weight:800;letter-spacing:.01em;line-height:1.4;white-space:nowrap;}
+  h1 .mark{color:var(--brand);border:0;padding:0;}
+  h1.home-link{cursor:pointer;}
+  .header-spacer{flex:1;}
   .agent-count-badge{
-    display:inline-flex;align-items:center;background:var(--accent);color:#fff;
-    border-radius:999px;padding:6px 14px;font-weight:700;font-size:13px;
+    display:inline-flex;align-items:center;background:var(--brand-light);color:var(--brand-dark);
+    border:1px solid var(--brand-border);border-radius:999px;padding:2px 10px;
+    font-weight:700;font-size:12px;white-space:nowrap;
   }
   .update-badge{
-    display:inline-flex;align-items:center;gap:6px;background:transparent;
-    color:#8A6A1D;border:1.5px solid var(--gold);border-radius:999px;
-    padding:5px 14px 5px 10px;font-weight:700;font-size:13px;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:5px;background:transparent;
+    color:#8A6A1D;border:1px solid var(--gold);border-radius:999px;
+    padding:2px 10px;font-weight:700;font-size:12px;white-space:nowrap;
   }
-  .update-badge svg{flex-shrink:0;}
-  header p.tagline{
-    font-size:13.5px;
-    color:var(--accent);
-    font-weight:600;
-    letter-spacing:.04em;
-    margin:0;
+  .update-badge svg{flex-shrink:0;width:12px;height:12px;}
+
+  /* 姉妹サイトへのリンク。色は行き先のサイトのブランド色に合わせる。 */
+  .sister-links{display:flex;gap:8px;flex-wrap:wrap;}
+  .sister-links a{
+    display:inline-flex;align-items:center;color:#fff;font-size:12px;font-weight:700;
+    padding:7px 13px;border-radius:999px;text-decoration:none;white-space:nowrap;
+    box-shadow:0 1px 4px rgba(23,33,29,.14);transition:filter .12s;
+  }
+  .sister-links a:hover{filter:brightness(.88);}
+  .sister-links .to-agent{background:#1F6F63;}
+  .sister-links .to-skillup{background:#E67E22;}
+
+  /* 見出し帯と、職種から探す近道 */
+  .site-hero{
+    background:linear-gradient(180deg,var(--brand-light),var(--bg));
+    border-bottom:1px solid var(--line);padding:26px 0 24px;
+  }
+  .site-hero-inner{max-width:900px;margin:0 auto;padding:0 16px;}
+  .site-hero h2{margin:0 0 8px;font-size:22px;line-height:1.5;}
+  .site-hero p{margin:0;color:var(--ink-sub);font-size:14px;}
+  .cat-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px;}
+  .cat-nav a{
+    display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+    padding:12px 6px 10px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    text-decoration:none;color:var(--ink);font-size:12px;font-weight:700;line-height:1.35;
+    transition:border-color .15s,box-shadow .15s,transform .15s;
+  }
+  .cat-nav a:hover{border-color:var(--brand);box-shadow:var(--shadow);transform:translateY(-1px);}
+  .cat-nav .ic{
+    width:34px;height:34px;border-radius:10px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .cat-nav .ic svg{width:20px;height:20px;}
+  .cat-nav .n{color:var(--ink-faint);font-size:11px;font-weight:600;}
+  @media (min-width:760px){ .cat-nav{grid-template-columns:repeat(6,1fr);} }
+  @media (max-width:600px){
+    .site-hero h2{font-size:19px;}
+    .sister-links{gap:6px;width:100%;}
+    .sister-links a{font-size:11px;padding:6px 10px;flex:1;justify-content:center;}
   }
 
-  /* segmented mode toggle */
-  .segment{max-width:860px;margin:28px auto 0;padding:0 16px;}
-  .segment .track{display:flex;background:var(--surface);border-radius:10px;padding:4px;gap:4px;}
+  body.view-detail .site-hero,
+  body.view-detail .segment{display:none;}
+
+  /* 受注／発注の切り替え。見出し帯のすぐ下に、白いカードとして置く。 */
+  .segment{max-width:900px;margin:20px auto 0;padding:0 16px;}
+  .segment .track{
+    display:flex;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:4px;gap:4px;box-shadow:var(--shadow);
+  }
   .mode-btn{
     flex:1;padding:11px 16px;background:none;border:none;border-radius:7px;
-    font-family:inherit;font-size:13.5px;font-weight:700;color:var(--ink-soft);
+    font-family:inherit;font-size:13.5px;font-weight:700;color:var(--ink-sub);
     cursor:pointer;transition:background .15s, color .15s;
   }
-  .mode-btn.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08);}
+  .mode-btn.active{background:var(--brand);color:#fff;}
 
-  /* recommend carousel */
-  .recommend-section{margin-top:32px;}
+  /* おすすめ（横スクロール） */
+  .recommend-section{margin-top:26px;}
   .recommend-label{
-    font-size:14px;font-weight:700;color:var(--accent-deep);margin-bottom:12px;
+    font-size:15px;font-weight:800;color:var(--ink);margin-bottom:12px;
     display:flex;align-items:center;gap:8px;
   }
   .recommend-scroll{
     display:flex;gap:12px;overflow-x:auto;
-    padding:2px 2px 8px;margin:0 -2px;-webkit-overflow-scrolling:touch;
+    padding:2px 2px 10px;margin:0 -2px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;
   }
   .recommend-card{
     position:relative;
-    flex:0 0 auto;width:168px;cursor:pointer;background:var(--surface);
+    flex:0 0 auto;width:186px;cursor:pointer;background:var(--card);
     border:1px solid var(--line);border-radius:12px;padding:14px;
-    display:flex;flex-direction:column;gap:10px;transition:border-color .12s, box-shadow .12s;
+    display:flex;flex-direction:column;gap:10px;
+    transition:border-color .15s, box-shadow .15s;
   }
-  .recommend-card:hover{border-color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.06);}
+  .recommend-card:hover{border-color:var(--brand);box-shadow:var(--shadow);}
   .recommend-card .category-pill{font-size:10.5px;padding:3px 8px;align-self:flex-start;}
   .recommend-card h4{
-    font-size:13.5px;font-weight:700;margin:0;line-height:1.4;color:var(--ink);
+    font-size:13.5px;font-weight:800;margin:0;line-height:1.4;color:var(--ink);
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   }
   .recommend-card .recommend-oneliner{
-    font-size:11.5px;color:var(--ink-soft);line-height:1.6;margin:0;
+    font-size:11.5px;color:var(--ink-sub);line-height:1.6;margin:0;
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
   }
 
   .filter-banner{
     display:none;
-    background:var(--accent-soft);color:var(--accent-deep);font-size:13px;font-weight:600;
-    padding:10px 14px;border-radius:8px;margin-top:32px;
+    background:var(--brand-light);color:var(--brand-dark);font-size:13px;font-weight:600;
+    padding:10px 14px;border-radius:8px;margin-top:26px;
   }
   .filter-banner.show{display:block;}
-  .filter-banner a{color:var(--accent-deep);text-decoration:underline;font-weight:700;margin-left:8px;cursor:pointer;}
+  .filter-banner a{color:var(--brand-dark);text-decoration:underline;font-weight:700;margin-left:8px;cursor:pointer;}
 
-  /* filter bar */
-  .filter-bar{margin-top:32px;}
+  /* 絞り込み。スキルアップ図鑑と同じく、白いカードにまとめる。 */
+  .filter-bar{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;margin-top:22px;box-shadow:var(--shadow);
+  }
   .filter-banner.show + .filter-bar{margin-top:14px;}
   .filter-bar input[type="text"]{
-    width:100%;padding:12px 14px;border:1px solid var(--line);background:var(--surface);
-    font-family:inherit;font-size:14px;color:var(--ink);border-radius:8px;margin-bottom:14px;
+    width:100%;padding:10px 12px;border:1px solid var(--line);background:var(--bg);
+    font-family:inherit;font-size:15px;color:var(--ink);border-radius:8px;margin-bottom:12px;
   }
-  .filter-bar input[type="text"]:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .filter-bar input[type="text"]:focus{outline:2px solid var(--brand);outline-offset:-1px;background:#fff;}
   .home-top-link{
-    display:none;font-size:12.5px;color:var(--accent);font-weight:600;
-    text-decoration:none;margin:-6px 0 14px;cursor:pointer;
+    display:none;font-size:12.5px;color:var(--brand-dark);font-weight:700;
+    text-decoration:none;margin:-4px 0 12px;cursor:pointer;
   }
   .home-top-link.show{display:block;}
   .home-top-link:hover{text-decoration:underline;}
-  .select-row{display:flex;flex-wrap:wrap;gap:8px;}
-  .select-field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:4px;}
-  .select-label{font-size:12px;color:var(--ink-soft);font-weight:700;}
+  .select-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+  .select-field{display:flex;flex-direction:column;gap:4px;}
+  .select-label{font-size:11px;color:var(--ink-sub);font-weight:700;}
   .select-row select{
-    width:100%;padding:10px 12px;border:1px solid var(--line);background:var(--surface);
-    font-family:inherit;font-size:13px;color:var(--ink);border-radius:8px;cursor:pointer;
+    width:100%;padding:8px 10px;border:1px solid var(--line);background:#fff;
+    font-family:inherit;font-size:14px;color:var(--ink);border-radius:8px;cursor:pointer;
   }
-  .select-row select:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .select-row select:focus{outline:2px solid var(--brand);outline-offset:-1px;}
   .select-field.fee-select{display:none;}
   body.mode-company .select-field.fee-select{display:flex;}
-  .result-count{font-size:12px;color:var(--ink-faint);margin-top:14px;}
+  .result-count{font-size:13px;color:var(--ink-sub);margin-top:12px;}
 
   /* home（セクション別トップ表示） */
   .home-section{margin-bottom:36px;}
@@ -223,6 +241,18 @@
     font-size:12px;color:var(--ink-soft);line-height:1.65;margin:0;
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
   }
+
+
+  /* カードの左端に、その職種の色の帯を出す（スキルアップ図鑑と同じ見せ方）。
+     色は JS が --cat に入れる。取れなかった場合はブランド色にする。 */
+  .row-item, .home-card, .recommend-card{overflow:hidden;}
+  .row-item::before, .home-card::before, .recommend-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:var(--cat, var(--brand));
+  }
+  .row-item{padding-left:21px;}
+  .home-card{padding-left:17px;}
+  .recommend-card{padding-left:17px;}
 
   /* list */
   .ledger{margin-top:8px;}
@@ -341,26 +371,20 @@
     .assistant-panel{width:calc(100vw - 32px);}
   }
 
-  .ad-slot{
-    position:relative;
-    border:1px dashed var(--line);
-    border-radius:8px;
-    background:var(--surface);
-    min-height:100px;
-    display:flex;align-items:center;justify-content:center;
-    margin:24px 0;
-    overflow:hidden;
-  }
+  /* 広告枠。配信されなかったときに、点線の空箱と「広告」の見出しだけが
+     残らないようにする（スキルアップ図鑑と同じ扱い）。 */
+  .ad-slot{position:relative;margin:24px 0;}
+  .ad-slot:empty{display:none;margin:0;}
+  .ad-slot ins{display:block;width:100%;}
   .ad-slot .ad-label{
-    position:absolute;top:8px;left:10px;
-    font-size:10px;color:var(--ink-faint);letter-spacing:.04em;
+    position:absolute;top:-15px;left:2px;
+    font-size:10px;color:var(--ink-faint);letter-spacing:.04em;display:none;
   }
-  .ad-slot .ad-placeholder{
-    font-size:12px;color:var(--ink-faint);
-  }
-  .ad-slot.banner{min-height:90px;}
-  .ad-slot.in-feed{min-height:110px;}
-  .ad-slot.footer-ad{min-height:90px;margin:32px 0 8px;}
+  .ad-slot:has(ins[data-ad-status="filled"]) .ad-label{display:block;}
+  .ad-slot:has(ins[data-ad-status="unfilled"]){display:none;margin:0;}
+  ins.adsbygoogle[data-ad-status="unfilled"]{display:none!important;}
+  .ad-slot .ad-placeholder{font-size:12px;color:var(--ink-faint);}
+  .ad-slot.footer-ad{margin:32px 0 8px;}
 
   footer{max-width:860px;margin:48px auto 0;padding:20px 16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-faint);line-height:1.8;}
   .footer-links{margin-top:10px;}
@@ -460,22 +484,67 @@
   }
 </style>
 </head>
-<body class="mode-candidate">
+<body class="mode-candidate view-detail">
 
 <header>
-  <a class="sister-site-link" href="https://agent-zukan.net/" target="_blank" rel="noopener noreferrer">転職するならこちら →</a>
-  <div class="inner">
+  <div class="header-inner">
     <h1 class="home-link" onclick="goHome()">フリーランス案件<span class="mark">図鑑</span></h1>
-    <div class="badge-row">
-      <span class="agent-count-badge" id="agentCountBadge">全国のサービスを116件掲載中！</span>
-      <span class="update-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8863B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg>
-        新着サービス毎日更新！
-      </span>
-    </div>
-    <p class="tagline">案件探しには、もう困らない</p>
+    <span class="agent-count-badge" id="agentCountBadge">全国のサービスを123件掲載中！</span>
+    <span class="update-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#B8863B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg>
+      毎日更新
+    </span>
+    <span class="header-spacer"></span>
+    <nav class="sister-links" aria-label="図鑑シリーズの姉妹サイト">
+      <a class="to-agent" href="https://agent-zukan.net/" target="_blank" rel="noopener noreferrer">転職エージェント探すなら →</a>
+      <a class="to-skillup" href="https://skillup-zukan.net/" target="_blank" rel="noopener noreferrer">学び直しの講座探すなら →</a>
+    </nav>
   </div>
 </header>
+
+<section class="site-hero">
+  <div class="site-hero-inner">
+    <h2>案件探しには、もう困らない</h2>
+    <p id="leadText">フリーランス向けの案件紹介・マッチングサービスを、特化職種・対応エリア・フィーで比べられます。</p>
+    <nav class="cat-nav" id="catNav" aria-label="職種から探す"><a href="/category/it-web/" data-cat="IT・Web開発">
+        <span class="ic" style="background:linear-gradient(135deg, #1F6F63, #123F38);">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="14" y="14" width="36" height="24" rx="2" stroke="#fff" stroke-width="2.5"></rect><line x1="24" y1="46" x2="40" y2="46" stroke="#fff" stroke-width="2.5"></line><line x1="32" y1="38" x2="32" y2="46" stroke="#fff" stroke-width="2.5"></line><path d="M22 22 L18 26 L22 30" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M42 22 L46 26 L42 30" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </span>
+        <span>IT・Web開発</span>
+        <span class="n">21件</span>
+      </a><a href="/category/design/" data-cat="デザイン">
+        <span class="ic" style="background:linear-gradient(135deg, #A3446E, #6B2B47);">
+          <svg viewBox="0 0 64 64" fill="none"><path d="M32 14 C20 14 12 23 12 33 c0 7 5 11 10 11 c2 0 4-1 4-3 c0-2-2-3-2-6 c0-3 2-5 5-5 h9 c6 0 13-5 13-15 C51 20 43 14 32 14 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"></path><circle cx="21" cy="27" r="2.4" fill="#fff"></circle><circle cx="30" cy="21" r="2.4" fill="#fff"></circle><circle cx="41" cy="24" r="2.4" fill="#fff"></circle><circle cx="43" cy="33" r="2.4" fill="#fff"></circle></svg>
+        </span>
+        <span>デザイン</span>
+        <span class="n">3件</span>
+      </a><a href="/category/video-creative/" data-cat="動画・クリエイティブ">
+        <span class="ic" style="background:linear-gradient(135deg, #3D7A8C, #264E58);">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="14" y="22" width="36" height="26" rx="3" stroke="#fff" stroke-width="2.3" fill="none"></rect><path d="M14 22 L22 14 h8 l-6 8 Z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"></path><path d="M30 22 L38 14 h8 l-6 8 Z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"></path><path d="M28 30 L28 40 L38 35 Z" fill="#fff"></path></svg>
+        </span>
+        <span>動画・クリエイティブ</span>
+        <span class="n">9件</span>
+      </a><a href="/category/consulting/" data-cat="コンサル・士業">
+        <span class="ic" style="background:linear-gradient(135deg, #2B3A55, #171E2C);">
+          <svg viewBox="0 0 64 64" fill="none"><rect x="14" y="24" width="36" height="24" rx="3" stroke="#fff" stroke-width="2.5"></rect><path d="M24 24 V18 a3 3 0 0 1 3-3 h10 a3 3 0 0 1 3 3 v6" stroke="#fff" stroke-width="2.5" fill="none"></path><line x1="14" y1="34" x2="50" y2="34" stroke="#fff" stroke-width="2"></line></svg>
+        </span>
+        <span>コンサル・士業</span>
+        <span class="n">10件</span>
+      </a><a href="/category/freelance-matching/" data-cat="フリーランス案件マッチング">
+        <span class="ic" style="background:linear-gradient(135deg, #7A5C8E, #4E3A5C);">
+          <svg viewBox="0 0 64 64" fill="none"><path d="M28 14 h14 l14 14 v14 l-14 14 h-14 l-14-14 v-14 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"></path><circle cx="34" cy="26" r="3" fill="#fff"></circle></svg>
+        </span>
+        <span>フリーランス案件マッチング</span>
+        <span class="n">62件</span>
+      </a><a href="/category/other/" data-cat="その他">
+        <span class="ic" style="background:linear-gradient(135deg, #5C6570, #38414A);">
+          <svg viewBox="0 0 64 64" fill="none"><path d="M14 22 h12 l4 6 h20 v22 a2 2 0 0 1-2 2 h-32 a2 2 0 0 1-2-2 v-26 a2 2 0 0 1 2-2 Z" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"></path></svg>
+        </span>
+        <span>その他</span>
+        <span class="n">14件</span>
+      </a></nav>
+  </div>
+</section>
 
 <div class="segment">
   <div class="track">
@@ -486,7 +555,7 @@
 
 <div class="wrap">
   <div class="ad-slot banner">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5761092657360295" data-ad-slot="1771024424" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done"></ins>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5761092657360295" data-ad-slot="1771024424" data-ad-format="auto" data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 
@@ -569,7 +638,7 @@
 
 <div class="wrap">
   <div class="ad-slot footer-ad">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5761092657360295" data-ad-slot="1620805016" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done"></ins>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5761092657360295" data-ad-slot="1620805016" data-ad-format="auto" data-full-width-responsive="true"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 </div>
@@ -749,10 +818,44 @@ const DEFAULT_CATEGORY_STYLE = {
 };
 
 /** categories.json（またはフォールバック）の配列から CATEGORY_STYLE / CHIP_LABELS を構築する。 */
+/** 見出し帯の「職種から探す」で使うため、slug と並び順も保持する。 */
+let CATEGORY_LIST = [];
+
 function applyCategoryData(list){
   CATEGORY_STYLE = {};
-  list.forEach(c=>{ CATEGORY_STYLE[c.name] = { from:c.from, to:c.to, icon:c.icon }; });
+  list.forEach(c=>{ CATEGORY_STYLE[c.name] = { from:c.from, to:c.to, icon:c.icon, slug:c.slug }; });
   CHIP_LABELS = ["all", ...list.map(c=>c.name)];
+  CATEGORY_LIST = list;
+}
+
+/**
+ * 見出し帯の「職種から探す」を作る。スキルアップ図鑑の同じ仕組みを移植したもの。
+ * リンク先は静的なカテゴリーページにしておき（検索エンジンからたどれるように）、
+ * クリック時はページ遷移せずその場で絞り込む。
+ * カテゴリー名は属性で渡す（onclick に埋め込むと、名前に引用符が入ったときに壊れるため）。
+ */
+function buildCatNav(){
+  const nav = document.getElementById("catNav");
+  if(!nav || !CATEGORY_LIST.length) return;
+  nav.innerHTML = CATEGORY_LIST.map(c=>{
+    const n = AGENTS.filter(a => a.category === c.name).length;
+    const href = c.slug ? `/category/${c.slug}/` : "javascript:void(0)";
+    const name = String(c.name).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+    return `<a href="${href}" data-cat="${name}">
+        <span class="ic" style="background:linear-gradient(135deg, ${c.from}, ${c.to});">
+          <svg viewBox="0 0 64 64" fill="none">${c.icon}</svg>
+        </span>
+        <span>${name}</span>
+        <span class="n">${n}件</span>
+      </a>`;
+  }).join("");
+  nav.querySelectorAll("a[data-cat]").forEach(a=>{
+    a.addEventListener("click", e=>{
+      e.preventDefault();
+      showCategoryList(a.dataset.cat);
+      window.scrollTo(0, 0);
+    });
+  });
 }
 
 /**
@@ -776,6 +879,12 @@ async function loadCategories(){
     console.error("categories.json の読み込みに失敗しました。デフォルトのカテゴリーを使用します。", err);
     applyCategoryData(DEFAULT_CATEGORIES);
   }
+}
+
+/** カード左端の帯の色を、その職種の色に合わせる。 */
+function applyCategoryAccent(el, agent){
+  const style = resolveCategoryStyle(agent && agent.category);
+  if(el && style && style.from) el.style.setProperty("--cat", style.from);
 }
 
 function eyecatchHTML(agent, variant, showNotableBadge){
@@ -877,6 +986,7 @@ function renderRecommend(){
     set.forEach(a=>{
       const card = document.createElement("div");
       card.className = "recommend-card";
+      applyCategoryAccent(card, a);
       card.onclick = ()=>navigateToDetail(a);
       if(setIndex > 0){
         card.setAttribute("aria-hidden", "true");
@@ -914,7 +1024,7 @@ function startRecommendAutoScroll(){
   if(!scroll || recommendAutoScroll.rafId) return;
   if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  const SPEED_PX_PER_SEC = 70;
+  const SPEED_PX_PER_SEC = 33;
   let lastTime = null;
 
   function step(timestamp){
@@ -1228,8 +1338,8 @@ function applyAssistantFiltersAndGoToList(){
 }
 
 const LEAD_TEXT = {
-  candidate: `日本全国には、本当にたくさんの転職サービスがあります。その中から、あなたに一番合った1社を見つけられます。`,
-  company: `サービスを使った採用で、採用単価を最も下げるために必要な比較サイトです。`
+  candidate: `フリーランス向けの案件紹介・マッチングサービスを、特化職種・対応エリア・フィーで比べられます。`,
+  company: `案件を掲載・発注したい企業の方向けに、各サービスの特徴と費用の考え方を比べられます。`
 };
 
 function updateLead(){
@@ -1352,12 +1462,56 @@ function computeHighScoreThreshold(currentMode, targetCount){
   return threshold;
 }
 
+/**
+ * フリーテキスト検索の類義語辞書。姉妹サイト「転職エージェント図鑑」の同機能と仕組み
+ * （キーに一致したら類義語群に展開し、複数語でOR検索する方式）は共通だが、辞書の中身は
+ * このサイト固有の語彙（働き方・契約形態、9カテゴリーの専門分野、報酬形態）で構成する。
+ * 各エントリはagents.jsonの実データでヒット件数を確認したうえで採用している
+ * （広すぎる語は無関係な誤ヒットの温床になるため避ける。例:「PR」は「BPR」に誤爆するため
+ * 不採用とし、「広報」で代替した）。
+ */
+const SEARCH_SYNONYMS = {
+  "リモート": ["リモート", "在宅", "フルリモート", "テレワーク"],
+  "単発": ["単発", "スポット"],
+  "継続": ["継続", "長期", "プロジェクト型"],
+  "副業": ["副業", "複業", "スキマ時間"],
+  "エンジニア": ["エンジニア", "IT", "システム開発", "プログラ", "インフラ", "DX"],
+  "デザイナー": ["デザイナー", "デザイン", "グラフィック", "UI", "UX"],
+  "ライター": ["ライター", "ライティング", "記事作成"],
+  "動画": ["動画", "映像", "撮影", "クリエイター", "クリエイティブ"],
+  "コンサル": ["コンサル", "コンサルタント", "戦略", "士業", "税理士"],
+  "事務": ["事務", "バックオフィス", "経理", "アシスタント", "秘書"],
+  "営業": ["営業", "マーケティング", "広告", "SNS", "広報"],
+  "高単価": ["高単価", "高額"],
+};
+
+/** 検索語がSEARCH_SYNONYMSのいずれかのキーを含んでいれば、対応する類義語群に展開する。
+ * 該当キーが無ければ元の検索語のまま（＝従来通りの部分一致）を返す。 */
+function expandSearchQuery(q){
+  const key = Object.keys(SEARCH_SYNONYMS).find(k => q.includes(k));
+  return key ? SEARCH_SYNONYMS[key] : [q];
+}
+
+/** 検索対象を横断的にまとめた文字列（小文字化済み）。SEARCH_SYNONYMSによる類義語展開の
+ * マッチ先として使う。name/category相当に加え、remoteRatio・feeStructure.note・
+ * contractTypes・features等、このサイト固有のフィールドも対象に含める。 */
+function buildSearchHaystack(agent){
+  return [
+    agent.name, agent.category, agent.region,
+    agent.oneLiner, agent.companyOneLiner, agent.appeal, agent.companyAppeal,
+    agent.remoteRatio, agent.feeStructure && agent.feeStructure.note,
+    ...(agent.contractTypes || []),
+    ...(agent.features || []), ...(agent.companyFeatures || []),
+  ].filter(Boolean).join(" ").toLowerCase();
+}
+
 function matches(agent, query){
   const passCategory = activeChip==="all" || agent.category===activeChip;
   const passPrefecture = matchesPrefecture(agent, activePrefecture);
   const passFee = mode==="company" ? matchesFee(agent, activeFee) : true;
   const q = query.trim().toLowerCase();
-  const passQuery = !q || agent.name.toLowerCase().includes(q) || agent.category.toLowerCase().includes(q);
+  const terms = q ? expandSearchQuery(q).map(t => t.toLowerCase()) : [];
+  const passQuery = !q || terms.some(t => buildSearchHaystack(agent).includes(t));
   const passFeatured = !featuredOnly || agent.featured===true;
   const passHighScore = !highScoreOnly || (agent.featured!==true && completenessScore(agent, mode) >= highScoreThreshold);
   return passCategory && passPrefecture && passFee && passQuery && passFeatured && passHighScore;
@@ -1456,6 +1610,7 @@ function buildRowItem(a){
 
   const row = document.createElement("div");
   row.className = "row-item";
+  applyCategoryAccent(row, a);
   row.onclick = ()=>navigateToDetail(a);
   row.innerHTML = `
     <div class="head">
@@ -1577,6 +1732,7 @@ function buildHomeSection(title, agents, onMoreClick, iconHTML, showNotableBadge
   agents.forEach(a => {
     const card = document.createElement("div");
     card.className = "home-card";
+    applyCategoryAccent(card, a);
     card.onclick = ()=>navigateToDetail(a);
     card.innerHTML = buildHomeCardHTML(a, mode, showNotableBadge);
     grid.appendChild(card);
@@ -1713,6 +1869,7 @@ function goHome(){
 
 function showList(){
   currentView = "list";
+  document.body.classList.remove("view-detail");
   document.getElementById("listView").classList.remove("hide");
   document.getElementById("detailView").classList.remove("show");
   window.scrollTo({top:0, behavior:"smooth"});
@@ -1721,6 +1878,9 @@ function showList(){
 
 function openDetail(a){
   currentView = "detail";
+  // 詳細を見ているあいだは、見出し帯と受注／発注の切り替えを隠す
+  // （本文が下に押し下げられて読みにくくなるため）。
+  document.body.classList.add("view-detail");
   document.getElementById("listView").classList.add("hide");
   const dv = document.getElementById("detailView");
   dv.classList.add("show");
@@ -1959,6 +2119,7 @@ async function loadAgents(){
     if(!res.ok) throw new Error("HTTP " + res.status);
     AGENTS = await res.json();
     updateAgentCountBadge();
+    buildCatNav();
     if(SSG_MODE){
       handleRoute();
     } else {
@@ -1984,7 +2145,7 @@ loadAgents();
 </script>
 
 
-<ins class="adsbygoogle adsbygoogle-noablate" data-ad-hi="true" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" style="border-width: medium; border-style: none; border-color: currentcolor; border-image: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;min-height:auto;max-height:none;min-width:auto;max-width:none;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="run-ad-auction" src="https://googleads.g.doubleclick.net/pagead/ads?client=ca-pub-5761092657360295&amp;output=html&amp;adk=1812271804&amp;adf=3025194257&amp;abgtt=6&amp;lmt=1788780669&amp;plat=1%3A16777224%2C2%3A8%2C3%3A2162688%2C4%3A2162688%2C9%3A32776%2C16%3A8388608%2C17%3A32%2C24%3A32%2C25%3A32%2C30%3A1048576%2C32%3A32%2C41%3A32%2C42%3A32%2C43%3A32%2C44%3A32&amp;format=0x0&amp;url=http%3A%2F%2Flocalhost%3A8935%2Findex.html%3Fssg%3D1%23%2Fagent%2Fa8-032&amp;pra=5&amp;asro=0&amp;aimartd=4&amp;aieuf=1&amp;aicrs=1&amp;uach=WyJMaW51eCIsIiIsIng4NiIsIiIsIjE1Mi4wLjc5NzcuNTQiLG51bGwsMCxudWxsLCI2NCIsW1siTm90P0FfQnJhbmQiLCIyNC4wLjAuMCJdLFsiQ2hyb21pdW0iLCIxNTIuMC43OTc3LjU0Il1dLDBd&amp;dt=1788780668991&amp;bpp=4&amp;bdt=114&amp;idt=46&amp;shv=r20260902&amp;mjsv=m202609010101&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;cookie_enabled=1&amp;eoidce=1&amp;nras=1&amp;correlator=5597255583225&amp;frm=20&amp;pv=2&amp;u_tz=0&amp;u_his=2&amp;u_h=600&amp;u_w=800&amp;u_ah=600&amp;u_aw=800&amp;u_cd=24&amp;u_sd=1&amp;dmc=16&amp;adx=-12245933&amp;ady=-12245933&amp;biw=800&amp;bih=600&amp;scr_x=0&amp;scr_y=0&amp;eid=95399629%2C95400774%2C95401044%2C122880829&amp;oid=2&amp;pvsid=5499934278617702&amp;tmod=1734640238&amp;uas=0&amp;nvt=1&amp;fsapi=1&amp;fc=1920&amp;brdim=10%2C10%2C10%2C10%2C800%2C0%2C780%2C580%2C800%2C600&amp;vis=1&amp;rsz=%7C%7Cs%7C&amp;abl=NS&amp;fu=32768&amp;bc=31&amp;bz=0.98&amp;ifi=1&amp;uci=a!1&amp;fsb=1&amp;dtd=65" data-google-container-id="a!1" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true"></iframe></div></ins><iframe src="https://www.google.com/recaptcha/api2/aframe" width="0" height="0" style="display: none;"></iframe><div id="ssgCompanyContent" hidden="" aria-hidden="true">
+<div id="ssgCompanyContent" hidden="" aria-hidden="true">
       <button class="back-btn" onclick="navigateToList()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>一覧に戻る</button>
       <div class="detail-head-row">
         <div class="eyecatch-row hero">
@@ -2042,4 +2203,4 @@ loadAgents();
         
         <div class="cta-sub" style="margin-top:8px;">A8.netアフィリエイト提携情報（アフィリエイト案件_フリーランス案件図鑑.xlsx）をもとに作成。取得日: 2026年9月7日。掲載情報は提携先の申告内容に基づきます。手数料体系・登録フリーランス数等の数値情報は今回のデータには含まれていません。</div>
       </div>
-    </div></body><iframe id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20260902/r20190131/zrt_lookup.html" style="display: none;"></iframe></html>
+    </div></body></html>

@@ -105,14 +105,32 @@ const LIMIT = process.env.PRERENDER_LIMIT ? parseInt(process.env.PRERENDER_LIMIT
  *    追加することで、Puppeteerが返すシリアライズ済みHTMLの空白・改行の違いに左右されない
  *    確実な埋め込みにしている）。
  */
+/**
+ * 静的化のあいだ読み込ませないホスト。
+ * 広告配信スクリプトを実行させると、AdSense 自身が ins や iframe をページに差し込み、
+ * それが保存されたHTMLに残り続ける（既存の静的ページに実際に焼き付いていた）。
+ * アクセス解析も静的化中に動かす必要がない。
+ */
+const BLOCKED_HOST_PATTERN = /googlesyndication\.com|doubleclick\.net|googleadservices\.com|googletagmanager\.com|google\.com\/recaptcha/;
+
+async function blockAdRequests(page) {
+  await page.setRequestInterception(true);
+  page.on('request', req => {
+    if (BLOCKED_HOST_PATTERN.test(req.url())) req.abort().catch(() => {});
+    else req.continue().catch(() => {});
+  });
+}
+
 async function renderAgentHTML(browser, id) {
   const candidatePage = await browser.newPage();
+  await blockAdRequests(candidatePage);
   try {
     const candidateUrl = `http://localhost:${PORT}/index.html?ssg=1#/agent/${encodeURIComponent(id)}`;
     await candidatePage.goto(candidateUrl, { waitUntil: 'networkidle0', timeout: 30000 });
     await candidatePage.waitForSelector('#detailView.show', { timeout: 10000 });
 
     const companyPage = await browser.newPage();
+    await blockAdRequests(companyPage);
     let companyDetailHTML = '';
     try {
       const companyUrl = `http://localhost:${PORT}/index.html?ssg=1#/agent/${encodeURIComponent(id)}?mode=company`;
@@ -150,6 +168,22 @@ async function renderAgentHTML(browser, id) {
   }
 }
 
+/**
+ * index.html（＝ページの見た目そのもの）のハッシュ。
+ *
+ * これまで、生成をとばすかどうかはエージェントのデータだけで決めていた。
+ * そのため index.html のデザインを変えても「変更なし」と判断され、静的ページが
+ * 古い見た目のまま残ってしまった（UI刷新のときに実際に起きた）。
+ * テンプレートが変わったときは、全ページを作り直す。
+ */
+const TEMPLATE_KEY = '__template';
+
+function computeTemplateHash() {
+  return crypto.createHash('sha1')
+    .update(fs.readFileSync(path.join(ROOT, 'index.html')))
+    .digest('hex');
+}
+
 async function main() {
   const agents = readJson(AGENTS_PATH, []);
   if (agents.length === 0) {
@@ -158,11 +192,15 @@ async function main() {
   }
 
   const manifest = readJson(MANIFEST_PATH, {});
+  const templateHash = computeTemplateHash();
+  const templateChanged = manifest[TEMPLATE_KEY] !== templateHash;
+  if (templateChanged) console.log("index.html が変わっているため、全ページを作り直します。");
   const currentIds = new Set(agents.map(a => String(a.id)));
 
   // agents.json から削除された（廃業等で消えた）エージェントの静的ページを掃除する。
   let pruned = 0;
   for (const id of Object.keys(manifest)) {
+    if (id === TEMPLATE_KEY) continue;
     if (!currentIds.has(id)) {
       const dir = path.join(OUT_DIR, id);
       if (fs.existsSync(dir)) fs.rmSync(dir, { recursive: true, force: true });
@@ -198,7 +236,7 @@ async function main() {
     for (const agent of targets) {
       const id = String(agent.id);
       const hash = computeAgentHash(agent);
-      if (manifest[id] === hash) {
+      if (!templateChanged && manifest[id] === hash) {
         skipped += 1;
         continue;
       }
@@ -229,6 +267,7 @@ async function main() {
     await new Promise(resolve => server.close(resolve));
   }
 
+  manifest[TEMPLATE_KEY] = templateHash;
   writeJson(MANIFEST_PATH, manifest);
   console.log(
     `Prerender finished: generated=${generated}, skipped(unchanged)=${skipped}, pruned=${pruned}, ` +
