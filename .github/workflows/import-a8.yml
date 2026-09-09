@@ -79,6 +79,8 @@ jobs:
           [ -f data/ssg-manifest.json ] && git add data/ssg-manifest.json
           [ -d agent ] && git add agent
           [ -d category ] && git add category
+          # API消費量の記録（scraper/lib/usage-log.js）。掲載データが変わらない日も費用は発生している。
+          [ -d data/usage-log ] && git add data/usage-log
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0

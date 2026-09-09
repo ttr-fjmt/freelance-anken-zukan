@@ -85,6 +85,10 @@ jobs:
           [ -f data/ssg-manifest.json ] && git add data/ssg-manifest.json
           [ -d agent ] && git add agent
           [ -d category ] && git add category
+          # 収穫逓減の判定材料（次回どのカテゴリーを回すかはこの履歴だけを根拠にする）。
+          [ -f data/discovery-runs.json ] && git add data/discovery-runs.json
+          # API消費量の記録（scraper/lib/usage-log.js）。掲載データが変わらない日も費用は発生している。
+          [ -d data/usage-log ] && git add data/usage-log
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0

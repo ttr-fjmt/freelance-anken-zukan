@@ -41,6 +41,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add agents.json
+          # API消費量の記録（scraper/lib/usage-log.js）。掲載データが変わらない日も費用は発生している。
+          [ -d data/usage-log ] && git add data/usage-log
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0

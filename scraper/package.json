@@ -5,6 +5,7 @@
   "description": "転職エージェント図鑑: jesra.or.jp 認定事業者一覧のスクレイパーと、Claude Haiku 4.5 による agents.json 構造化スクリプト",
   "main": "scrape.js",
   "scripts": {
+    "test": "node --test \"test/*.test.js\"",
     "scrape": "node scrape.js",
     "structure": "node structure.js",
     "promote-categories": "node promote-categories.js",

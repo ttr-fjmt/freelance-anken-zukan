@@ -109,6 +109,29 @@ data/a8-import/               A8アフィリエイト提携情報のExcel（手�
    - 取り込み後、`prerender.js` / `generate-sitemap.js` も実行し、新規・更新分の静的詳細ページと
      サイトマップを反映します
 
+## API費用の記録と、頭打ちカテゴリーの間引き
+
+日次の発見（`discover-agents.js`）は、1カテゴリーにつき Sonnet + web_search を1回呼ぶ。
+運用費用の大半はここで、構造化（Haiku）や enrich は誤差の範囲に収まっている。
+掲載が伸びているうちは1件あたりの費用が安いので毎日回す価値があるが、母集団は有限なので、
+いずれカテゴリーごとに新規が出なくなる。そこから先は同じ費用で「新規0件」を毎日確認する
+だけになる。そのため次の2つを入れている（skillup-zukan と同じ仕組み）。
+
+**消費量の記録（`scraper/lib/usage-log.js`）** — Anthropic クライアントを作っている箇所
+（`lib/agent-discovery.js` の `getAnthropicClient()`、`enrich-mhlw-websites.js`、`structure.js`）で
+`instrumentClient()` を通しているので、以降の呼び出しは自動で測定される。プロセス終了時に
+`data/usage-log/YYYY-MM.json` へ (日付 × スクリプト × モデル) で追記される。
+`estimated_usd` は公開価格からの概算であって請求額ではない。価格表（`MODEL_PRICING`）に
+無いモデルを使うと `estimated_usd: null` と `unpriced: true` になるので、モデルを差し替えたら
+価格表も更新すること。
+
+**収穫逓減スロットル（`scraper/lib/category-cooldown.js`）** — `data/discovery-runs.json` に
+カテゴリー別の実行実績を残し、**3回続けて新規0件だったカテゴリーだけ**、日次の対象から外して
+週1回に落とす。伸びているカテゴリーの頻度は下げない。1件でも照合を通れば即座に毎日へ戻る。
+どれだけ0件が続いても7日ごとに必ず再挑戦するので、恒久的に止まることはない
+（新しいサービスは後から生まれるため）。比較記事経由の発見も web_search を1回消費するので、
+同じ扱いで対象に含めている。`DISCOVER_IGNORE_COOLDOWN=1` で一時的に無効化できる。
+
 ## セットアップ
 
 1. リポジトリの Settings → Secrets and variables → Actions で `ANTHROPIC_API_KEY` を登録する

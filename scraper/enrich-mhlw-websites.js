@@ -32,6 +32,8 @@ const path = require('path');
 const { politeDelay } = require('./lib/http');
 const { DAILY_ENRICH_LIMIT, companyNameCore, inferCompanyDomain, verifyDomainMatch } = require('./lib/website-enrich');
 const { stripProtocol, buildFaviconUrl } = require('./structure');
+// API消費量の記録（lib/usage-log.js）。プロセス終了時に data/usage-log/ へ自動で書き出す。
+const { instrumentClient, getDefaultRecorder, installExitFlush } = require('./lib/usage-log');
 
 const AGENTS_PATH = path.join(__dirname, '..', 'agents.json');
 const MHLW_RAW_PATH = path.join(__dirname, '..', 'data', 'mhlw-agents.json');
@@ -55,7 +57,8 @@ async function main() {
     return;
   }
   const Anthropic = require('@anthropic-ai/sdk');
-  const anthropic = new Anthropic({ apiKey });
+  installExitFlush();
+  const anthropic = instrumentClient(new Anthropic({ apiKey }), getDefaultRecorder());
 
   const agents = readJson(AGENTS_PATH, []);
   const mhlwRawByPermit = new Map(readJson(MHLW_RAW_PATH, []).map(r => [r.permitNumber, r]));

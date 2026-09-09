@@ -19,7 +19,10 @@ const {
   discoverCandidates,
   buildDiscoveredAgentFields,
   getAnthropicClient,
+  SEARCH_CATEGORIES,
+  COMPARISON_ARTICLE_LABEL,
 } = require('./lib/agent-discovery');
+const { selectCategories, describeDeferred, recordRuns } = require('./lib/category-cooldown');
 const { buildFaviconUrl, stripProtocol, topCategoryHints } = require('./structure');
 const { promoteCategories } = require('./promote-categories');
 const { NOT_DISCLOSED } = require('./lib/schema');
@@ -30,6 +33,30 @@ const SKIP_PATH = path.join(__dirname, '..', 'data', 'agent-discover-skip.json')
 
 /** 1回の実行あたりに新規発見を試みる候補数の上限。環境変数で調整可能。 */
 const MAX_PER_RUN = Number(process.env.DISCOVER_MAX_PER_RUN || 10);
+
+/**
+ * 収穫逓減で頭打ちになったカテゴリーを、今日の対象から外す（lib/category-cooldown.js）。
+ *
+ * 3回続けて新規0件だったカテゴリーだけを週1回まで落とす。伸びているカテゴリーの頻度は
+ * 下げない。DISCOVER_IGNORE_COOLDOWN=1 で一時的に無効化できる。
+ *
+ * 比較記事経由の発見も web_search を1回消費するので、同じ扱いで対象に含めている。
+ */
+function selectTargetsWithCooldown() {
+  const all = [...SEARCH_CATEGORIES, COMPARISON_ARTICLE_LABEL];
+  if (process.env.DISCOVER_IGNORE_COOLDOWN === '1') {
+    return { categories: SEARCH_CATEGORIES, includeComparisonArticles: true, deferredCount: 0 };
+  }
+
+  const { run, deferred } = selectCategories(all);
+  for (const line of describeDeferred(deferred)) console.log(`見送り: ${line}`);
+
+  return {
+    categories: run.filter(c => c !== COMPARISON_ARTICLE_LABEL),
+    includeComparisonArticles: run.includes(COMPARISON_ARTICLE_LABEL),
+    deferredCount: deferred.length,
+  };
+}
 
 const REVIEW_NOTE = '口コミデータは未収集です（今後のアップデートで追加予定）。';
 const COMPANY_REVIEW_NOTE = '企業からの口コミデータは未収集です（今後のアップデートで追加予定）。';
@@ -132,9 +159,24 @@ async function main() {
       `(excluding ${excludeNames.length} known name(s): ${agents.length} listed + ${Object.keys(skipList).length} skip-listed)...`
   );
 
+  const { categories, includeComparisonArticles } = selectTargetsWithCooldown();
+  if (categories.length === 0 && !includeComparisonArticles) {
+    console.log('対象カテゴリーがありません（すべて収穫逓減のクールダウン中）。今日は検索を行いません。');
+    return;
+  }
+
   // discoverCandidates() がカテゴリーごとにweb_searchと実在照合(verifyCandidate)まで
   // 内部で行い、累計の照合成功数がMAX_PER_RUNに達した時点で残りのカテゴリーをスキップする。
-  const { verified, skipped, perCategory } = await discoverCandidates(excludeNames, MAX_PER_RUN);
+  const { verified, skipped, perCategory } = await discoverCandidates(excludeNames, MAX_PER_RUN, {
+    categories,
+    includeComparisonArticles,
+  });
+
+  // 検索を実行した時点で費用は発生しているので、この後の工程が失敗しても記録は残す
+  // （次回のクールダウン判定はこの履歴だけを根拠にする）。
+  const runsPath = recordRuns(perCategory);
+  if (runsPath) console.log(`Recorded ${perCategory.length} category run(s) in ${path.relative(process.cwd(), runsPath)}.`);
+
   const totalFound = perCategory.reduce((sum, c) => sum + c.found, 0);
   console.log(`AI proposed ${totalFound} candidate(s) via web_search across ${perCategory.length} categorie(s), ${verified.length} passed verification.`);
 

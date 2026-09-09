@@ -19,6 +19,8 @@ const crypto = require('crypto');
 const { CATEGORIES, NOT_DISCLOSED } = require('./lib/schema');
 const { politeDelay } = require('./lib/http');
 const { verifyLink } = require('./lib/link-check');
+// API消費量の記録（lib/usage-log.js）。プロセス終了時に data/usage-log/ へ自動で書き出す。
+const { instrumentClient, getDefaultRecorder, installExitFlush } = require('./lib/usage-log');
 
 const RAW_PATH = path.join(__dirname, '..', 'data', 'raw-agents.json');
 const MHLW_RAW_PATH = path.join(__dirname, '..', 'data', 'mhlw-agents.json');
@@ -604,7 +606,8 @@ async function main() {
   let anthropic = null;
   if (apiKey) {
     const Anthropic = require('@anthropic-ai/sdk');
-    anthropic = new Anthropic({ apiKey });
+    installExitFlush();
+    anthropic = instrumentClient(new Anthropic({ apiKey }), getDefaultRecorder());
   } else {
     console.warn('ANTHROPIC_API_KEY is not set — running in offline fallback mode (no AI structuring).');
   }

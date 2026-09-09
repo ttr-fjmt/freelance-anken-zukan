@@ -21,6 +21,8 @@ const { politeDelay } = require('./http');
 const { companyNameCore } = require('./website-enrich');
 const { CATEGORIES, NOT_DISCLOSED_TEXT } = require('./schema');
 
+const { instrumentClient, getDefaultRecorder, installExitFlush } = require('./usage-log');
+
 const DISCOVERY_MODEL = process.env.ANTHROPIC_DISCOVERY_MODEL || 'claude-sonnet-4-6';
 const STRUCTURE_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001';
 
@@ -29,7 +31,11 @@ function getAnthropicClient() {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not set');
   const Anthropic = require('@anthropic-ai/sdk');
-  return new Anthropic({ apiKey });
+
+  // API消費量の記録（lib/usage-log.js）。プロセス終了時に
+  // data/usage-log/YYYY-MM.json へ自動で書き出す。
+  installExitFlush();
+  return instrumentClient(new Anthropic({ apiKey }), getDefaultRecorder());
 }
 
 /**
@@ -281,13 +287,17 @@ async function collectVerifiedCandidates(rawCandidates, label, excludeCores, max
  *                                                                // （比較記事経由も同じ形式で1項目として含む）
  *   }
  */
-async function discoverCandidates(excludeNames, maxCandidates) {
+async function discoverCandidates(
+  excludeNames,
+  maxCandidates,
+  { categories = SEARCH_CATEGORIES, includeComparisonArticles = true } = {}
+) {
   const excludeCores = new Set((excludeNames || []).map(n => companyNameCore(n)));
   const verified = [];
   const skipped = [];
   const perCategory = [];
 
-  for (const category of SEARCH_CATEGORIES) {
+  for (const category of categories) {
     if (verified.length >= maxCandidates) {
       console.log(`agent-discovery: 上限(${maxCandidates}件)に到達したため、残りのカテゴリーの検索をスキップします。`);
       break;
@@ -298,14 +308,20 @@ async function discoverCandidates(excludeNames, maxCandidates) {
       rawCandidates = await module.exports.searchCategoryCandidates(category, [...excludeCores]);
     } catch (err) {
       console.warn(`agent-discovery: [${category}] Web検索呼び出しに失敗しました: ${err.message}`);
-      perCategory.push({ category, found: 0, listed: 0, skipped: 0 });
+      // error: true は「0件だった」ではなく「実行できなかった」の目印。
+      // lib/category-cooldown.js がこの回を収穫逓減の判定から除外するために使う
+      // （APIの一時的な失敗を「もう出てこないカテゴリー」と誤解しないため）。
+      perCategory.push({ category, found: 0, listed: 0, skipped: 0, error: true });
       continue;
     }
 
     await collectVerifiedCandidates(rawCandidates, category, excludeCores, maxCandidates, verified, skipped, perCategory);
   }
 
-  if (verified.length >= maxCandidates) {
+  if (!includeComparisonArticles) {
+    // 比較記事経由の検索も web_search を1回消費するので、収穫逓減の対象に含めている。
+    // 呼び出し側（discover-agents.js）がクールダウン中と判断した回はここに来る。
+  } else if (verified.length >= maxCandidates) {
     console.log(`agent-discovery: 上限(${maxCandidates}件)に到達したため、比較記事経由の検索をスキップします。`);
   } else {
     let rawCandidates;
@@ -314,7 +330,7 @@ async function discoverCandidates(excludeNames, maxCandidates) {
     } catch (err) {
       console.warn(`agent-discovery: [${COMPARISON_ARTICLE_LABEL}] Web検索呼び出しに失敗しました: ${err.message}`);
       rawCandidates = null;
-      perCategory.push({ category: COMPARISON_ARTICLE_LABEL, found: 0, listed: 0, skipped: 0 });
+      perCategory.push({ category: COMPARISON_ARTICLE_LABEL, found: 0, listed: 0, skipped: 0, error: true });
     }
     if (rawCandidates) {
       await collectVerifiedCandidates(rawCandidates, COMPARISON_ARTICLE_LABEL, excludeCores, maxCandidates, verified, skipped, perCategory);
@@ -745,6 +761,7 @@ module.exports = {
   getAnthropicClient,
   extractJsonArray,
   SEARCH_CATEGORIES,
+  COMPARISON_ARTICLE_LABEL,
   searchCategoryCandidates,
   discoverFromComparisonArticles,
   discoverCandidates,
