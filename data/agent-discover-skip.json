@@ -508,5 +508,35 @@
     "website": "https://carifri.jp",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-08T20:19:23.972Z"
+  },
+  "エンジニアデータバンク": {
+    "name": "エンジニアデータバンク",
+    "website": "https://engineer-data-bank.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-09T20:23:10.096Z"
+  },
+  "Contact EARTH matching（株式会社ストラテジーテック・コンサルティング）": {
+    "name": "Contact EARTH matching（株式会社ストラテジーテック・コンサルティング）",
+    "website": "https://matching.contact-earth.com/expert",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-09T20:23:10.096Z"
+  },
+  "フリーランススタート（株式会社Brocante）": {
+    "name": "フリーランススタート（株式会社Brocante）",
+    "website": "https://freelance.style/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-09T20:23:10.096Z"
+  },
+  "アサインナビ": {
+    "name": "アサインナビ",
+    "website": "https://assign-navi.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-09T20:23:10.096Z"
+  },
+  "ITジョブネット": {
+    "name": "ITジョブネット",
+    "website": "https://itjobnet.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-09T20:23:10.096Z"
   }
 }
