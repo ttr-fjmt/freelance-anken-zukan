@@ -681,6 +681,26 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://freelance-anken-zukan.net/agent/112/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://freelance-anken-zukan.net/agent/113/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://freelance-anken-zukan.net/agent/114/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://freelance-anken-zukan.net/agent/115/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://freelance-anken-zukan.net/category/it-web/</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>

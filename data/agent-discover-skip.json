@@ -538,5 +538,53 @@
     "website": "https://itjobnet.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-09T20:23:10.096Z"
+  },
+  "Yahoo!副業": {
+    "name": "Yahoo!副業",
+    "website": "https://fukugyou.yahoo.co.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-10T20:22:28.985Z"
+  },
+  "LUNK（ランク）／株式会社LUNK": {
+    "name": "LUNK（ランク）／株式会社LUNK",
+    "website": "https://lunk.jp",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-10T20:22:28.985Z"
+  },
+  "toiroフリーランス（株式会社SHIFT）": {
+    "name": "toiroフリーランス（株式会社SHIFT）",
+    "website": "https://toiro-freelance.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-10T20:22:28.985Z"
+  },
+  "シミックソリューションズ株式会社": {
+    "name": "シミックソリューションズ株式会社",
+    "website": "https://cmic-solutions.co.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-10T20:22:28.985Z"
+  },
+  "CRCJOB（アポプラスステーション）": {
+    "name": "CRCJOB（アポプラスステーション）",
+    "website": "https://crcjob.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-10T20:22:28.985Z"
+  },
+  "MUSUBU+（ムスブプラス）": {
+    "name": "MUSUBU+（ムスブプラス）",
+    "website": "https://musubu.io",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-10T20:22:28.985Z"
+  },
+  "Tech Clipsフリーランス": {
+    "name": "Tech Clipsフリーランス",
+    "website": "https://techclips.jp/freelance",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-10T20:22:28.985Z"
+  },
+  "PARAFT（パラフト）": {
+    "name": "PARAFT（パラフト）",
+    "website": "https://paraft.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-10T20:22:28.985Z"
   }
 }
