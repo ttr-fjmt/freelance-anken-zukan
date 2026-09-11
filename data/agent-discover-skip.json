@@ -586,5 +586,11 @@
     "website": "https://paraft.jp",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-10T20:22:28.985Z"
+  },
+  "マイナビクリエイター": {
+    "name": "マイナビクリエイター",
+    "website": "https://creator.mynavi.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-11T20:20:07.764Z"
   }
 }

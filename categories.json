@@ -40,5 +40,12 @@
     "to": "#38414A",
     "icon": "<path d=\"M14 22 h12 l4 6 h20 v22 a2 2 0 0 1-2 2 h-32 a2 2 0 0 1-2-2 v-26 a2 2 0 0 1 2-2 Z\" stroke=\"#fff\" stroke-width=\"2.2\" fill=\"none\" stroke-linejoin=\"round\"/>",
     "slug": "other"
+  },
+  {
+    "name": "フリーランス案件マッチングサービス",
+    "from": "#7A5C8E",
+    "to": "#4E3A5C",
+    "icon": "<path d=\"M28 14 h14 l14 14 v14 l-14 14 h-14 l-14-14 v-14 Z\" stroke=\"#fff\" stroke-width=\"2.2\" fill=\"none\" stroke-linejoin=\"round\"/><circle cx=\"34\" cy=\"26\" r=\"3\" fill=\"#fff\"/>",
+    "slug": "category-1"
   }
 ]

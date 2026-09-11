@@ -166,5 +166,89 @@
     "found": 3,
     "listed": 0,
     "skipped": 3
+  },
+  {
+    "date": "2026-09-12",
+    "category": "IT・Web開発",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "デザイン",
+    "found": 1,
+    "listed": 0,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-12",
+    "category": "ライティング・編集",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "動画・クリエイティブ",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "コンサル・士業",
+    "found": 1,
+    "listed": 1,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "事務・バックオフィス",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "営業・マーケティング",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "フリーランス案件マッチング",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "副業・複業マッチング",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "医療・治験系",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "翻訳・通訳系",
+    "found": 2,
+    "listed": 2,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-12",
+    "category": "比較記事経由（メタ発見）",
+    "found": 2,
+    "listed": 2,
+    "skipped": 0
   }
 ]
