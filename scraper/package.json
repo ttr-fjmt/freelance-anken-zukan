@@ -8,7 +8,7 @@
     "test": "node --test \"test/*.test.js\"",
     "scrape": "node scrape.js",
     "structure": "node structure.js",
-    "promote-categories": "node promote-categories.js",
+    "merge-categories": "node merge-categories.js",
     "prerender": "node prerender.js",
     "generate-sitemap": "node generate-sitemap.js",
     "import-a8": "node import-a8.js"
