@@ -620,5 +620,47 @@
     "reason": "out_of_scope",
     "note": "フリーランス向けの案件紹介・マッチングサービスではなく、法人向けに通訳・翻訳サービスを提供する企業",
     "checkedAt": "2026-09-12T09:39:57.675Z"
+  },
+  "PROsheet（プロシート）": {
+    "name": "PROsheet（プロシート）",
+    "website": "https://biz.prosheet.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-12T20:18:39.708Z"
+  },
+  "副業ポータル": {
+    "name": "副業ポータル",
+    "website": "https://fukugyou-portal.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-12T20:18:39.708Z"
+  },
+  "Structiv Agent（ストラクティブエージェント）": {
+    "name": "Structiv Agent（ストラクティブエージェント）",
+    "website": "https://structiv.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-12T20:18:39.708Z"
+  },
+  "CLINKF（クリンク）／ダイスリンク": {
+    "name": "CLINKF（クリンク）／ダイスリンク",
+    "website": "https://clinkf.com",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-12T20:18:39.708Z"
+  },
+  "coachee人事シェア／coachee": {
+    "name": "coachee人事シェア／coachee",
+    "website": "https://corp.coachee-hr.com",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-12T20:18:39.708Z"
+  },
+  "スマートラング翻訳通訳（グラースメディア合同会社）": {
+    "name": "スマートラング翻訳通訳（グラースメディア合同会社）",
+    "website": "https://smartlang.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-12T20:18:39.708Z"
+  },
+  "Zehitomo（ゼヒトモ）／株式会社Zehitomo": {
+    "name": "Zehitomo（ゼヒトモ）／株式会社Zehitomo",
+    "website": "https://zehitomo.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-12T20:18:39.708Z"
   }
 }

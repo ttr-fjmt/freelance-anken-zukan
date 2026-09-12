@@ -250,5 +250,61 @@
     "found": 2,
     "listed": 2,
     "skipped": 0
+  },
+  {
+    "date": "2026-09-13",
+    "category": "IT・Web開発",
+    "found": 5,
+    "listed": 3,
+    "skipped": 2
+  },
+  {
+    "date": "2026-09-13",
+    "category": "デザイン",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-13",
+    "category": "コンサル・士業",
+    "found": 1,
+    "listed": 0,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-13",
+    "category": "フリーランス案件マッチング",
+    "found": 2,
+    "listed": 0,
+    "skipped": 2
+  },
+  {
+    "date": "2026-09-13",
+    "category": "副業・複業マッチング",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-13",
+    "category": "医療・治験系",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-13",
+    "category": "翻訳・通訳系",
+    "found": 1,
+    "listed": 0,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-13",
+    "category": "比較記事経由（メタ発見）",
+    "found": 1,
+    "listed": 0,
+    "skipped": 1
   }
 ]
