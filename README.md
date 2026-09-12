@@ -109,6 +109,31 @@ data/a8-import/               A8アフィリエイト提携情報のExcel（手�
    - 取り込み後、`prerender.js` / `generate-sitemap.js` も実行し、新規・更新分の静的詳細ページと
      サイトマップを反映します
 
+## カテゴリーと掲載範囲
+
+### カテゴリーは正式な9分類にまとめ直す
+
+以前は「その他」に付いた補足メモが一定数たまると、正式カテゴリーへ自動昇格させていました（`promote-categories.js`）。
+その結果「フリーランス案件マッチング」と同じ意味の「フリーランス案件マッチングサービス」が別カテゴリーとして作られ、
+姉妹サイトの転職エージェント図鑑では言い換えのカテゴリーが46種類まで増えたため、2026-09 に自動昇格をやめました。
+
+- 分類は [scraper/lib/schema.js](scraper/lib/schema.js) の `CATEGORIES`（9分類）だけ
+- 日次の発見（`discover-agents.js`）と A8 取り込み（`import-a8.js`）のあとに、
+  [scraper/lib/category-merge.js](scraper/lib/category-merge.js) が名前の文字列で機械的にまとめ直し、
+  `categories.json` を9分類で作り直します（手で実行する場合は `cd scraper && node merge-categories.js`）
+- 掲載0件のカテゴリーは、トップの「職種から探す」にもカテゴリーページにも出しません
+
+### 掲載をやめるサービス
+
+終了したサービスや、フリーランス向けの案件サービスではない企業は `agents.json` から外し、
+**日次の発見で再び掲載されないよう `data/agent-discover-skip.json` に理由（`reason`）と説明（`note`）つきで登録**します。
+静的ページは次回の `prerender.js` で自動的に削除されます。
+
+- `discontinued`：公式サイトでサービス終了・閉鎖が告知されている
+- `out_of_scope`：フリーランス向けの案件紹介・マッチングサービスではない
+
+`scraper/test/listing-scope.test.js` が、外したサービスが一覧に戻っていないことを確かめます。
+
 ## 検索エンジンに公開する範囲
 
 姉妹サイトの転職エージェント図鑑が AdSense の審査で「有用性の低いコンテンツ」と判定された（2026-09-12）ため、

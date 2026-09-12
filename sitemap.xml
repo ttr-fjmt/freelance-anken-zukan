@@ -291,11 +291,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://freelance-anken-zukan.net/agent/54/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://freelance-anken-zukan.net/agent/55/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -686,6 +681,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://freelance-anken-zukan.net/category/writing-editing/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://freelance-anken-zukan.net/category/video-creative/</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
@@ -696,17 +696,17 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://freelance-anken-zukan.net/category/sales-marketing/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://freelance-anken-zukan.net/category/freelance-matching/</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://freelance-anken-zukan.net/category/other/</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://freelance-anken-zukan.net/category/category-1/</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>

@@ -782,8 +782,11 @@ function applyCategoryData(list){
 function buildCatNav(){
   const nav = document.getElementById("catNav");
   if(!nav || !CATEGORY_LIST.length) return;
-  nav.innerHTML = CATEGORY_LIST.map(c=>{
-    const n = AGENTS.filter(a => a.category === c.name).length;
+  nav.innerHTML = CATEGORY_LIST
+    .map(c => ({ c, n: AGENTS.filter(a => a.category === c.name).length }))
+    // 掲載0件のカテゴリーは入口に出さない（押しても何も表示されないため）。
+    .filter(x => x.n > 0)
+    .map(({ c, n })=>{
     const href = c.slug ? `/category/${c.slug}/` : "javascript:void(0)";
     const name = String(c.name).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
     return `<a href="${href}" data-cat="${name}">

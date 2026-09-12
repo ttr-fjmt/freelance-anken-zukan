@@ -592,5 +592,33 @@
     "website": "https://creator.mynavi.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-11T20:20:07.764Z"
+  },
+  "スポットコンサル（QEEE）": {
+    "name": "スポットコンサル（QEEE）",
+    "website": "https://qeee.jp/spot-consul",
+    "reason": "discontinued",
+    "note": "公式サイトで2026年3月31日をもってサービス提供を終了したと告知されている",
+    "checkedAt": "2026-09-12T09:39:57.675Z"
+  },
+  "Bizseek（ビズシーク）": {
+    "name": "Bizseek（ビズシーク）",
+    "website": "https://www.bizseek.jp",
+    "reason": "discontinued",
+    "note": "公式サイトで2024年7月31日をもってサイト閉鎖と告知されている",
+    "checkedAt": "2026-09-12T09:39:57.675Z"
+  },
+  "workhop（ワークホップ）": {
+    "name": "workhop（ワークホップ）",
+    "website": "https://workhop.jp",
+    "reason": "discontinued",
+    "note": "公式サイトで2023年12月1日をもってサービスを終了したと告知されている",
+    "checkedAt": "2026-09-12T09:39:57.675Z"
+  },
+  "サイマル・インターナショナル": {
+    "name": "サイマル・インターナショナル",
+    "website": "https://www.simul.co.jp",
+    "reason": "out_of_scope",
+    "note": "フリーランス向けの案件紹介・マッチングサービスではなく、法人向けに通訳・翻訳サービスを提供する企業",
+    "checkedAt": "2026-09-12T09:39:57.675Z"
   }
 }

@@ -24,7 +24,7 @@ const {
 } = require('./lib/agent-discovery');
 const { selectCategories, describeDeferred, recordRuns } = require('./lib/category-cooldown');
 const { buildFaviconUrl, stripProtocol, topCategoryHints } = require('./structure');
-const { promoteCategories } = require('./promote-categories');
+const { mergeCategories } = require('./lib/category-merge');
 const { NOT_DISCLOSED } = require('./lib/schema');
 
 const AGENTS_PATH = path.join(__dirname, '..', 'agents.json');
@@ -194,7 +194,7 @@ async function main() {
   }
 
   let listedCount = 0;
-  let promotedNames = [];
+  let mergedCount = 0;
 
   if (verified.length > 0) {
     const anthropic = getAnthropicClient();
@@ -230,9 +230,11 @@ async function main() {
 
   if (listedCount > 0) {
     const categories = readJson(CATEGORIES_PATH, []);
-    const result = promoteCategories(agents, categories);
-    promotedNames = result.promotedNames;
-    if (result.promotedNames.length > 0 || result.reclassifiedCount > 0) {
+    // 以前はここで「その他」の補足メモを正式カテゴリーへ自動昇格させていたが、
+    // 同じ意味のカテゴリーが増えるだけだったためやめた。正式な9分類にまとめ直す（lib/category-merge.js）。
+    const result = mergeCategories(agents, categories);
+    mergedCount = result.reclassifiedCount;
+    if (result.changed) {
       writeJson(AGENTS_PATH, agents);
       writeJson(CATEGORIES_PATH, categories);
     }
@@ -245,7 +247,7 @@ async function main() {
 
   console.log(
     `Discovery finished: found=${totalFound}, listed=${listedCount}, skipped=${skipped.length}` +
-      (promotedNames.length ? `, promotedCategories=${promotedNames.join('、')}` : '')
+      (mergedCount ? `, mergedCategories=${mergedCount}` : '')
   );
 }
 

@@ -47,7 +47,7 @@ const XLSX = require('xlsx');
 const { NOT_DISCLOSED } = require('./lib/schema');
 const { buildDiscoveredAgentFields, getAnthropicClient } = require('./lib/agent-discovery');
 const { topCategoryHints } = require('./structure');
-const { promoteCategories } = require('./promote-categories');
+const { mergeCategories } = require('./lib/category-merge');
 
 const AGENTS_PATH = path.join(__dirname, '..', 'agents.json');
 const CATEGORIES_PATH = path.join(__dirname, '..', 'categories.json');
@@ -423,12 +423,13 @@ async function main() {
 
   if (added > 0 || updated > 0) {
     const categories = fs.existsSync(CATEGORIES_PATH) ? JSON.parse(fs.readFileSync(CATEGORIES_PATH, 'utf8')) : [];
-    const result = promoteCategories(finalAgents, categories);
-    if (result.promotedNames.length > 0 || result.reclassifiedCount > 0) {
+    // 正式な9分類にまとめ直す（以前の自動昇格は廃止。lib/category-merge.js）。
+    const result = mergeCategories(finalAgents, categories);
+    if (result.changed) {
       fs.writeFileSync(AGENTS_PATH, JSON.stringify(finalAgents, null, 2) + '\n', 'utf8');
       fs.writeFileSync(CATEGORIES_PATH, JSON.stringify(categories, null, 2) + '\n', 'utf8');
       console.log(
-        `Category promotion: promoted=${result.promotedNames.join('、') || 'none'}, reclassified=${result.reclassifiedCount}`
+        `Category merge: reclassified=${result.reclassifiedCount}`
       );
     }
   }
