@@ -11,7 +11,8 @@
     "merge-categories": "node merge-categories.js",
     "prerender": "node prerender.js",
     "generate-sitemap": "node generate-sitemap.js",
-    "import-a8": "node import-a8.js"
+    "import-a8": "node import-a8.js",
+    "verify-live": "node verify-live.js"
   },
   "engines": {
     "node": ">=22.12.0"
@@ -26,6 +27,6 @@
     "puppeteer": "^25.10.0"
   },
   "allowScripts": {
-    "puppeteer@25.9.0": true
+    "puppeteer@25.10.0": true
   }
 }
