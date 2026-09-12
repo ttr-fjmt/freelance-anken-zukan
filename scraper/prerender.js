@@ -32,6 +32,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { isIndexableAgent, withRobotsNoindex } = require('./lib/indexing');
 const http = require('http');
 
 const ROOT = path.join(__dirname, '..');
@@ -243,7 +244,9 @@ async function main() {
         continue;
       }
 
-      const html = await renderAgentHTML(browser, id);
+      const rendered = await renderAgentHTML(browser, id);
+      // 公式サイトの本文を確認できなかったページ・終了したサービスのページは検索対象から外す（lib/indexing.js）。
+      const html = isIndexableAgent(agent) ? rendered : withRobotsNoindex(rendered);
 
       const sizeBytes = Buffer.byteLength(html, 'utf8');
       if (sizeBytes > SIZE_ERROR_THRESHOLD_BYTES) {

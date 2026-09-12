@@ -18,6 +18,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { isIndexableCategory, ROBOTS_NOINDEX } = require('./lib/indexing');
 
 const ROOT = path.join(__dirname, '..');
 const AGENTS_PATH = path.join(ROOT, 'agents.json');
@@ -196,7 +197,7 @@ function buildCollectionPageJsonLd({ categoryName, pageUrl, description, pageAge
   };
 }
 
-function buildPageHtml({ categoryName, slug, styleBlock, totalCount, pageAgents, categoryStyle }) {
+function buildPageHtml({ categoryName, slug, styleBlock, totalCount, pageAgents, categoryStyle, indexable = true }) {
   const pageUrl = `${BASE_URL}/category/${slug}/`;
   const title = `${categoryName}のサービス一覧｜フリーランス案件図鑑`;
   const description = `${categoryName}に対応するフリーランス向け案件紹介・マッチングサービスを${totalCount}件掲載。対応エリアや特徴を比較して、あなたに合ったサービスを見つけられます。`;
@@ -219,7 +220,7 @@ function buildPageHtml({ categoryName, slug, styleBlock, totalCount, pageAgents,
 <title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeHtml(description)}">
 <link rel="canonical" href="${pageUrl}">
-<meta property="og:title" content="${escapeHtml(title)}">
+${indexable ? '' : ROBOTS_NOINDEX + '\n'}<meta property="og:title" content="${escapeHtml(title)}">
 <meta property="og:description" content="${escapeHtml(description)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="${pageUrl}">
@@ -261,7 +262,7 @@ ${styleBlock}
 </div>
 <footer>
   掲載情報は、AIによるWeb検索で発見したサービスについて、実際に公式サイトへアクセスして実在確認を行った上で、日次で自動更新しています。取得できなかった項目は「非公開（お問い合わせで確認）」と表示しています。図鑑スコアは実際の利用者口コミではなく、掲載情報の充実度に基づく当サイト独自の指標です。個別サービスのCTAボタンからは各社の公式サイトへ遷移します。
-  <div class="footer-links"><a href="/">トップページ</a> / <a href="/faq.html">よくある質問</a> / <a href="/privacy.html">プライバシーポリシー</a></div>
+  <div class="footer-links"><a href="/">トップページ</a> / <a href="/guide/">フリーランスガイド</a> / <a href="/faq.html">よくある質問</a> / <a href="/privacy.html">プライバシーポリシー</a></div>
 </footer>
 </body>
 </html>
@@ -310,6 +311,8 @@ function main() {
       totalCount: matched.length,
       pageAgents,
       categoryStyle,
+      // 中身のあるサービスが1件も無い一覧は検索対象から外す。
+      indexable: isIndexableCategory(agents, c.name),
     });
 
     const outDir = path.join(CATEGORY_DIR, c.slug);

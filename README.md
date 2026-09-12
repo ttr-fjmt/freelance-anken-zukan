@@ -109,6 +109,32 @@ data/a8-import/               A8アフィリエイト提携情報のExcel（手�
    - 取り込み後、`prerender.js` / `generate-sitemap.js` も実行し、新規・更新分の静的詳細ページと
      サイトマップを反映します
 
+## 検索エンジンに公開する範囲
+
+姉妹サイトの転職エージェント図鑑が AdSense の審査で「有用性の低いコンテンツ」と判定された（2026-09-12）ため、
+このサイトでも中身が確認できていないページを検索対象から外しています。
+線引きは [scraper/lib/indexing.js](scraper/lib/indexing.js) の1か所で決めています。
+
+- **特徴（`features`）が0件で、紹介文に「本文を確認できなかった」「サービスを終了した」旨が書かれているサービス**は
+  検索対象外。サイトには残しますが、`<meta name="robots" content="noindex,follow">` を入れ、サイトマップにも載せません
+  - 2026-09 時点で142件中14件（本文を確認できなかった11件、終了・閉鎖が告知されている3件）
+  - 紹介文の言い回しだけで外すと中身のあるページまで外してしまうため、必ず「特徴0件」と組み合わせています
+- **カテゴリーページは、検索対象のサービスが1件でも含まれるときだけ検索対象**
+
+同じ線引きを3か所で使っています（`prerender.js` の noindex、`generate-category-pages.js` の noindex、
+`generate-sitemap.js` の除外）。`scraper/test/indexing.test.js` が、3か所が揃っていること、
+特徴が確認できているページを誤って外していないことを確かめます。
+
+## 解説記事（/guide/）
+
+`scraper/generate-guide-pages.js` が `guide/` 以下の「フリーランスガイド」を書き出します（`cd scraper && node generate-guide-pages.js`）。
+
+- 法律・日付・期間など事実に当たる記述は、**厚生労働省・公正取引委員会の公式ページで確認できたものだけ**を書き、
+  記事末尾に出典を載せます。どの義務がどの発注事業者に適用されるかなど、公式ページの本文で確認しきれなかった条件は
+  断定せず、公式のQ&Aを確認するよう案内しています。手数料の料率や相場は書きません
+- `scraper/test/guides.test.js` が、出典が公式ドメインであること、割合・金額を書いていないこと、
+  日付・期間が確認済みのものだけであることを確かめます。新しい数字を書くときは、出典を確認してから許可リストに足してください
+
 ## API費用の記録と、頭打ちカテゴリーの間引き
 
 日次の発見（`discover-agents.js`）は、1カテゴリーにつき Sonnet + web_search を1回呼ぶ。
@@ -162,3 +188,11 @@ cd scraper
 ANTHROPIC_API_KEY=sk-ant-... node import-a8.js ../data/a8-import/a8-agents-YYYYMMDD.xlsx
 node import-a8.js ../data/a8-import/a8-agents-YYYYMMDD.xlsx --dry-run   # 書き込まず確認のみ
 ```
+
+### 静的ページ生成でブラウザが起動しない場合（Windows）
+
+`prerender.js` が `puppeteer.launch() failed` で止まり、ログに「アプリケーション制御ポリシーによってこのファイルが
+ブロックされました」と出る場合は、Windows のアプリケーション制御が、puppeteer がダウンロードした特定のビルドの Chrome を
+ブロックしています（2026-09 に puppeteer 25.9.0 が使う `win64-152.0.7977.54` で発生し、25.10.0 に上げて解消）。
+セキュリティ設定は変えず、ブロックされていないビルドを `PUPPETEER_EXECUTABLE_PATH` で指定して実行してください。
+GitHub Actions（Linux）では発生しません。

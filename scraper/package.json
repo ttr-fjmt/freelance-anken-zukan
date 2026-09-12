@@ -23,7 +23,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "puppeteer": "^25.9.0"
+    "puppeteer": "^25.10.0"
   },
   "allowScripts": {
     "puppeteer@25.9.0": true

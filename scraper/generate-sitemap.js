@@ -10,6 +10,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { isIndexableAgent, isIndexableCategory } = require('./lib/indexing');
 
 const ROOT = path.join(__dirname, '..');
 const AGENTS_PATH = path.join(ROOT, 'agents.json');
@@ -71,8 +72,20 @@ function buildEntries(agents, categories = []) {
   // scraper/prerender.js が /agent/{id}/index.html を実際に生成するようになったため、
   // このループを復活させる（以前は個別ページのプリレンダリングが無く、実在しないURLを
   // クローラーに送ってしまうため一時的に無効化していた）。
+  // 解説記事（/guide/ 以下）。独自に書いた記事で、Google に評価してほしいページの中心。
+  const guideDir = path.join(ROOT, 'guide');
+  if (fs.existsSync(path.join(guideDir, 'index.html'))) {
+    entries.push({ loc: `${BASE_URL}/guide/`, changefreq: 'monthly', priority: '0.7' });
+    for (const name of fs.readdirSync(guideDir).sort()) {
+      if (fs.existsSync(path.join(guideDir, name, 'index.html'))) {
+        entries.push({ loc: `${BASE_URL}/guide/${name}/`, changefreq: 'monthly', priority: '0.7' });
+      }
+    }
+  }
+  // 中身が確認できていないページ・終了したサービスは noindex にしているので載せない（lib/indexing.js）。
   for (const a of agents) {
     if (!a.id) continue;
+    if (!isIndexableAgent(a)) continue;
     entries.push({
       loc: `${BASE_URL}/agent/${encodeURIComponent(a.id)}/`,
       changefreq: 'weekly',
@@ -87,6 +100,8 @@ function buildEntries(agents, categories = []) {
     if (!c.slug) continue;
     const hasAgent = agents.some(a => a.category === c.name);
     if (!hasAgent) continue;
+    // 中身のあるサービスが1件も無いカテゴリーは noindex にしているので載せない。
+    if (!isIndexableCategory(agents, c.name)) continue;
     entries.push({
       loc: `${BASE_URL}/category/${encodeURIComponent(c.slug)}/`,
       changefreq: 'daily',
