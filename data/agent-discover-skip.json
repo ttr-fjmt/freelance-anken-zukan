@@ -662,5 +662,23 @@
     "website": "https://zehitomo.com/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-12T20:18:39.708Z"
+  },
+  "SKIMA Creative（スキマクリエイティブ）": {
+    "name": "SKIMA Creative（スキマクリエイティブ）",
+    "website": "https://creative.skima.jp",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-13T20:17:20.682Z"
+  },
+  "SECジャパン（SEC Japan）": {
+    "name": "SECジャパン（SEC Japan）",
+    "website": "https://sec-japan-hr.com",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-13T20:17:20.682Z"
+  },
+  "ハイパフォーマー（High-Performer）": {
+    "name": "ハイパフォーマー（High-Performer）",
+    "website": "https://www.high-performer.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-13T20:17:20.682Z"
   }
 }

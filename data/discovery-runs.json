@@ -306,5 +306,47 @@
     "found": 1,
     "listed": 0,
     "skipped": 1
+  },
+  {
+    "date": "2026-09-14",
+    "category": "IT・Web開発",
+    "found": 1,
+    "listed": 1,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-14",
+    "category": "デザイン",
+    "found": 2,
+    "listed": 1,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-14",
+    "category": "コンサル・士業",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-14",
+    "category": "医療・治験系",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-14",
+    "category": "翻訳・通訳系",
+    "found": 3,
+    "listed": 1,
+    "skipped": 2
+  },
+  {
+    "date": "2026-09-14",
+    "category": "比較記事経由（メタ発見）",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
   }
 ]
