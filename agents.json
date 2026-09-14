@@ -8299,5 +8299,59 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-09-13T20:17:42.892Z"
+  },
+  {
+    "id": 127,
+    "source": "ai-discovered",
+    "name": "DUBADUB（ダバダブ）",
+    "category": "その他",
+    "categoryHint": "通訳・翻訳コーディネート",
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "外国語ナレーター・通訳・翻訳者を世界規模で紹介するキャスティングオフィス",
+    "companyOneLiner": "多言語対応のナレーター・通訳・翻訳者を即座に配置できるオンデマンド人材提供",
+    "appeal": "教材・Eラーニング、企業CM/VP、映画トレーラー、ゲーム・アニメキャラクター吹き替えなど幅広い分野に対応。外国人訛りの日本語ナレーションなど特殊ニーズにも応じられる。フランス語・英語・イタリア語・スウェーデン語など複数言語の通訳・翻訳者が登録。",
+    "companyAppeal": "必要な才能を必要な時期に提供できる体制により、採用工数削減と迅速な人材配置が実現可能。企画制作・プロデューサンス対応でワンストップサービスが可能。",
+    "features": [
+      "教材・Eラーニング・企業CM/VPなど多分野対応",
+      "外国人訛りの日本語ナレーションなど特殊ニーズに対応",
+      "複数言語の通訳・翻訳者が登録"
+    ],
+    "companyFeatures": [],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "www.dubadub.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=www.dubadub.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-14T20:17:05.701Z"
   }
 ]
