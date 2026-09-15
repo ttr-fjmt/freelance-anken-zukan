@@ -8411,5 +8411,63 @@
       "handoverPolicy": "非公開（お問い合わせで確認）",
       "confidentiality": "非公開（お問い合わせで確認）"
     }
+  },
+  {
+    "id": 128,
+    "source": "ai-discovered",
+    "name": "テンナイン・コミュニケーション",
+    "category": "その他",
+    "categoryHint": "通訳・翻訳サービス",
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": "8,000名以上の通訳者・翻訳者が登録",
+    "oneLiner": "通訳・翻訳・人材派遣・英語教育を手がける語学コミュニケーション企業と通訳者・翻訳者のマッチングプラットフォーム",
+    "companyOneLiner": "8,000名以上の言語プロフェッショナルから最適な人材を提案でき、急な依頼にも対応可能なマッチングを実現",
+    "appeal": "通訳・翻訳・人材派遣・英語教育など、語学を軸とした幅広い案件に対応。大手外資系企業も採用する実績があり、単発から常駐派遣まで多様な契約形態に対応。急な依頼にも対応する柔軟性を持つ。",
+    "companyAppeal": "8,000名以上の通訳者・翻訳者プールから最適な人材を提案・組み合わせが可能。コーディネーターが依頼から実行まで一括対応するため、企業側の手配工数を最小化できる。",
+    "features": [
+      "大手外資系企業も採用する実績がある通訳・翻訳サービス",
+      "急な依頼にも迅速に対応する体制",
+      "スキルだけでなく人柄も考慮した人材選定"
+    ],
+    "companyFeatures": [
+      "8,000名以上の言語プロフェッショナルから最適な組み合わせを提案",
+      "依頼から実行まできめ細かく対応するコーディネーターチーム",
+      "単発対応から常駐派遣・人材紹介まで柔軟な対応が可能"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "www.ten-nine.co.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=www.ten-nine.co.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-15T20:16:13.488Z"
   }
 ]
