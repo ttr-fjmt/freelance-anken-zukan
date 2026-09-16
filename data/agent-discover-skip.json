@@ -680,5 +680,17 @@
     "website": "https://www.high-performer.jp",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-13T20:17:20.682Z"
+  },
+  "FREE-DA（フリーダ）": {
+    "name": "FREE-DA（フリーダ）",
+    "website": "https://free-da.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-16T20:17:17.725Z"
+  },
+  "マスメディアン": {
+    "name": "マスメディアン",
+    "website": "https://www.massmediaman.com",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-16T20:17:17.725Z"
   }
 }
