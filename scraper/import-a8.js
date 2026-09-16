@@ -111,12 +111,20 @@ function cell(value) {
   return s || null;
 }
 
+/** Excelの反映チェック（A列）の見出し。TRUE の行は取り込み済み。 */
+const REFLECTED_COLUMN = '反映';
+
 /**
- * 「広告主名・リンク・特徴」が埋まっている行のみを対象として返す。列の対応付けは
+ * 「広告主名・リンク・特徴」が埋まっていて、**まだ反映していない**行のみを対象として返す。列の対応付けは
  * ヘッダー行の文言で解決するため（サイト列の有無・列の並び順の変化に依存しない）、
  * このExcelが今後サイト専用の固定レイアウトになっても引き続き動作する。
  * 対応エリア・特化領域は空欄でも対象に含める（後段でAIに推測させるため）。
  * 対象年代列は今後一切参照しない。
+ *
+ * 【反映済みの行を外す理由】
+ * A列（反映）が TRUE の行は、すでに取り込んだもの。外さないと、実行のたびに掲載中の全社を
+ * AIに送り直すことになり、毎回そのぶんの費用と時間がかかる（実際に23件を毎回書き直していた）。
+ * 転職エージェント図鑑の取り込みは最初からこの形で、そちらに揃える。
  *
  * 各行には sheetRowIndex（0-indexed。物理的なシート上の行番号は sheetRowIndex+1、
  * ヘッダー行がr=0のため）を持たせる。XLSX.utils.sheet_to_json(sheet,{defval:null})は
@@ -130,13 +138,14 @@ function readRows(filePath) {
   return raw
     .map((r, i) => ({
       sheetRowIndex: i,
+      reflected: !!r[REFLECTED_COLUMN],
       name: cell(r['広告主名']),
       affiliateUrl: extractAffiliateUrl(r['リンク']),
       feature: cell(r['特徴']),
       region: cell(r['対応エリア']),
       specialty: cell(r['なにに特化しているか']),
     }))
-    .filter(r => r.name && r.affiliateUrl && r.feature);
+    .filter(r => !r.reflected && r.name && r.affiliateUrl && r.feature);
 }
 
 /**
