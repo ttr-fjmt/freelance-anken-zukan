@@ -36,6 +36,13 @@ test('APIキーは Actions の secrets から渡している', () => {
   assert.ok(publish.includes('secrets.ANTHROPIC_API_KEY'), 'APIキーの渡し方が違います');
 });
 
+test('Node は 22 以降を使う（npm test のファイル指定が Node 20 では効かない）', () => {
+  // Node 20 の node --test は "test/*.test.js" を展開できず、1件も見つけられない（実際に止まった）。
+  const version = publish.match(/node-version: "(\d+)"/);
+  assert.ok(version, 'node-version の指定がありません');
+  assert.ok(Number(version[1]) >= 22, `node-version が ${version[1]} になっています（22以上にしてください）`);
+});
+
 test('日次の実行が、他のワークフローとぶつからないようにしてある', () => {
   assert.ok(publish.includes('group: repo-content-write'), 'concurrency の設定がありません');
 });
