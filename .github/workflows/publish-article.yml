@@ -105,8 +105,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/articles data/article-queue.json guide sitemap.xml
-          [ -d data/usage-log ] && git add data/usage-log
+          # 記事が1本も書けていない日は data/articles がまだ無い。
+          # 無いものを git add すると、そこで失敗して題材リストの印まで残らなくなる。
+          for target in data guide sitemap.xml; do
+            if [ -e "$target" ]; then git add -A -- "$target"; fi
+          done
           if git diff --cached --quiet; then
             echo "コミットするものはありません。"
             exit 0
