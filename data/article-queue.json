@@ -1,12 +1,116 @@
 [
-  { "n": 1, "id": "freelance-hou-toha", "title": "フリーランス・事業者間取引適正化等法とは、何を決めた法律か", "basis": "法律の目的と、誰が対象になるか", "sources": ["mhlw"], "status": "pending", "note": "" },
-  { "n": 2, "id": "torihiki-jouken-meiji", "title": "仕事を受けるときに示されることになっている取引条件", "basis": "発注事業者が明示することになっている事項", "sources": ["mhlw", "shuugyouKankyou"], "status": "pending", "note": "" },
-  { "n": 3, "id": "shuugyou-kankyou", "title": "発注する側が整えることになっている「就業環境」とは", "basis": "就業環境の整備として求められていること", "sources": ["shuugyouKankyou"], "status": "pending", "note": "" },
-  { "n": 4, "id": "harassment-taisaku", "title": "フリーランスへのハラスメントについて、発注側に求められていること", "basis": "ハラスメント対策として求められている措置", "sources": ["harassment", "shuugyouKankyou"], "status": "pending", "note": "" },
-  { "n": 5, "id": "ikuji-kaigo-hairyo", "title": "育児・介護と両立して働くための配慮", "basis": "育児介護等と業務の両立に対する配慮", "sources": ["shuugyouKankyou"], "status": "pending", "note": "" },
-  { "n": 6, "id": "chuuto-kaijo-yokoku", "title": "契約を途中でやめられるとき、いつ知らされるのか", "basis": "中途解除・不更新の予告", "sources": ["shuugyouKankyou"], "status": "pending", "note": "" },
-  { "n": 7, "id": "roudousha-ni-ataru", "title": "フリーランスでも「労働者」に当たる場合がある", "basis": "働き方によっては労働関係法令が適用されること", "sources": ["mhlw"], "status": "pending", "note": "" },
-  { "n": 8, "id": "rousai-tokubetsu-kanyuu", "title": "フリーランスが労災保険に入るという選択肢", "basis": "労災保険の特別加入の対象と手続き", "sources": ["rousai"], "status": "pending", "note": "" },
-  { "n": 9, "id": "trouble-soudan", "title": "取引でもめたとき、どこに相談できるか", "basis": "フリーランス・トラブル110番の役割と使い方", "sources": ["trouble110", "mhlw"], "status": "pending", "note": "" },
-  { "n": 10, "id": "ihan-moushide", "title": "法律に違反していると思ったときの申出窓口", "basis": "違反被疑事実の申出のしくみ", "sources": ["moushide"], "status": "pending", "note": "" }
+  {
+    "n": 1,
+    "id": "freelance-hou-toha",
+    "title": "フリーランス・事業者間取引適正化等法とは、何を決めた法律か",
+    "basis": "法律の目的と、誰が対象になるか",
+    "sources": [
+      "mhlw"
+    ],
+    "status": "published",
+    "note": "",
+    "published_at": "2026-09-17"
+  },
+  {
+    "n": 2,
+    "id": "torihiki-jouken-meiji",
+    "title": "仕事を受けるときに示されることになっている取引条件",
+    "basis": "発注事業者が明示することになっている事項",
+    "sources": [
+      "mhlw",
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 3,
+    "id": "shuugyou-kankyou",
+    "title": "発注する側が整えることになっている「就業環境」とは",
+    "basis": "就業環境の整備として求められていること",
+    "sources": [
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 4,
+    "id": "harassment-taisaku",
+    "title": "フリーランスへのハラスメントについて、発注側に求められていること",
+    "basis": "ハラスメント対策として求められている措置",
+    "sources": [
+      "harassment",
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 5,
+    "id": "ikuji-kaigo-hairyo",
+    "title": "育児・介護と両立して働くための配慮",
+    "basis": "育児介護等と業務の両立に対する配慮",
+    "sources": [
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 6,
+    "id": "chuuto-kaijo-yokoku",
+    "title": "契約を途中でやめられるとき、いつ知らされるのか",
+    "basis": "中途解除・不更新の予告",
+    "sources": [
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 7,
+    "id": "roudousha-ni-ataru",
+    "title": "フリーランスでも「労働者」に当たる場合がある",
+    "basis": "働き方によっては労働関係法令が適用されること",
+    "sources": [
+      "mhlw"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 8,
+    "id": "rousai-tokubetsu-kanyuu",
+    "title": "フリーランスが労災保険に入るという選択肢",
+    "basis": "労災保険の特別加入の対象と手続き",
+    "sources": [
+      "rousai"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 9,
+    "id": "trouble-soudan",
+    "title": "取引でもめたとき、どこに相談できるか",
+    "basis": "フリーランス・トラブル110番の役割と使い方",
+    "sources": [
+      "trouble110",
+      "mhlw"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 10,
+    "id": "ihan-moushide",
+    "title": "法律に違反していると思ったときの申出窓口",
+    "basis": "違反被疑事実の申出のしくみ",
+    "sources": [
+      "moushide"
+    ],
+    "status": "pending",
+    "note": ""
+  }
 ]
