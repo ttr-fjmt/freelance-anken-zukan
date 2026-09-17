@@ -14,6 +14,11 @@ on:
         required: false
         type: string
 
+# GitHub Actions の既定は "bash -e {0}" で pipefail が無く、パイプの左側の失敗が握りつぶされる。
+defaults:
+  run:
+    shell: bash
+
 permissions:
   contents: write
 
