@@ -1,0 +1,42 @@
+[
+  {
+    "id": "mhlw",
+    "label": "厚生労働省「フリーランスとして業務を行う方・フリーランスの方に業務を委託する事業者の方等へ」",
+    "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/koyoukintou/zaitaku/index_00002.html"
+  },
+  {
+    "id": "jftcQa",
+    "label": "公正取引委員会「フリーランス・事業者間取引適正化等法 Q&A」",
+    "url": "https://www.jftc.go.jp/fllaw_limited/fllaw_qa.html"
+  },
+  {
+    "id": "jftc",
+    "label": "公正取引委員会「フリーランス・事業者間取引適正化等法」",
+    "url": "https://www.jftc.go.jp/fllaw_limited.html"
+  },
+  {
+    "id": "trouble110",
+    "label": "フリーランス・トラブル110番",
+    "url": "https://freelance110.mhlw.go.jp/"
+  },
+  {
+    "id": "shuugyouKankyou",
+    "label": "厚生労働省「フリーランス・事業者間取引適正化等法に基づく就業環境整備のポイント」",
+    "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/bunya/freelance_00006.html"
+  },
+  {
+    "id": "moushide",
+    "label": "厚生労働省「フリーランス・事業者間取引適正化等法の違反被疑事実についての申出窓口」",
+    "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/koyoukintou/zaitaku/freelance_moushide.html"
+  },
+  {
+    "id": "rousai",
+    "label": "厚生労働省「フリーランスの労災保険の特別加入について」",
+    "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/rousai/kanyu_r3.4.1_00010.html"
+  },
+  {
+    "id": "harassment",
+    "label": "厚生労働省「フリーランスに対するハラスメント対策の研修動画ができました！」",
+    "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/koyoukintou/zaitaku/freelance_00007.html"
+  }
+]

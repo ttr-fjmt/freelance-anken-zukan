@@ -1,0 +1,52 @@
+name: Fetch official pages
+
+# 公式ページの本文を取得して data/raw/ に保存する。
+# クラウドのセッションからは公式サイトに出られないので、取得だけをここで行い、
+# 「読んで記事を書く」は publish-article.yml（write-next-article.js）で行う。
+#
+# 出典を足したとき（data/sources.json に追記したとき）に手で動かす。
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_id:
+        description: "1件だけ取り直すときは出典ID（空なら全件）"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-content-write
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Fetch official pages
+        working-directory: scraper
+        run: node fetch-official.js ${{ inputs.source_id }}
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/raw data/sources.json
+          if git diff --cached --quiet; then
+            echo "変わりはありません。"
+            exit 0
+          fi
+          git commit -m "chore: 公式ページの本文を取り直す ($(date -u +%Y-%m-%d))"
+          until git push; do
+            git pull --rebase origin main
+          done
