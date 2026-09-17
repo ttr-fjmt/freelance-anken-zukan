@@ -29,7 +29,16 @@
    構造化して `agents.json` に追加する（`ANTHROPIC_API_KEY` を使用）。追加後にカテゴリーを9分類へまとめ直す
 2. `prerender.js` → `generate-category-pages.js` → `generate-sitemap.js`
 
+`.github/workflows/publish-article.yml` が毎日 JST 6:00 に、解説記事を1本書いて公開する。
+
+1. `write-next-article.js` — `data/article-queue.json` の次の題材を選び、`data/raw/` に保存した公式ページの
+   本文だけを材料に記事を書く（`ANTHROPIC_API_KEY` を使用）。書いたその場で `lib/article-guards.js` の検査にかけ、
+   通らなければ保存しない（3回書き直して駄目なら印をつけて次の題材へ）
+2. `generate-guide-pages.js` → `generate-sitemap.js`
+
 手動実行のワークフロー：
+- `fetch-official.yml` — 公式ページの本文を `data/raw/` に保存する（`data/sources.json` に出典を足してから動かす）。
+  公正取引委員会（`jftc.go.jp`）はサーバー側が機械的なアクセスを断る（403）ため取得できない。厚労省のページを使う
 - `import-a8.yml` — A8 提携サービスの取り込み（Claude Code では `/import-a8`）
 - `backfill-company-features.yml` — 企業向けの特徴の後から補完
 
@@ -50,7 +59,11 @@
   掲載0件のカテゴリーはページも入口も出さない
 - **解説記事（/guide/、フリーランスガイド）**：[scraper/generate-guide-pages.js](scraper/generate-guide-pages.js) から書き出す。
   法律・日付・期間は厚生労働省・公正取引委員会の公式ページで確認できたものだけを書き、出典を載せる。
-  どの義務がどの発注事業者に適用されるかなど、公式ページで確認しきれない条件は断定しない。手数料の料率や相場は書かない
+  どの義務がどの発注事業者に適用されるかなど、公式ページで確認しきれない条件は断定しない。手数料の料率や相場は書かない。
+  記事には2種類ある
+  - **手で書いた記事**（`GUIDES`）：新しい数字を書くときは `test/guides.test.js` の許可リストにも足す
+  - **自動で書く記事**（`data/articles/*.json`）：毎日1本。数字は「同じ節の引用に実在すること」を
+    `lib/article-guards.js` が機械的に確かめる。料率（％）・金額（円）は書けない。引用は `data/raw/` の本文と一字一句照合する
 - **AdSense のタグ**は、固定ページ（index / faq / privacy / 404）と記事ページの `<head>` に静的に置く
 
 ## よく使うコマンド

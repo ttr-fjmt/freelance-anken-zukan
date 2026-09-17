@@ -1,0 +1,118 @@
+name: Publish one article (daily)
+
+# 解説記事を毎日1本、自動で書いて公開する。
+#
+# 【なぜ毎日か】
+# 一覧ページは大手の比較サイトと正面からぶつかるので上位に出にくい。検索の入口になるのは
+# 記事のほうなので、公式情報で裏づけの取れる記事を毎日1本ずつ増やしていく。
+#
+# 【薄い記事は出さない】
+# 公式ページの本文に無いことは書けない仕組み（scraper/lib/article-guards.js）で、
+# 検査に通らなかった下書きは保存しない。書けない日は、何も公開せずに静かに終わる。
+
+on:
+  schedule:
+    # 毎日 21:00 UTC = 日本時間(JST) 6:00
+    - cron: "0 21 * * *"
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "題材を指定して書く（空なら次の1本）"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-content-write
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # npm test の "test/*.test.js" は Node 22 以降でないと展開されない（Node 20 では見つからない）
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: scraper/package-lock.json
+
+      - name: Install dependencies
+        working-directory: scraper
+        run: npm ci --ignore-scripts
+
+      # 壊れた状態から書き足さない。まず今のリポジトリが検査を通ることを確かめる。
+      - name: Run unit tests
+        working-directory: scraper
+        run: npm test
+
+      - name: Write the next article
+        working-directory: scraper
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "${{ inputs.topic }}" ]; then
+            node write-next-article.js --topic "${{ inputs.topic }}"
+          else
+            node write-next-article.js
+          fi
+
+      # 書けなかった日はここで静かに終わる。
+      # 新しい記事は「新規ファイル」なので git diff では見つからない（git status で見る）。
+      - name: Check what changed
+        id: check
+        run: |
+          if [ -z "$(git status --porcelain -- data/articles)" ]; then
+            echo "written=no" >> "$GITHUB_OUTPUT"
+            echo "今日は新しい記事はありません。"
+          else
+            echo "written=yes" >> "$GITHUB_OUTPUT"
+            git status --short -- data/articles
+          fi
+          # 記事が書けなかった日でも、題材リストの印（書けなかった理由）は残す。
+          if [ -z "$(git status --porcelain -- data)" ]; then
+            echo "changed=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rebuild guide pages and sitemap
+        if: steps.check.outputs.written == 'yes'
+        working-directory: scraper
+        run: |
+          node generate-guide-pages.js
+          node generate-sitemap.js
+
+      # 書き出したページが記事データと一致しているか、公式照合を通っているかを、公開前にもう一度見る。
+      - name: Verify before publishing
+        if: steps.check.outputs.written == 'yes'
+        working-directory: scraper
+        run: npm test
+
+      - name: Commit and push
+        if: steps.check.outputs.changed == 'yes'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/articles data/article-queue.json guide sitemap.xml
+          [ -d data/usage-log ] && git add data/usage-log
+          if git diff --cached --quiet; then
+            echo "コミットするものはありません。"
+            exit 0
+          fi
+          title=$(node -e "
+            const fs=require('fs');
+            const queue=JSON.parse(fs.readFileSync('data/article-queue.json','utf8'));
+            const latest=queue.filter(t=>t.published_at).sort((a,b)=>String(b.published_at).localeCompare(String(a.published_at)))[0];
+            process.stdout.write(latest ? latest.title : '記事を1本追加');
+          ")
+          git commit -m "feat: 記事を追加「${title}」"
+          until git push; do
+            git pull --rebase origin main
+          done
