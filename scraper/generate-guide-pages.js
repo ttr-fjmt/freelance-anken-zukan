@@ -235,11 +235,13 @@ const STYLE = `<style>
   .related h2{font-size:15px;}
   .footer-links{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;}
   .footer-links a{color:var(--accent);text-decoration:none;font-weight:500;}
+  .footer-links .sister{display:block;margin-top:10px;font-size:12.5px;color:var(--ink-faint);}
   .footer-links a:hover{text-decoration:underline;}
 </style>`;
 
 const BACK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>';
-const FOOTER = `<div class="footer-links"><a href="/">トップページ</a> / <a href="/guide/">${GUIDE_NAME}</a> / <a href="/faq.html">よくある質問</a> / <a href="/privacy.html">プライバシーポリシー</a></div>`;
+const FOOTER = `<div class="footer-links"><a href="/">トップページ</a> / <a href="/guide/">${GUIDE_NAME}</a> / <a href="/faq.html">よくある質問</a> / <a href="/privacy.html">プライバシーポリシー</a>
+<span class="sister">図鑑シリーズ： <a href="https://agent-zukan.net/" target="_blank" rel="noopener noreferrer">転職エージェント図鑑</a> / <a href="https://skillup-zukan.net/" target="_blank" rel="noopener noreferrer">スキルアップ図鑑</a> / <a href="https://settle-in-japan.net/" target="_blank" rel="noopener noreferrer">Settle in Japan（外国人の日本移住）</a></span></div>`;
 
 function head({ title, description, url, jsonLd, analytics, type }) {
   return `<!DOCTYPE html>
