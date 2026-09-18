@@ -8469,5 +8469,65 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-09-15T20:16:13.488Z"
+  },
+  {
+    "id": 129,
+    "source": "ai-discovered",
+    "name": "HELP YOU（株式会社ニット）",
+    "category": "その他",
+    "categoryHint": "業務代行・アシスタント派遣",
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "業務委託"
+    ],
+    "remoteRatio": "フルリモート対応",
+    "feeStructure": {
+      "type": "monthlyFixed",
+      "note": "月額契約制。超過時間は1時間あたり4,000円（税抜）。初月は2カ月分を前払いし、翌月からは月初に翌月分を請求。"
+    },
+    "freelancerCount": "500人",
+    "oneLiner": "バックオフィス・事務スキルを活かして、企業のオンライン業務代行案件に参加",
+    "companyOneLiner": "500人の優秀なアシスタントから最短3日で最適人材を選別、採用・研修コストを削減",
+    "appeal": "500人の経験豊富なアシスタント陣が在籍。難しい筆記試験と面談をクリアした優秀な人材のみで構成され、スキルだけでなく仕事のマインドも育成済み。営業事務・経理・マーケティング・データ入力・資料作成など幅広い業務に対応でき、複数分野のスキルを組み合わせた業務サポートが可能。",
+    "companyAppeal": "採用・選考の手間がゼロ。500人の中から最短3日で最適なアシスタントを配置でき、採用コストを大幅削減。業務マニュアルを作成するため特定人材への依存を回避し、引継ぎの手間も不要。平均5人のチーム体制で複数業務を同時対応できる。",
+    "features": [
+      "バックオフィス・事務全般への対応（営業事務、経理、労務、採用・人事等）",
+      "デザイン・ライティング・SNS運用など高度なスキルが必要な業務にも対応",
+      "RPAやAIを活用した業務自動化による効率化支援"
+    ],
+    "companyFeatures": [
+      "500人の優秀なアシスタント陣から最短3日での配置",
+      "採用・選考プロセスの完全外注化で採用工数ゼロ",
+      "業務マニュアル作成による属人化防止と安定稼働"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "help-you.me",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=help-you.me&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-18T20:16:24.334Z"
   }
 ]
