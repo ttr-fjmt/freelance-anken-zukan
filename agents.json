@@ -8529,5 +8529,63 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-09-18T20:16:24.334Z"
+  },
+  {
+    "id": 130,
+    "source": "ai-discovered",
+    "name": "ブリッジコンサルティンググループ（フリーランス会計士マッチング）",
+    "category": "その他",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "会計・経営コンサルティングプロジェクトへの参画機会を紹介",
+    "companyOneLiner": "上場会社の信頼と、5000名超の会計プロ人材ネットワークで成長企業を支援",
+    "appeal": "上場企業（東証グロース【9225】）としての信頼と実績に基づいた案件紹介。IPO準備企業や上場企業の経営課題に対応した多様なプロジェクト（IPO支援、内部監査、J-SOX、M&A、決算開示など）に参画可能。経営目線でアドバイスや実行支援を行うプロジェクト環境。",
+    "companyAppeal": "5000名超の公認会計士を中心としたプロフェッショナル人材データベースを保有。要件に合致する人材を効率的に探索・アサイン可能。全国6拠点展開により、案件発注時の対応地域が広い。",
+    "features": [
+      "IPO支援、内部監査、J-SOX、M&A、決算開示など幅広い経営コンサルティング案件に参画可能",
+      "経営者・経営陣の視点でアドバイスする実務経験者との協働",
+      "スタートアップから上場企業まで、多段階の企業成長ステージに対応"
+    ],
+    "companyFeatures": [
+      "公認会計士比率100%のプロジェクトメンバー体制で高品質を保証",
+      "5000名超の人材データベースで要件マッチ人材を迅速に探索・確保",
+      "全国6拠点（東京・大阪・名古屋・札幌・広島・福岡）から同品質のサービス展開"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "bridge-group.co.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=bridge-group.co.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-19T20:15:10.309Z"
   }
 ]

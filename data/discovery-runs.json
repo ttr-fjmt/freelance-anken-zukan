@@ -467,5 +467,26 @@
     "found": 0,
     "listed": 0,
     "skipped": 0
+  },
+  {
+    "date": "2026-09-20",
+    "category": "事務・バックオフィス",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-20",
+    "category": "フリーランス案件マッチング",
+    "found": 2,
+    "listed": 1,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-20",
+    "category": "副業・複業マッチング",
+    "found": 1,
+    "listed": 0,
+    "skipped": 1
   }
 ]

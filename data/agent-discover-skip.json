@@ -692,5 +692,17 @@
     "website": "https://www.massmediaman.com",
     "reason": "name_mismatch",
     "checkedAt": "2026-09-16T20:17:17.725Z"
+  },
+  "パーソルクロステクノロジー フリーランスサービス": {
+    "name": "パーソルクロステクノロジー フリーランスサービス",
+    "website": "https://freelance.persol-xtech.co.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-19T20:15:03.257Z"
+  },
+  "コデアル（CODEAL）": {
+    "name": "コデアル（CODEAL）",
+    "website": "https://www.codeal.work/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-19T20:15:03.257Z"
   }
 }
