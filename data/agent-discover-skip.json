@@ -704,5 +704,11 @@
     "website": "https://www.codeal.work/",
     "reason": "name_mismatch",
     "checkedAt": "2026-09-19T20:15:03.257Z"
+  },
+  "サンカク": {
+    "name": "サンカク",
+    "website": "https://sankak.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-20T20:15:15.175Z"
   }
 }

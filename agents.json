@@ -8587,5 +8587,121 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-09-19T20:15:10.309Z"
+  },
+  {
+    "id": 131,
+    "source": "ai-discovered",
+    "name": "Otanomi（オタノミ）",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "副業"
+    ],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "地域課題に取り組む企業と副業・兼業人材をつなぐマッチングプラットフォーム",
+    "companyOneLiner": "地方企業の課題解決を副業・兼業人材の専門性で支援できる採用の仕組み",
+    "appeal": "地域課題と副業・兼業人材をつなぐプラットフォームで、マーケティング・IT・デザイン・人事など多様な職種の案件が掲載されている。福島県など地方を中心とした地域魅力開発に関わるプロジェクトが豊富。正社員採用ではなく専門性が必要な業務を柔軟に依頼できる仕組みが特徴。",
+    "companyAppeal": "副業・兼業人材の専門性を活用することで、正社員採用を伴わない経営戦略が実現できる。広報・IT・デザイン・人事採用など幅広い職種の課題解決を個別に発注できる。",
+    "features": [
+      "広報・SNS運用、IT・DX推進、動画編集、採用支援など多様な職種に対応",
+      "地域課題解決に関わるプロジェクトを継続的に掲載、新着案件を定期更新",
+      "副業・兼業での柔軟な契約形態で対応"
+    ],
+    "companyFeatures": [],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "o-tanomi.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=o-tanomi.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-20T20:15:20.901Z"
+  },
+  {
+    "id": 132,
+    "source": "ai-discovered",
+    "name": "CloudBuilders（クラウドビルダーズ）",
+    "category": "IT・Web開発",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "正社員",
+      "業務委託（フリーランス）"
+    ],
+    "remoteRatio": "フルリモート対応、リモート+週3日出社など複数の働き方に対応",
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "AWS技術に特化した求人・案件紹介サービス。エンジニアのキャリアアップをサポート",
+    "companyOneLiner": "国内唯一のAWS認定人材提供パートナーが運営し、実績企業との厳選な案件マッチング",
+    "appeal": "AWS特化型の求人サービスであり、正社員求人から業務委託フリーランス案件まで多様な雇用形態に対応。AWSエンジニアはハイステータスな職種として位置づけられ、年収1000万以上など高給与案件も豊富。専門のキャリアアドバイザーがキャリアアップを支援する体制がある。フルリモート対応や副業OKな案件も検索可能。",
+    "companyAppeal": "AWS認定人材提供パートナーという公式認定を背景に、信頼性の高い人材確保が可能。AWS技術に特化したエンジニアプール保有により、ニーズに応じた迅速なマッチングが期待できる。",
+    "features": [
+      "AWS関連の多様な案件ラインアップ（インフラエンジニア、Webアプリケーション、LLMリサーチャーなど）",
+      "フルリモート対応や副業OKなど柔軟な条件で案件選択可能",
+      "年収1000万以上などハイキャリア案件が豊富"
+    ],
+    "companyFeatures": [
+      "AWS認定人材提供パートナーによる厳選された候補者プール",
+      "AWS技術に特化したエンジニア層へのダイレクトアクセス"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "www.cloudbuilders.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=www.cloudbuilders.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-20T20:15:27.674Z"
   }
 ]
