@@ -69,8 +69,10 @@
     "sources": [
       "shuugyouKankyou"
     ],
-    "status": "pending",
-    "note": ""
+    "status": "blocked",
+    "note": "",
+    "blocked_reason": "予告は「書面」や「メール」など、記録に残る方法で: 「30日」を裏づける引用がありません。この節の引用には数字がありません。数字を書かないか、数字のある公式の文を引いてください",
+    "blocked_at": "2026-09-22"
   },
   {
     "n": 7,
