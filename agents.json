@@ -8927,5 +8927,62 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-09-21T20:16:45.412Z"
+  },
+  {
+    "id": 137,
+    "source": "ai-discovered",
+    "name": "みらいワークス",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "複数の専門領域でフリーランス向け案件マッチングサービスを提供",
+    "companyOneLiner": "専門スキルを持つフリーランス人材との効率的なマッチングが可能",
+    "appeal": "複数の専門分野に特化したサービス展開（フリーコンサルタント、デジタル案件、地方創生プロジェクト等）により、様々な業種の案件に対応できる環境が整備されている。大手企業から地方自治体まで、幅広い発注元との取引実績を保有しており、安定した案件供給が期待できる。",
+    "companyAppeal": "複数領域の専門サービスラインを保有することで、単一分野に限定されない人材採用ニーズへの対応が可能。地方創生やサステナビリティ経営支援など社会的課題解決型の案件も扱い、企業のCSR・経営方針と連携した人材マッチングが実現できる。",
+    "features": [
+      "複数の専門領域に対応（コンサルティング、デジタル、地方創生等）",
+      "地方自治体との協業実績（福島県いわき市での継続受託等）",
+      "スキルリスキリング支援を含むキャリア支援メニュー"
+    ],
+    "companyFeatures": [
+      "専門スキル別のセグメント化により ターゲット人材へのアクセスが容易",
+      "複数サービスラインの総合的活用で採用課題の多角的解決が可能"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "mirai-works.co.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=mirai-works.co.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-22T20:16:44.656Z"
   }
 ]

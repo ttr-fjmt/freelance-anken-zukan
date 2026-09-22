@@ -710,5 +710,29 @@
     "website": "https://sankak.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-20T20:15:15.175Z"
+  },
+  "DMMフリーランス（インフラトップ）": {
+    "name": "DMMフリーランス（インフラトップ）",
+    "website": "https://lp.dmm-freelance.biz/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-22T20:16:38.952Z"
+  },
+  "バチグマ（Batchgooma）／INTLOOP株式会社": {
+    "name": "バチグマ（Batchgooma）／INTLOOP株式会社",
+    "website": "https://batchgooma.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-22T20:16:38.952Z"
+  },
+  "High Performer SAP（ハイパフォSAP）／INTLOOP株式会社": {
+    "name": "High Performer SAP（ハイパフォSAP）／INTLOOP株式会社",
+    "website": "https://high-performer-sap.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-22T20:16:38.952Z"
+  },
+  "High Performer PMO（ハイパフォPMO）／INTLOOP株式会社": {
+    "name": "High Performer PMO（ハイパフォPMO）／INTLOOP株式会社",
+    "website": "https://high-performer-pmo.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-22T20:16:38.952Z"
   }
 }

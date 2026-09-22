@@ -537,5 +537,33 @@
     "found": 1,
     "listed": 1,
     "skipped": 0
+  },
+  {
+    "date": "2026-09-23",
+    "category": "コンサル・士業",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-23",
+    "category": "事務・バックオフィス",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-23",
+    "category": "フリーランス案件マッチング",
+    "found": 2,
+    "listed": 1,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-23",
+    "category": "比較記事経由（メタ発見）",
+    "found": 3,
+    "listed": 0,
+    "skipped": 3
   }
 ]
