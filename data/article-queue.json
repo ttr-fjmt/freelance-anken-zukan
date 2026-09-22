@@ -65,14 +65,12 @@
     "n": 6,
     "id": "chuuto-kaijo-yokoku",
     "title": "契約を途中でやめられるとき、いつ知らされるのか",
-    "basis": "中途解除・不更新の予告",
+    "basis": "中途解除・不更新の予告（予告の期限と、解除理由の開示）。期間を書くときは、その期間が書かれた公式の文を同じ節に引くこと",
     "sources": [
       "shuugyouKankyou"
     ],
-    "status": "blocked",
-    "note": "",
-    "blocked_reason": "予告は「書面」や「メール」など、記録に残る方法で: 「30日」を裏づける引用がありません。この節の引用には数字がありません。数字を書かないか、数字のある公式の文を引いてください",
-    "blocked_at": "2026-09-22"
+    "status": "pending",
+    "note": ""
   },
   {
     "n": 7,
@@ -115,6 +113,123 @@
     "basis": "違反被疑事実の申出のしくみ",
     "sources": [
       "moushide"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 11,
+    "id": "houshuu-shiharai-kigen",
+    "title": "報酬はいつまでに支払われることになっているか",
+    "basis": "報酬の支払期日の決まり（期間を書くときは、その期間が書かれた公式の文を同じ節に引く）",
+    "sources": [
+      "mhlw",
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 12,
+    "id": "boshuu-jouhou-tekikaku",
+    "title": "募集の情報は、正確でなければならない",
+    "basis": "募集情報の的確表示として求められていること",
+    "sources": [
+      "mhlw",
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 13,
+    "id": "kaijo-riyuu-kaiji",
+    "title": "契約を切られた理由を聞けるのか",
+    "basis": "解除理由の開示を請求できること、書面など記録に残る方法で行うこと",
+    "sources": [
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 14,
+    "id": "soudan-taisei",
+    "title": "発注する側が用意することになっている相談の窓口",
+    "basis": "ハラスメントの相談に応じる体制の整備",
+    "sources": [
+      "shuugyouKankyou",
+      "harassment"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 15,
+    "id": "ihan-shita-baai",
+    "title": "法律に違反すると、発注した側はどうなるのか",
+    "basis": "指導・助言・勧告・命令・公表のしくみ",
+    "sources": [
+      "mhlw",
+      "moushide"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 16,
+    "id": "tokutei-gyoumu-itaku",
+    "title": "「特定業務委託事業者」とは、どんな発注者を指すのか",
+    "basis": "特定業務委託事業者と業務委託事業者の違い（従業員を使用するかどうか）",
+    "sources": [
+      "mhlw",
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 17,
+    "id": "rousai-tetsuzuki",
+    "title": "労災保険の特別加入は、どう手続きするのか",
+    "basis": "特別加入の手続きと保険料の考え方（金額は書かない）",
+    "sources": [
+      "rousai"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 18,
+    "id": "trouble-jirei",
+    "title": "フリーランスの相談窓口には、どんな相談が寄せられているか",
+    "basis": "トラブル110番で扱う相談の内容",
+    "sources": [
+      "trouble110"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 19,
+    "id": "harassment-3shurui",
+    "title": "フリーランスが受けやすいハラスメントの種類",
+    "basis": "対策が求められているハラスメントの種類",
+    "sources": [
+      "harassment",
+      "shuugyouKankyou"
+    ],
+    "status": "pending",
+    "note": ""
+  },
+  {
+    "n": 20,
+    "id": "shuugyou-kankyou-taishou",
+    "title": "就業環境の決まりは、どの契約に当てはまるのか",
+    "basis": "就業環境の整備の規定が適用される場面（断定せず、公式に書かれている範囲で）",
+    "sources": [
+      "shuugyouKankyou",
+      "mhlw"
     ],
     "status": "pending",
     "note": ""
