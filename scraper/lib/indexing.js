@@ -15,10 +15,19 @@
  *   - サービスの終了・サイト閉鎖が公式に告知されている（3件）
  *
  * 【判定の考え方】
- * 特徴（features）が1件でも確認できていれば、中身があるとみなして検索対象にする。
- * 特徴が0件のときだけ、紹介文に「確認できなかった」「終了した」旨が書かれていないかを見る。
- * 紹介文の言い回しだけで判定すると、中身のあるページ（例: 特徴の抽出だけ漏れたページ）まで
- * 外してしまうため、必ず「特徴0件」と組み合わせる。
+ * 次の2つを両方みたすページだけを検索対象にする。
+ *
+ *   1. 中身が確認できている（特徴が1件以上ある。特徴が0件のときは、紹介文に
+ *      「確認できなかった」「終了した」旨が無いこと）
+ *   2. **比べる材料が1つ以上ある**（対応地域・案件数・手数料率・登録者数・リモート比率の
+ *      どれかが「非公開」ではなく分かっている）
+ *
+ * 2つ目は 2026-09-22 に足した（AdSense 不承認への対策）。このサイトは比較サイトなのに、
+ * 検索対象142件のうち41件（29%）は5項目すべてが「非公開（お問い合わせで確認）」で、
+ * 読んでも比べようがなかった。姉妹サイトの転職エージェント図鑑が同じ判定を受けたときの
+ * 「中身が確認できないページは検索対象から外す」という線引きを、このサイトの事情に合わせたもの。
+ *
+ * 外したページもサイトには残る（noindex＋サイトマップ除外）。利用者は今までどおり見られる。
  */
 
 /** 公式サイトの本文を確認できなかったことを示す言い回し。 */
@@ -30,12 +39,33 @@ const DISCONTINUED_PATTERN = /をもって[^。]*(終了|閉鎖)/;
 /** 検索対象から外すときに <head> に入れるタグ。リンクはたどってもらう（follow）。 */
 const ROBOTS_NOINDEX = '<meta name="robots" content="noindex,follow">';
 
+/**
+ * 比べる材料になる項目。どれか1つでも分かっていれば「比べられるページ」とみなす。
+ * 値が「非公開（お問い合わせで確認）」のままのものは数えない。
+ */
+const COMPARABLE_FIELDS = ['region', 'jobCount', 'feeRate', 'freelancerCount', 'remoteRatio'];
+
+/** その項目が「分かっている」か。 */
+function isDisclosed(value) {
+  if (value == null) return false;
+  const text = String(value).trim();
+  if (!text) return false;
+  return !text.includes('非公開');
+}
+
+/** 比べる材料がいくつ分かっているか。 */
+function comparableCount(agent) {
+  return COMPARABLE_FIELDS.filter(key => isDisclosed(agent && agent[key])).length;
+}
+
 function introText(agent) {
   return [agent.oneLiner, agent.appeal].filter(Boolean).join(' ');
 }
 
 function isIndexableAgent(agent) {
   if (!agent) return false;
+  // 比べる材料が1つも無いページは、比較サイトとして読む意味がないので検索対象から外す。
+  if (comparableCount(agent) === 0) return false;
   if ((agent.features || []).length > 0) return true;
   const text = introText(agent);
   return !(UNVERIFIED_PATTERN.test(text) || DISCONTINUED_PATTERN.test(text));
@@ -66,6 +96,9 @@ module.exports = {
   UNVERIFIED_PATTERN,
   DISCONTINUED_PATTERN,
   ROBOTS_NOINDEX,
+  COMPARABLE_FIELDS,
+  isDisclosed,
+  comparableCount,
   isIndexableAgent,
   isIndexableCategory,
   withRobotsNoindex,

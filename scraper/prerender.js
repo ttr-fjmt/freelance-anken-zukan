@@ -181,9 +181,17 @@ async function renderAgentHTML(browser, id) {
  */
 const TEMPLATE_KEY = '__template';
 
+/**
+ * 「全ページを作り直す必要があるか」を決める印。
+ *
+ * index.html だけでなく **検索対象の線引き（lib/indexing.js）も含める**。
+ * 線引きを変えても index.html が同じだと、既に書き出したページに noindex が入らないまま
+ * 残ってしまう（2026-09-22 に実際に起きた。サイトマップだけ減って、ページは元のままだった）。
+ */
 function computeTemplateHash() {
   return crypto.createHash('sha1')
     .update(fs.readFileSync(path.join(ROOT, 'index.html')))
+    .update(fs.readFileSync(path.join(__dirname, 'lib', 'indexing.js')))
     .digest('hex');
 }
 
@@ -197,7 +205,7 @@ async function main() {
   const manifest = readJson(MANIFEST_PATH, {});
   const templateHash = computeTemplateHash();
   const templateChanged = manifest[TEMPLATE_KEY] !== templateHash;
-  if (templateChanged) console.log("index.html が変わっているため、全ページを作り直します。");
+  if (templateChanged) console.log("index.html か検索対象の線引きが変わっているため、全ページを作り直します。");
   const currentIds = new Set(agents.map(a => String(a.id)));
 
   // agents.json から削除された（廃業等で消えた）エージェントの静的ページを掃除する。
