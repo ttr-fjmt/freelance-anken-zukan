@@ -8984,5 +8984,64 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-09-22T20:16:44.656Z"
+  },
+  {
+    "id": 138,
+    "source": "ai-discovered",
+    "name": "akahai agent（アカハイエージェント）",
+    "category": "その他",
+    "categoryHint": "マーケティング案件マッチング",
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "業務委託"
+    ],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "デジタルマーケティング専門の業務委託案件を紹介、スキルチェック後にマッチング",
+    "companyOneLiner": "デジタルマーケティング領域に特化した700社・3,000求人以上の案件保有",
+    "appeal": "デジタルマーケティング業界に完全特化したサービスで、リスティング広告運用からSEOコンサルタント、SNSマーケター、MA/CRMマーケターなど多種多様な職種の案件を取り扱っています。フリーランス向けに業務委託案件の紹介を行い、スキルチェック実施後にLINE公式アカウント登録で案件情報が随時更新されます。独立を検討しているマーケターや既にフリーランスとして活躍中のマーケターが対象です。",
+    "companyAppeal": "デジタルマーケティング領域に特化した専門チームが700社の企業とネットワークを保有しており、3,000件以上の業務委託案件プールから適切なフリーランスをマッチングできます。業界知識が深いため、企業側の要件に対して適切な人選と効率的な発注が実現できます。",
+    "features": [
+      "多様な職種：広告運用、アカウントプランナー、ストラテジックプランナー、マーケティングコンサルタント、SNSマーケター、SEOコンサルタント、MA/CRMマーケターなど",
+      "大規模案件プール：大手広告代理店から中小規模・スタートアップの広告代理店、事業会社まで多様な企業からの案件",
+      "スキルチェック実施：フリーランス登録時に適正評価をした上でマッチング"
+    ],
+    "companyFeatures": [
+      "業界特化による高い適合性：完全特化したサービスのため業界理解が深く、ミスマッチが少ない",
+      "大規模案件ネットワーク：700社以上のクライアント企業との関係があり、継続案件や新規案件への対応が迅速"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "akahaiagent.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=akahaiagent.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-23T20:18:21.384Z"
   }
 ]

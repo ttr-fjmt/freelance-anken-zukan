@@ -565,5 +565,47 @@
     "found": 3,
     "listed": 0,
     "skipped": 3
+  },
+  {
+    "date": "2026-09-24",
+    "category": "IT・Web開発",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-24",
+    "category": "デザイン",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-24",
+    "category": "コンサル・士業",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-24",
+    "category": "事務・バックオフィス",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-24",
+    "category": "フリーランス案件マッチング",
+    "found": 1,
+    "listed": 1,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-24",
+    "category": "比較記事経由（メタ発見）",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
   }
 ]
