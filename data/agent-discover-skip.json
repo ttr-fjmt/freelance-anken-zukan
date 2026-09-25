@@ -734,5 +734,11 @@
     "website": "https://high-performer-pmo.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-09-22T20:16:38.952Z"
+  },
+  "en-gage（エンゲージ）／エン・ジャパン株式会社": {
+    "name": "en-gage（エンゲージ）／エン・ジャパン株式会社",
+    "website": "https://en-gage.net",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-25T20:15:28.794Z"
   }
 }

@@ -635,5 +635,40 @@
     "found": 0,
     "listed": 0,
     "skipped": 0
+  },
+  {
+    "date": "2026-09-26",
+    "category": "ライティング・編集",
+    "found": 1,
+    "listed": 0,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-26",
+    "category": "動画・クリエイティブ",
+    "found": 1,
+    "listed": 1,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-26",
+    "category": "営業・マーケティング",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-26",
+    "category": "フリーランス案件マッチング",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-26",
+    "category": "翻訳・通訳系",
+    "found": 1,
+    "listed": 1,
+    "skipped": 0
   }
 ]
