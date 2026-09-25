@@ -51,6 +51,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://freelance-anken-zukan.net/guide/ihan-moushide/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://freelance-anken-zukan.net/guide/ikuji-kaigo-hairyo/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
