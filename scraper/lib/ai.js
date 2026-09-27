@@ -7,7 +7,7 @@
  * （getDefaultRecorder で包むので、何も書かなくても data/usage-log に積み上がる）。
  */
 
-const { instrumentClient, getDefaultRecorder, jstDateString } = require('./usage-log');
+const { instrumentClient, getDefaultRecorder, installExitFlush, jstDateString } = require('./usage-log');
 
 /** 記事を書くモデル。解説文を書くので、構造化より少し賢いモデルを既定にする。 */
 const DEFAULT_MODEL = process.env.ANTHROPIC_ARTICLE_MODEL || 'claude-sonnet-5';
@@ -16,6 +16,9 @@ function createClient({ script } = {}) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY がありません');
   const Anthropic = require('@anthropic-ai/sdk');
+  // 終了時に data/usage-log へ書き出す。これを忘れると呼び出しは記録されるのにファイルに残らず、
+  // 「どこにいくらかかっているか」が分からなくなる（記事作成の費用が実際に丸ごと抜けていた）。
+  installExitFlush();
   return instrumentClient(new Anthropic({ apiKey }), getDefaultRecorder({ script }));
 }
 
