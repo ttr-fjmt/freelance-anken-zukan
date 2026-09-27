@@ -698,5 +698,33 @@
     "found": 1,
     "listed": 1,
     "skipped": 0
+  },
+  {
+    "date": "2026-09-28",
+    "category": "動画・クリエイティブ",
+    "found": 2,
+    "listed": 1,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-28",
+    "category": "フリーランス案件マッチング",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-28",
+    "category": "医療・治験系",
+    "found": 4,
+    "listed": 3,
+    "skipped": 1
+  },
+  {
+    "date": "2026-09-28",
+    "category": "翻訳・通訳系",
+    "found": 1,
+    "listed": 1,
+    "skipped": 0
   }
 ]

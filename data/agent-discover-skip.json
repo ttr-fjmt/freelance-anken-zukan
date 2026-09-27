@@ -740,5 +740,17 @@
     "website": "https://en-gage.net",
     "reason": "name_mismatch",
     "checkedAt": "2026-09-25T20:15:28.794Z"
+  },
+  "フェローズ（FELLOWS）": {
+    "name": "フェローズ（FELLOWS）",
+    "website": "https://www.fellow-s.co.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-09-27T20:16:37.485Z"
+  },
+  "アイムメディカルリソース": {
+    "name": "アイムメディカルリソース",
+    "website": "http://immedicalresource.com/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-27T20:16:37.485Z"
   }
 }
