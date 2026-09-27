@@ -33,3 +33,10 @@ for (const file of workflows) {
     );
   });
 }
+
+test('AIを呼ぶ部品が、消費量をファイルに書き出す設定になっている', () => {
+  // 呼び出しは記録していても、終了時に書き出さないとファイルに残らない。
+  // 実際にこれで記事作成の費用が丸ごと記録から抜けていた（2026-09-27 に発覚）。
+  const ai = fs.readFileSync(path.join(__dirname, '..', 'lib', 'ai.js'), 'utf8');
+  assert.match(ai, /installExitFlush\(\)/, 'installExitFlush() を呼んでいません');
+});
