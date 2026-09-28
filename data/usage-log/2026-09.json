@@ -454,5 +454,17 @@
     "output_tokens": 4893,
     "web_search_requests": 0,
     "estimated_usd": 0.085934
+  },
+  {
+    "date": "2026-09-29",
+    "script": "discover-agents",
+    "model": "claude-sonnet-4-6",
+    "calls": 3,
+    "input_tokens": 170363,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 2338,
+    "web_search_requests": 10,
+    "estimated_usd": 0.646159
   }
 ]
