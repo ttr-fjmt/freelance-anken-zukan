@@ -747,5 +747,26 @@
     "found": 0,
     "listed": 0,
     "skipped": 0
+  },
+  {
+    "date": "2026-09-30",
+    "category": "動画・クリエイティブ",
+    "found": 1,
+    "listed": 1,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-30",
+    "category": "医療・治験系",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-09-30",
+    "category": "翻訳・通訳系",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
   }
 ]
