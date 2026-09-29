@@ -502,5 +502,17 @@
     "output_tokens": 408,
     "web_search_requests": 0,
     "estimated_usd": 0.010805
+  },
+  {
+    "date": "2026-09-30",
+    "script": "write-next-article",
+    "model": "claude-sonnet-5",
+    "calls": 1,
+    "input_tokens": 17199,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 7570,
+    "web_search_requests": 0,
+    "estimated_usd": 0.110098
   }
 ]

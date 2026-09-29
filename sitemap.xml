@@ -91,6 +91,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://freelance-anken-zukan.net/guide/soudan-taisei/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://freelance-anken-zukan.net/guide/torihiki-jouken-meiji/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
