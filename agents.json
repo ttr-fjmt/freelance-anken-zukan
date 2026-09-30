@@ -9830,5 +9830,121 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-09-29T20:17:29.214Z"
+  },
+  {
+    "id": 153,
+    "source": "ai-discovered",
+    "name": "名古屋IT案件.com（株式会社ブレイン・パートナーズ）",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": "フルリモート案件あり、一部リモート案件あり、常駐案件あり",
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "名古屋・東海地区のIT案件に特化した、フリーランスエンジニア向け案件紹介マッチングサービス",
+    "companyOneLiner": "東海地区の地元優良企業案件を多数掲載、スキルに合致するフリーランスを効率的にマッチング",
+    "appeal": "地元企業ネットワークを活かした東海地区のIT案件に特化。金融・物流・鉄道など多様な業界の案件を提供。タイムリーな新着案件情報を定期更新。参画までの手厚いサポートで参画確約率100%を実現。",
+    "companyAppeal": "東海地区の地元企業に特化しており、未掲載の優良企業案件も豊富。スキル検証から参画までの一貫したマッチング支援で、採用工数削減と適切な人材配置を実現。",
+    "features": [
+      "東海地区（名古屋・三重・岐阜・尾張・西三河・東三河）の多様なIT案件に対応",
+      "Java・C#・COBOL・Python・C言語など幅広いプログラミング言語と技術スタックに対応",
+      "金融・製造・物流・鉄道などの基幹システム開発から最新のAI・クラウド案件まで取扱い"
+    ],
+    "companyFeatures": [
+      "参画確約率100%によるマッチング成功の確実性",
+      "未掲載の地元優良企業案件を多数保有",
+      "毎月のフォローアップと契約条件交渉サポートで継続的な案件獲得をサポート"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "itanken-tokai.com",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=itanken-tokai.com&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-30T20:19:07.940Z"
+  },
+  {
+    "id": 154,
+    "source": "ai-discovered",
+    "name": "株式会社日本翻訳センター（JTC）",
+    "category": "その他",
+    "categoryHint": "通訳・翻訳サービス",
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": "2000人超",
+    "oneLiner": "30言語以上、年5000件の翻訳・通訳案件をマッチング。2000人超の翻訳スタッフで対応。",
+    "companyOneLiner": "1962年創業の翻訳・通訳専門企業。言語人材を活用した多言語対応で企業の海外展開を支援。",
+    "appeal": "1962年創業の日本初翻訳・通訳専門企業で、30言語以上に対応。年間5000件の翻訳業務と豊富な実績により信頼性が高い。同時通訳から逐次通訳、映像字幕、MTPE（機械翻訳チェック）など多様なサービスに対応可能。",
+    "companyAppeal": "2000人超の翻訳・通訳人材プールを保有しており、採用工数の削減が可能。年間5000件のマッチング実績で、安定した案件供給が期待できる。",
+    "features": [
+      "30言語以上の多言語対応で、広い分野の案件に従事可能",
+      "同時通訳・逐次通訳・映像字幕・MTPEなど多様な業務形態を経験できる",
+      "年間5000件の実績がある信頼度の高い企業との直接取引"
+    ],
+    "companyFeatures": [
+      "2000人超の翻訳・通訳人材で採用工数削減",
+      "年5000件の翻訳案件で安定供給が期待できる",
+      "複数サービス（翻訳・通訳・字幕・MTPE）で単価交渉の柔軟性"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "www.jtc.co.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=www.jtc.co.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-09-30T20:19:15.872Z"
   }
 ]

@@ -752,5 +752,23 @@
     "website": "http://immedicalresource.com/",
     "reason": "name_mismatch",
     "checkedAt": "2026-09-27T20:16:37.485Z"
+  },
+  "アットエンジニア（株式会社アイスタンダード）": {
+    "name": "アットエンジニア（株式会社アイスタンダード）",
+    "website": "https://at-engineer.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-30T20:18:59.780Z"
+  },
+  "WorkAny（ワークエニー）／株式会社ファンコミュニケーションズ": {
+    "name": "WorkAny（ワークエニー）／株式会社ファンコミュニケーションズ",
+    "website": "https://workany.jp",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-30T20:18:59.780Z"
+  },
+  "translator.jp（翻訳・通訳・語学スペシャリスト）": {
+    "name": "translator.jp（翻訳・通訳・語学スペシャリスト）",
+    "website": "https://www.translator.jp",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-09-30T20:18:59.780Z"
   }
 }
