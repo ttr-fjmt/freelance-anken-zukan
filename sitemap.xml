@@ -101,6 +101,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://freelance-anken-zukan.net/guide/tokutei-gyoumu-itaku/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://freelance-anken-zukan.net/guide/torihiki-jouken-meiji/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
