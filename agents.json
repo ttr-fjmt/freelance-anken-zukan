@@ -9946,5 +9946,302 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-09-30T20:19:15.872Z"
+  },
+  {
+    "id": 155,
+    "source": "ai-discovered",
+    "name": "BizPartner（みらいソリューション株式会社）",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": "フル〜週1～3程度のリモート対応案件を保有、別途相談可能",
+    "feeStructure": {
+      "type": "unknown",
+      "note": "仲介手数料はクライアント企業から取得、業界最低水準。フリーランス側への料金記載なし。"
+    },
+    "freelancerCount": null,
+    "oneLiner": "経営コンサル向けに常時100件以上の案件を保有し、丁寧なヒアリング・継続サポートを実施",
+    "companyOneLiner": "充実した案件ラインアップと手厚いサポートで、コンサルタント採用の工数を削減",
+    "appeal": "\n経営コンサルティング業界出身のコンサルタントが対応し、ヒアリング〜参画中まで継続的にサポート。希望条件（勤務地・勤務形態・単価・稼働率など）に合わせて5～10件程度の案件をピックアップして紹介。平均報酬150万円/月（100%稼働時）で、ファーム勤務時の約2倍の年収を実現している利用者が多数。初回登録後はメール・電話・Web会議・LINEなど都合の良い方法で対応可能。\n",
+    "companyAppeal": "\n多くのコンサルファーム・エージェント・プラットフォームとの協業により市場案件を網羅。案件ニーズを常時一覧化・最新化して対応スピードを高めており、クライアント企業からのニーズに応じた人材紹介が可能。仲介手数料は業界最低水準。\n",
+    "features": [
+      "常時100件以上の案件を保有（独自案件を含む）",
+      "希望条件に最適な案件を5～10件ピックアップして提案",
+      "コンサルティング経験者による継続サポート体制"
+    ],
+    "companyFeatures": [
+      "市場案件の網羅性が高く、複数エージェント経由での案件確保が可能",
+      "業界最低水準の仲介手数料を実現",
+      "案件チームによるニーズの常時最新化で迅速対応"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "bizpartner-s.com",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=bizpartner-s.com&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-01T20:20:06.070Z"
+  },
+  {
+    "id": 156,
+    "source": "ai-discovered",
+    "name": "WooGWay（PMOフリーコンサル）",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "準委任契約",
+      "有料人材紹介"
+    ],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "PMO・ITコンサル案件に特化したフリーランス向けマッチングサービス",
+    "companyOneLiner": "日本人ITコンサルとインド人エンジニアの調達、海外ビジネス支援も展開",
+    "appeal": "フリーランスは充実したコミュニティ、継続的な高単価案件紹介、マンツーマンのパーソナルサポートの3つの強みで支援される。PMO・プロジェクト管理推進、業務コンサルティング、IT導入コンサルティングなど、コンサル業務に特化した案件紹介に力を入れている。",
+    "companyAppeal": "日本人ITコンサルとインド人エンジニアの両面で人材調達ニーズに対応できるため、企業の人材不足解決を多角的にサポート。SES（準委任契約）と有料人材紹介の双方で柔軟な契約形態を提供。",
+    "features": [
+      "PMO・プロジェクト管理推進案件の紹介",
+      "業務・IT導入コンサルティング案件への対応",
+      "マンツーマンのパーソナルサポート体制"
+    ],
+    "companyFeatures": [
+      "日本人ITコンサルとインド人エンジニア双方の人材調達に対応",
+      "SES（準委任）と有料人材紹介の複数契約形態を選択可能",
+      "コンサル案件紹介に特化した人材マッチング"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "woogway.com",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=woogway.com&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-01T20:20:12.228Z"
+  },
+  {
+    "id": 157,
+    "source": "ai-discovered",
+    "name": "HighClass（ハイクラス）",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "業務委託"
+    ],
+    "remoteRatio": "フルリモート対応",
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "エンジニア以外のハイクラス人材向けに、週1日からの高単価業務委託案件を厳選紹介",
+    "companyOneLiner": "エンジニア以外の非エンジニア案件を大量確保し、企業との交渉を全て代行",
+    "appeal": "営業・マーケティング・事業開発・人事・経理など、これまで案件が少なかった専門職種の高単価案件を多数保有。週1日から週5日まで柔軟に選択でき、社長・役員直下の案件が豊富。月額450万～1,200万円の案件をラインアップ。",
+    "companyAppeal": "エンジニア以外の高度な専門人材を効率的に確保できる。企業との交渉・調整をHighClass側が全て代行することで、採用工数を削減。長期プロジェクト案件が多く、継続的な支援体制を構築可能。",
+    "features": [
+      "非エンジニア職種の高単価案件を大量確保（営業・マーケティング・事業開発・管理部等）",
+      "週1～5日まで柔軟な稼働日数で案件選択が可能",
+      "企業側との契約交渉・調整を完全代行"
+    ],
+    "companyFeatures": [
+      "エンジニア以外の専門人材を効率的に採用可能",
+      "企業とフリーランス間のあらゆる交渉を代行し採用工数削減",
+      "社長・役員直下案件多数で経営層と直接関わる人材確保が実現"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "highclass.work",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=highclass.work&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-01T20:20:19.224Z"
+  },
+  {
+    "id": 158,
+    "source": "ai-discovered",
+    "name": "ママワークス",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "業務委託",
+      "アルバイト"
+    ],
+    "remoteRatio": "フルリモート対応",
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "主婦向けの在宅ワーク・副業案件を豊富に紹介するフリーランスマッチングプラットフォーム",
+    "companyOneLiner": "幅広い職種の在宅案件を掲載でき、主婦層へのリーチが可能",
+    "appeal": "主婦・在宅ワーカーを対象とした専門性の高いプラットフォームで、豊富な職種対応（事務・クリエイティブ・営業・データ入力など）が可能。時間・曜日選択可能、扶養内調整可能など柔軟な条件設定ができ、育児との両立を希望する層へ直接アプローチできる。会員登録後はオンライン講座など無料コンテンツも利用可能。",
+    "companyAppeal": "主婦層という特定ターゲットに絞った専門プラットフォームにより、採用母集団の質と適合度が高い。時短勤務・週3日以内勤務など多様な勤務形態に対応できるため、採用工数の最適化が見込める。",
+    "features": [
+      "複数職種対応（事務・クリエイティブ・営業・データ入力など）",
+      "全国の在宅案件を掲載可能",
+      "単発・継続案件の両方に対応"
+    ],
+    "companyFeatures": [
+      "主婦層への直接リーチが可能",
+      "柔軟な勤務条件設定で採用の間口を広げられる"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "mamaworks.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=mamaworks.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-01T20:20:25.575Z"
+  },
+  {
+    "id": 159,
+    "source": "ai-discovered",
+    "name": "株式会社インターグループ",
+    "category": "その他",
+    "categoryHint": "通訳・翻訳コーディネート",
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "1966年創立、通訳・翻訳・会議運営をワンストップで対応する語学プロフェッショナルマッチング",
+    "companyOneLiner": "半世紀以上の実績を持つ通訳・翻訳パートナーで、国際会議やイベント対応の外国語課題を総合解決",
+    "appeal": "1966年創立の業界老舗による豊富な実績と信頼。30以上の言語に対応し、通訳・翻訳だけでなく会議運営やオンライン同時通訳（遠隔同時通訳・RSI）、人材派遣など多角的なサービスを展開。各分野に精通した語学スペシャリストをマッチングし、コーディネーターが案件ニーズに応じた最適なソリューションを提案。国際首脳級会議や大規模展示会など高難度案件の実績豊富。",
+    "companyAppeal": "業界実績50年以上の信頼で、外国語対応という経営課題を一括アウトソーシング可能。専任コーディネーターが対応するため、初めての発注でも丁寧なサポートが受けられ、採用・運営の手間を削減できる。",
+    "features": [
+      "1966年創立の業界老舗による半世紀以上の実績",
+      "30以上の言語に対応した多言語体制",
+      "通訳・翻訳・会議運営・人材派遣・オンライン同時通訳を幅広く対応"
+    ],
+    "companyFeatures": [
+      "専任コーディネーターによるニーズ把握と最適提案",
+      "初めての利用者向けに依頼ポイントをまとめた資料提供",
+      "遠隔同時通訳により現場スタッド削減と柔軟な対応実現"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "www.intergroup.co.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=www.intergroup.co.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-01T20:20:32.716Z"
   }
 ]

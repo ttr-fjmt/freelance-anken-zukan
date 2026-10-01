@@ -770,5 +770,35 @@
     "website": "https://www.translator.jp",
     "reason": "name_mismatch",
     "checkedAt": "2026-09-30T20:18:59.780Z"
+  },
+  "SEES（シーズ）／株式会社Miraie": {
+    "name": "SEES（シーズ）／株式会社Miraie",
+    "website": "https://miraie-group.jp/sees",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-10-01T20:19:57.720Z"
+  },
+  "APPSTARS（アップスターズ）フリーランス／株式会社モンスターラボホールディングス": {
+    "name": "APPSTARS（アップスターズ）フリーランス／株式会社モンスターラボホールディングス",
+    "website": "https://www.appstars.io",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-10-01T20:19:57.720Z"
+  },
+  "Fittioフリーランス": {
+    "name": "Fittioフリーランス",
+    "website": "https://fittio.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-01T20:19:57.720Z"
+  },
+  "foriio Creator Match": {
+    "name": "foriio Creator Match",
+    "website": "https://creatormatch.foriio.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-01T20:19:57.720Z"
+  },
+  "G-Jobエージェント": {
+    "name": "G-Jobエージェント",
+    "website": "https://game-matching.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-10-01T20:19:57.720Z"
   }
 }
