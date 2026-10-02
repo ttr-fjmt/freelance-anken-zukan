@@ -86,6 +86,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://freelance-anken-zukan.net/guide/rousai-tetsuzuki/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://freelance-anken-zukan.net/guide/rousai-tokubetsu-kanyuu/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
