@@ -800,5 +800,17 @@
     "website": "https://game-matching.jp/",
     "reason": "name_mismatch",
     "checkedAt": "2026-10-01T20:19:57.720Z"
+  },
+  "ビズフリー.net（Biz-Free）": {
+    "name": "ビズフリー.net（Biz-Free）",
+    "website": "https://biz-free.net/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-02T20:18:16.714Z"
+  },
+  "ビジェント": {
+    "name": "ビジェント",
+    "website": "https://www.biz-agent.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-02T20:18:16.714Z"
   }
 }

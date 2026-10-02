@@ -10243,5 +10243,301 @@
     },
     "linkVerified": true,
     "lastLinkCheckAt": "2026-10-01T20:20:32.716Z"
+  },
+  {
+    "id": 160,
+    "source": "ai-discovered",
+    "name": "ENGER（エンガー）",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "人材紹介",
+      "SES／業務委託",
+      "人材派遣"
+    ],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": "人材紹介・SES／業務委託・人材派遣で費用と発生条件が異なり、採用・稼働など契約形態に応じて費用が発生する。具体的な料率・金額については着手前に提示される。"
+    },
+    "freelancerCount": null,
+    "oneLiner": "IT・エンジニア領域の案件紹介、スキルシートから応募・相談までサポート",
+    "companyOneLiner": "人材確保と活用を支援する案件紹介・マッチングプラットフォーム",
+    "appeal": "IT・エンジニア領域を中心に案件紹介を提供。登録から案件探し・相談は無料で利用でき、スキルシート作成から応募・相談までをサポートする環境が整備されている。現代のDX推進人材不足の課題に対応したマッチングサービス。",
+    "companyAppeal": "人材紹介・SES／業務委託・人材派遣の複数の契約形態に対応でき、契約内容に応じた柔軟な費用体系を提供。企業登録・人材検索・相談は無料で開始でき、着手前に条件を明確に提示する透明性。",
+    "features": [
+      "登録・案件探し・相談が無料で利用可能",
+      "スキルシート作成やPDF出力などの機能をサポート",
+      "IT・エンジニア領域を中心とした案件情報へのアクセス"
+    ],
+    "companyFeatures": [
+      "人材紹介・SES・業務委託・派遣で異なる費用体系に柔軟に対応",
+      "企業登録・人材検索は無料で開始可能",
+      "契約形態に応じた費用条件を着手前に明確に提示"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "enger.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=enger.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-02T20:18:24.539Z"
+  },
+  {
+    "id": 161,
+    "source": "ai-discovered",
+    "name": "ライターズマーケット",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "ライティング案件に特化したマッチングサイト。ライター希望者と案件依頼者を直接つなぐ。",
+    "companyOneLiner": "質の高いライターと出会え、ミスマッチの少ない採用が実現できるプラットフォーム。",
+    "appeal": "ライティング案件に特化したマッチングサービスであり、自分の希望する仕事に出会いやすい環境が整備されている。ライター登録が無料で利用できる。ミスマッチを減らす仕組みを構築している点が特徴。",
+    "companyAppeal": "案件掲載の依頼が無料で、希望するライターと効率的につながることができるプラットフォーム。",
+    "features": [
+      "ライティング案件に特化したマッチング機能",
+      "ライター無料登録で案件情報にアクセス可能",
+      "多様な働き方を支援する環境"
+    ],
+    "companyFeatures": [
+      "案件掲載料金が無料",
+      "登録ライターの情報から希望者を探しやすい"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "www.writers-market.net",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=www.writers-market.net&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-02T20:18:29.017Z"
+  },
+  {
+    "id": 162,
+    "source": "ai-discovered",
+    "name": "MeMovies",
+    "category": "動画・クリエイティブ",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "動画撮影・編集案件をカメラマンやクリエイターに直接依頼できるマッチングサービス",
+    "companyOneLiner": "多様な動画ニーズに対応するクリエイターとの効率的なマッチングで制作コストを最適化",
+    "appeal": "手数料ゼロで直接クリエイターと取引でき、企業プロモーション・広告映像・イベント映像・教育映像・アニメーションなど多様なジャンルのクリエイターが登録しており、オファー形式と入札コンペ形式から案件ごとに選べるマッチング方法が特徴。マッチング後は自由なコミュニケーションツールで打ち合わせ可能。",
+    "companyAppeal": "手数料ゼロの透明な料金体系で、予め制作コストを決定してから依頼できるため、必要以上の費用増加がない。クリエイター検索で実績を確認してから依頼でき、複数クリエイターとの同時マッチングで比較検討も可能。",
+    "features": [
+      "多様なジャンル対応のクリエイター登録（撮影のみ、編集のみ、両方対応）",
+      "ドローン撮影などの特殊技術対応可能",
+      "実績ポートフォリオと制作サンプル動画で事前確認可能"
+    ],
+    "companyFeatures": [
+      "手数料・仲介手数料ゼロでコスト管理が明確",
+      "オファー形式と入札コンペ形式で柔軟な依頼方法が選択可能",
+      "複数クリエイターとの同時マッチングで候補比較が容易"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "memovies.jp",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=memovies.jp&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-02T20:18:36.777Z"
+  },
+  {
+    "id": 163,
+    "source": "ai-discovered",
+    "name": "Independent",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "業務委託"
+    ],
+    "remoteRatio": null,
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": "600名以上",
+    "oneLiner": "企業の経営課題に対して、厳選されたプロフェッショナルを業務委託契約でご紹介",
+    "companyOneLiner": "実力派コンサルタント600名以上から、課題に最適な人材を即座にマッチング",
+    "appeal": "大手企業や成長企業での実務経験を持つ事業会社出身の人材が多数登録。IT-PMO、新規事業開発、マーケティングの3領域に特に強みを持ち、実際のビジネス現場で培った実践的知見と問題解決経験を活かした提案が可能。30代の優秀なプロフェッショナルが中心で、最新テクノロジーへの感度と豊富な実務経験を兼ね備えている。",
+    "companyAppeal": "厳格な審査基準を通過した実力派人材のみの紹介により、採用ミスクを低減。プロジェクト開始前の課題分析から進行中の伴走支援まで、組織的な後方支援体制により高品質なデリバリーを実現。",
+    "features": [
+      "戦略立案から実行まで一貫した専門知識に基づくプロジェクト推進",
+      "短期集中型改革から中長期事業変革まで柔軟な参画形態に対応",
+      "プロジェクト、業務支援、アドバイザー支援の3つの参画形態を用意"
+    ],
+    "companyFeatures": [
+      "専門スキル評価・問題解決力・提案品質を含めた厳選採用で即戦力確保",
+      "プロジェクト進行中の定期レビューと柔軟な軌道修正による成功確度向上",
+      "社内ナレッジセンターのベストプラクティスとアウトプットサンプル提供"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "by-independent.com",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=by-independent.com&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-02T20:18:44.390Z"
+  },
+  {
+    "id": 164,
+    "source": "ai-discovered",
+    "name": "HERP Career（ハープキャリア）",
+    "category": "フリーランス案件マッチング",
+    "categoryHint": null,
+    "region": "非公開（お問い合わせで確認）",
+    "jobCount": "非公開（お問い合わせで確認）",
+    "feeRate": "非公開（お問い合わせで確認）",
+    "contractTypes": [
+      "正社員"
+    ],
+    "remoteRatio": "フルリモート対応求人が豊富（掲載例：「フルリモート」「リモート可」等）",
+    "feeStructure": {
+      "type": "unknown",
+      "note": null
+    },
+    "freelancerCount": null,
+    "oneLiner": "AIマッチングでスタートアップ転職を加速させる、求人・企業情報が充実したスタートアップ特化型サービス",
+    "companyOneLiner": "採用管理システム連携により、リアルタイムで最新のスタートアップ求人を掲載できるプラットフォーム",
+    "appeal": "AIによる効率的なマッチング機能により、活躍可能性の高い企業からの面談リクエストを受け取れるため、大量スカウト対応の手間を削減できます。採用管理システム（HERP Hire）と連携した独自求人により、一般には公開されていない魅力的なポジション情報にアクセス可能。スタートアップ企業の評価額や資金調達額などの重要指標に加え、「メンバーの声」などのカルチャー情報も掲載されており、数値データでは見えない企業の実態を把握できます。",
+    "companyAppeal": "HERP Hire採用管理システムとの連携で、各企業の最新求人情報をリアルタイムに自動掲載。スタートアップ特化型の市場で利用者を効率的に集約でき、採用プロセスを一元管理できるプラットフォームを活用できます。",
+    "features": [
+      "AIマッチング機能で活躍可能性の高い企業との面談リクエストを受け取れる",
+      "採用管理システム連携による独自求人・最新ポジション情報へのアクセス",
+      "評価額・資金調達額・メンバー評価など、スタートアップ選びに必要な情報を一元掲載"
+    ],
+    "companyFeatures": [
+      "採用管理システムHERP Hireとの連携で求人情報を自動化・リアルタイム更新",
+      "スタートアップ特化型プラットフォームで採用母集団を効率的に構築"
+    ],
+    "reviews": [],
+    "reviewNote": "口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "companyReviews": [],
+    "companyReviewNote": "企業からの口コミデータは未収集です（今後のアップデートで追加予定）。",
+    "commitmentExplanation": "非公開（お問い合わせで確認）",
+    "website": "herp.careers",
+    "faviconUrl": "https://www.google.com/s2/favicons?domain=herp.careers&sz=128",
+    "affiliateUrl": null,
+    "featured": false,
+    "real": true,
+    "sourceNote": "AIによるWeb検索で発見・実在照合済み",
+    "companyDetail": {
+      "permitNumber": "非公開（お問い合わせで確認）",
+      "avgDays": "非公開（お問い合わせで確認）",
+      "trackRecord": "非公開（お問い合わせで確認）",
+      "refundPolicy": "非公開（お問い合わせで確認）",
+      "upfrontFee": "非公開（お問い合わせで確認）",
+      "minContract": "非公開（お問い合わせで確認）",
+      "exclusivity": "非公開（お問い合わせで確認）",
+      "capacity": "非公開（お問い合わせで確認）",
+      "sourcingMethod": "非公開（お問い合わせで確認）",
+      "reportingFreq": "非公開（お問い合わせで確認）",
+      "handoverPolicy": "非公開（お問い合わせで確認）",
+      "confidentiality": "非公開（お問い合わせで確認）"
+    },
+    "linkVerified": true,
+    "lastLinkCheckAt": "2026-10-02T20:18:52.389Z"
   }
 ]
