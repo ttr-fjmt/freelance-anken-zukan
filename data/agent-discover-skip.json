@@ -812,5 +812,23 @@
     "website": "https://www.biz-agent.jp/",
     "reason": "fetch_failed",
     "checkedAt": "2026-10-02T20:18:16.714Z"
+  },
+  "NIKKEI SEEKS（ニッケイシークス）／日本経済新聞社": {
+    "name": "NIKKEI SEEKS（ニッケイシークス）／日本経済新聞社",
+    "website": "https://seeks.nikkei.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-03T22:50:59.281Z"
+  },
+  "ハッシュミー（#Me）／株式会社ココドル": {
+    "name": "ハッシュミー（#Me）／株式会社ココドル",
+    "website": "https://hashme.work/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-03T22:50:59.281Z"
+  },
+  "ヒューマンコム株式会社": {
+    "name": "ヒューマンコム株式会社",
+    "website": "https://www.humancom.co.jp",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-03T22:50:59.281Z"
   }
 }
