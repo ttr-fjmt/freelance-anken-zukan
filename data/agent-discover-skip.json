@@ -830,5 +830,23 @@
     "website": "https://www.humancom.co.jp",
     "reason": "fetch_failed",
     "checkedAt": "2026-10-03T22:50:59.281Z"
+  },
+  "フリーランスポート（Freelance Port）／株式会社Senyou": {
+    "name": "フリーランスポート（Freelance Port）／株式会社Senyou",
+    "website": "https://senyou.dev/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-10-04T22:58:22.876Z"
+  },
+  "UNIFIRE RESOURCES": {
+    "name": "UNIFIRE RESOURCES",
+    "website": "https://unifire-resources.com/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-04T22:58:22.876Z"
+  },
+  "POD（Professionals On Demand）": {
+    "name": "POD（Professionals On Demand）",
+    "website": "https://pod.jp/",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-10-04T22:58:22.876Z"
   }
 }

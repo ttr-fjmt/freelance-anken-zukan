@@ -142,5 +142,29 @@
     "output_tokens": 15630,
     "web_search_requests": 0,
     "estimated_usd": 0.18045
+  },
+  {
+    "date": "2026-10-05",
+    "script": "discover-agents",
+    "model": "claude-sonnet-4-6",
+    "calls": 7,
+    "input_tokens": 446880,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 9275,
+    "web_search_requests": 24,
+    "estimated_usd": 1.719765
+  },
+  {
+    "date": "2026-10-05",
+    "script": "discover-agents",
+    "model": "claude-haiku-4-5-20251001",
+    "calls": 7,
+    "input_tokens": 74558,
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "output_tokens": 4622,
+    "web_search_requests": 0,
+    "estimated_usd": 0.097668
   }
 ]
