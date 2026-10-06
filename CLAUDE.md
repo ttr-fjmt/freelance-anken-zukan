@@ -23,7 +23,7 @@
 
 ## 毎日動いている処理
 
-`.github/workflows/discover-agents.yml` が毎日 JST 5:00 に実行される。
+`.github/workflows/discover-agents.yml` が**毎週月曜** JST 5:00 に実行される（2026-10-06 に毎日から週1回へ。費用のため）。
 
 1. `discover-agents.js` — AIのWeb検索でフリーランス向け案件サービスを探し、公式サイトにアクセスして実在を照合し、
    構造化して `agents.json` に追加する（`ANTHROPIC_API_KEY` を使用）。追加後にカテゴリーを9分類へまとめ直す

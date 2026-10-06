@@ -23,7 +23,18 @@ const { CATEGORIES, NOT_DISCLOSED_TEXT } = require('./schema');
 
 const { instrumentClient, getDefaultRecorder, installExitFlush } = require('./usage-log');
 
-const DISCOVERY_MODEL = process.env.ANTHROPIC_DISCOVERY_MODEL || 'claude-sonnet-4-6';
+/**
+ * 発見（Web検索して候補を挙げさせる）に使うモデル。
+ *
+ * 2026-10-06 に Sonnet 4.6 から Sonnet 5.5 へ切り替えた。単価が入力 $3→$2・出力 $15→$10
+ * （どちらも3分の1安い）で、この処理は運用費用の大半を占めていたため（DECISIONS.md 2026-10-06）。
+ * Sonnet 5.5 は既定で考えてから答える（その分も出力として課金される）ので、
+ * 検索して一覧を返すだけのこの処理では effort を low にして考える量を抑える。
+ */
+const DISCOVERY_MODEL = process.env.ANTHROPIC_DISCOVERY_MODEL || 'claude-sonnet-5-5';
+const DISCOVERY_EFFORT = process.env.ANTHROPIC_DISCOVERY_EFFORT || 'low';
+/** 考える分も max_tokens に含まれるので、Sonnet 4.6 のときより余裕を持たせる（使った分だけ課金される）。 */
+const DISCOVERY_MAX_TOKENS = 8000;
 const STRUCTURE_MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001';
 
 /** ANTHROPIC_API_KEY が無い場合は呼び出し時点で明確に例外を投げる（呼び出し側で分岐しやすくするため）。 */
@@ -110,7 +121,8 @@ async function searchCategoryCandidates(category, excludeNames) {
 
   const response = await anthropic.messages.create({
     model: DISCOVERY_MODEL,
-    max_tokens: 1500,
+    max_tokens: DISCOVERY_MAX_TOKENS,
+    output_config: { effort: DISCOVERY_EFFORT },
     tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 4 }],
     messages: [{
       role: 'user',
@@ -180,7 +192,8 @@ async function discoverFromComparisonArticles(excludeNames, maxCandidates) {
 
   const response = await anthropic.messages.create({
     model: DISCOVERY_MODEL,
-    max_tokens: 2000,
+    max_tokens: DISCOVERY_MAX_TOKENS,
+    output_config: { effort: DISCOVERY_EFFORT },
     tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 6 }],
     messages: [{
       role: 'user',
@@ -758,6 +771,8 @@ async function buildDiscoveredAgentFields(candidate, pageText, anthropic, existi
 }
 
 module.exports = {
+  DISCOVERY_MODEL,
+  DISCOVERY_EFFORT,
   getAnthropicClient,
   extractJsonArray,
   SEARCH_CATEGORIES,

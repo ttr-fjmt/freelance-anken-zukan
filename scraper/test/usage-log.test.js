@@ -83,7 +83,8 @@ test('estimateCostUsd: 価格表に無いモデルは null（0で埋めない）
 
 test('価格表に、実際に使っているモデルが載っている', () => {
   // モデルを差し替えたのに価格表を更新し忘れると、金額が静かに欠ける。
-  for (const model of ['claude-haiku-4-5-20251001', 'claude-sonnet-4-6', 'claude-sonnet-5']) {
+  const { DISCOVERY_MODEL } = require('../lib/agent-discovery');
+  for (const model of ['claude-haiku-4-5-20251001', 'claude-sonnet-4-6', 'claude-sonnet-5', 'claude-sonnet-5-5', DISCOVERY_MODEL]) {
     assert.ok(MODEL_PRICING[model], `${model} が価格表にない`);
   }
   assert.strictEqual(WEB_SEARCH_USD_PER_REQUEST, 0.01);

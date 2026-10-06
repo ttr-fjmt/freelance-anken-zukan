@@ -1,13 +1,15 @@
-name: Discover new freelance agents (daily)
+name: Discover new freelance agents (weekly)
 
 on:
   schedule:
-    # 毎日 20:00 UTC(前日) = 日本時間(JST) 5:00 に実行
-    - cron: "0 20 * * *"
+    # 毎週日曜 20:00 UTC = 日本時間(JST) 月曜 5:00 に実行。
+    # 2026-10-06、毎日から週1回へ落とした。この処理が API 費用の6割（月およそ$54）を占めており、
+    # 掲載の伸びより費用を優先するとTatsuroさんが判断したため（DECISIONS.md 2026-10-06）。
+    - cron: "0 20 * * 0"
   workflow_dispatch:
     inputs:
       max_candidates:
-        description: "1回の実行で新規発見を試みる候補数の上限（手動実行専用。空欄なら50件。日次自動実行は常に10件のまま）"
+        description: "1回の実行で新規発見を試みる候補数の上限（手動実行専用。空欄なら50件。週1回の自動実行は常に10件のまま）"
         required: false
         type: string
         default: "50"
