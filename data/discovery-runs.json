@@ -1062,5 +1062,33 @@
     "found": 0,
     "listed": 0,
     "skipped": 0
+  },
+  {
+    "date": "2026-10-07",
+    "category": "IT・Web開発",
+    "found": 2,
+    "listed": 2,
+    "skipped": 0
+  },
+  {
+    "date": "2026-10-07",
+    "category": "動画・クリエイティブ",
+    "found": 0,
+    "listed": 0,
+    "skipped": 0
+  },
+  {
+    "date": "2026-10-07",
+    "category": "コンサル・士業",
+    "found": 4,
+    "listed": 3,
+    "skipped": 1
+  },
+  {
+    "date": "2026-10-07",
+    "category": "事務・バックオフィス",
+    "found": 1,
+    "listed": 1,
+    "skipped": 0
   }
 ]
