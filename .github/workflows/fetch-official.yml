@@ -32,6 +32,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # 順番待ち（concurrency）のあいだに別の処理が main を更新していることがある。
+          # 既定では「待ち始めた時点」の版を読み込むため、保存のときに食い違って失敗する
+          # （2026-10-06、転職エージェント図鑑で記事の保存が失敗した）。動き出した時点の最新を読む。
+          ref: ${{ github.ref_name }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
