@@ -40,3 +40,19 @@ test('AIを呼ぶ部品が、消費量をファイルに書き出す設定にな
   const ai = fs.readFileSync(path.join(__dirname, '..', 'lib', 'ai.js'), 'utf8');
   assert.match(ai, /installExitFlush\(\)/, 'installExitFlush() を呼んでいません');
 });
+
+// 2026-10-06、転職エージェント図鑑で記事の保存が失敗した。記事公開は順番待ち（concurrency）で
+// 先の処理が終わるのを待っていたが、読み込んだのは「待ち始めた時点」の古い版だったため、
+// 待っている間に先の処理が保存した内容と食い違い、push が弾かれた。
+// main へ書き戻すワークフローは、動き出した時点の最新を読み込むこと。
+for (const file of workflows) {
+  const src = fs.readFileSync(path.join(WORKFLOW_DIR, file), 'utf8');
+  if (!/git push/.test(src)) continue;
+  test(`${file}: 動き出した時点の最新の main を読み込む（順番待ちの間の更新と食い違わないように）`, () => {
+    const checkouts = src.match(/uses: actions\/checkout@v\d+[\s\S]*?(?=\n\s*- (?:name|uses):|\n\S|$)/g) || [];
+    assert.ok(checkouts.length > 0, 'actions/checkout が見つからない');
+    for (const block of checkouts) {
+      assert.match(block, /ref: \$\{\{ github\.ref_name \}\}/, 'checkout に ref: ${{ github.ref_name }} が無い');
+    }
+  });
+}
