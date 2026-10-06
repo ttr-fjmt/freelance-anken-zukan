@@ -848,5 +848,35 @@
     "website": "https://pod.jp/",
     "reason": "name_mismatch",
     "checkedAt": "2026-10-04T22:58:22.876Z"
+  },
+  "フリーコンサルタントスクエア": {
+    "name": "フリーコンサルタントスクエア",
+    "website": "https://fc-square.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-06T01:18:40.937Z"
+  },
+  "CAREER FLIGHT（キャリアフライト）": {
+    "name": "CAREER FLIGHT（キャリアフライト）",
+    "website": "https://careerflight.jp/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-06T01:18:40.937Z"
+  },
+  "Treasurefoot": {
+    "name": "Treasurefoot",
+    "website": "https://treasurefoot.net/",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-06T01:18:40.937Z"
+  },
+  "Conyac（コニャック）／Xtra株式会社": {
+    "name": "Conyac（コニャック）／Xtra株式会社",
+    "website": "https://conyac.cc/ja",
+    "reason": "fetch_failed",
+    "checkedAt": "2026-10-06T01:18:40.937Z"
+  },
+  "アーバン・コネクションズ／株式会社アーバン・コネクションズ": {
+    "name": "アーバン・コネクションズ／株式会社アーバン・コネクションズ",
+    "website": "https://urbanconnections.jp",
+    "reason": "name_mismatch",
+    "checkedAt": "2026-10-06T01:18:40.937Z"
   }
 }
